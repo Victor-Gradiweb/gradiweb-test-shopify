@@ -1,8 +1,14 @@
 package.json
 package-lock.json
-webpack.prod.js
-webpack.dev.js
-webpack.common.js
+webpack.config.js
+
+clean.js
+mode.js
+
+cypress.env.json
+cypress.config.js
 
 node_modules/
 src/
+cypress/
+.github/
