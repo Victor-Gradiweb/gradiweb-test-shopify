@@ -1,4 +1,4 @@
-@use './abstracts/variables';
+@use "./abstracts/variables";
 
 @import "components/address";
 @import "components/auth";
@@ -26,7 +26,7 @@ $margin-customer: 50px;
     flex-direction: column-reverse;
 
     @media screen and (max-width: $break-customer) {
-      & > *:last-child {
+      > *:last-child {
         margin-bottom: $margin-customer;
       }
     }
@@ -35,7 +35,7 @@ $margin-customer: 50px;
       flex-direction: row;
       flex-wrap: nowrap;
 
-      & > *:first-child {
+      > *:first-child {
         margin-right: $margin-customer;
       }
     }
@@ -61,16 +61,16 @@ $margin-customer: 50px;
     &-list {
       --columns: 1fr 2fr 2fr 2fr 1fr;
       --column-gap: 30px;
-  
+
       &--header {
         display: none;
-  
+
         @media screen and (min-width: $break-customer) {
           display: grid;
           font-weight: 600;
         }
       }
-  
+
       &--detail {
         --columns: 3fr 2fr 2fr 1fr 1fr;
 
@@ -78,39 +78,39 @@ $margin-customer: 50px;
           margin-bottom: 10px;
         }
 
-        & > *:last-child {
+        > *:last-child {
           text-align: right;
         }
       }
-      
+
       padding: 10px 0 10px;
-      
+
       &:not(:last-of-type) {
         border-bottom: 1px solid;
       }
-  
-      & > div > .ref__hidden {
+
+      > div > .ref__hidden {
         display: none;
       }
-  
+
       @media screen and (max-width: $break-customer) {
         --columns: 1fr;
         --row-gap: 30px;
-  
+
         &:not(:last-of-type) {
           margin-bottom: $margin-customer;
         }
-  
-        & > div {
+
+        > div {
           display: flex;
           justify-content: space-between;
-  
-          & > .ref__hidden {
+
+          > .ref__hidden {
             display: block;
             margin-right: $margin-customer;
           }
-  
-          & > *:last-child {
+
+          > *:last-child {
             text-align: right;
           }
         }
@@ -125,12 +125,12 @@ $margin-customer: 50px;
         margin-bottom: 10px;
       }
 
-      & > *:first-child {
+      > *:first-child {
         display: block;
         margin-right: $margin-customer;
       }
 
-      & > *:last-child {
+      > *:last-child {
         text-align: right;
       }
     }

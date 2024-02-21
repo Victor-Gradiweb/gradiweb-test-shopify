@@ -1,5 +1,5 @@
-import { setQuantity } from "../../utils/input-quantity";
-import { changeItem, deleteItem } from "./cart";
+import { setQuantity } from '../../utils/input-quantity'
+import { changeItem, deleteItem } from './cart'
 
 /**
  * web component for item cart.
@@ -11,13 +11,13 @@ class ItemCart extends HTMLElement {
   /**
    * detect child elements within the web component.
    */
-  connectedCallback() {
-    deleteItem(this);
-    changeItem(this);
-    setQuantity(this);
+  connectedCallback () {
+    deleteItem(this)
+    changeItem(this)
+    setQuantity(this)
   }
 
-  disconnectedCallback() {}
+  disconnectedCallback () {}
 }
 
-export default ItemCart;
+export default ItemCart

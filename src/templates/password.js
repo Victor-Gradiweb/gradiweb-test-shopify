@@ -1,1 +1,1 @@
-import "../scss/password.scss";
+import '../scss/password.scss'
