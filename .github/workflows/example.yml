@@ -50,7 +50,7 @@ jobs:
           # Password generated from Theme Access app
           SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
           SHOPIFY_CLI_TTY: 0
-        run: shopify theme push --path ./ --t 134435078377 -u
+        run: shopify theme push --path ./ --theme 134435078377 --unpublished
   
   #cypress-run:
     #runs-on: ubuntu-22.04
