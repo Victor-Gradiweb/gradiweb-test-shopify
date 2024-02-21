@@ -1,53 +1,44 @@
 {
   "name": "theme-base-shopify",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "",
-  "main": "index.js",
   "keywords": [],
   "author": "Cristian Velasco",
-  "license": "MIT",
   "scripts": {
-    "clean": "rm assets/theme.js",
-    "build": "webpack --config webpack.prod.js --mode production --progress",
-    "dev": "node cleanCompilation.js && webpack --config webpack.dev.js --watch --mode development --progress",
-    "build:criticalcss": "webpack --config webpack.prod.js --mode production --progress && node criticalcss.js",
-    "install:codeqa": "cd code-quality && npm prune && npm install",
-    "lint": "stylelint **/*.scss & (cd code-quality && eslint --quiet ../)"
+    "clean": "node clean.js",
+    "dev": "node mode.js development && webpack --config webpack.config.js --mode development --progress"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.1",
-    "@babel/plugin-transform-runtime": "^7.15.0",
-    "@babel/preset-env": "^7.11.0",
-    "@html-eslint/eslint-plugin": "^0.13.2",
-    "@html-eslint/parser": "^0.13.2",
-    "babel-loader": "^8.1.0",
-    "css-loader": "^5.2.4",
-    "css-minimizer-webpack-plugin": "^3.3.1",
-    "eslint": "^7.32.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^3.4.1",
-    "lodash": "^4.17.21",
-    "mini-css-extract-plugin": "^1.6.0",
-    "postcss-scss": "^4.0.4",
-    "prettier": "^2.3.2",
-    "sass": "^1.43.5",
-    "sass-loader": "^12.3.0",
-    "style-loader": "^2.0.0",
-    "stylelint": "^14.11.0",
-    "stylelint-config-idiomatic-order": "^8.1.0",
-    "terser-webpack-plugin": "^5.1.1",
-    "webpack": "^5.64.4",
-    "webpack-cli": "^4.6.0",
-    "webpack-dev-server": "^4.3.1",
-    "webpack-merge": "^5.7.3"
+    "babel-loader": "^9.1.3",
+    "css-loader": "^6.8.1",
+    "cypress": "^13.6.4",
+    "mini-css-extract-plugin": "^2.7.6",
+    "prettier": "^3.2.5",
+    "sass": "^1.64.2",
+    "sass-loader": "^13.3.2",
+    "standard": "^17.1.0",
+    "style-loader": "^3.3.3",
+    "stylelint": "^16.2.1",
+    "stylelint-config-sass-guidelines": "^11.0.0",
+    "stylelint-config-standard-scss": "^13.0.0",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-merge": "^5.9.0"
   },
   "dependencies": {
     "axios": "^0.22.0",
-    "confusing-browser-globals": "^1.0.11",
-    "core-js": "^3.20.3",
     "graditify-api": "^1.0.2",
     "graditify-utils": "^1.0.4",
     "import": "^0.0.6",
     "swiper": "^7.4.1"
+  },
+  "eslintConfig": {
+    "extends": "./node_modules/eslint-config-standard/.eslintrc.json"
+  },
+  "stylelint": {
+    "extends": [
+      "./node_modules/stylelint-config-standard-scss/index.js",
+      "./node_modules/stylelint-config-sass-guidelines/index.js"
+    ]
   }
 }

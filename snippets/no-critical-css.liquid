@@ -1,18 +1,24 @@
+{% assign ext = '.css' %}
+
+{% if development %}
+  {% assign ext = '.dev.css' %}
+{% endif %}
+
 <link
   rel="stylesheet"
-  href="{{ 'theme.css' | asset_url }}"
+  href="{{ 'theme.css' | append: ext | asset_url }}"
 >
 
-{% render 'preload-css', asset: 'cart.css' %}
+{% render 'preload-css', ext: ext, asset: 'cart' %}
 
 {%- if request.page_type == 'product' -%}
-  {% render 'preload-css', asset: 'product.css' %}
+  {% render 'preload-css', ext: ext, asset: 'product' %}
 {%- endif -%}
 
 {%- if request.page_type == 'collection' -%}
-  {% render 'preload-css', asset: 'collection.css' %}
+  {% render 'preload-css', ext: ext, asset: 'collection' %}
 {%- endif -%}
 
 {%- if request.page_type contains 'customers' -%}
-  {% render 'preload-css', asset: 'customer.css' %}
+  {% render 'preload-css', ext: ext, asset: 'customer' %}
 {%- endif -%}

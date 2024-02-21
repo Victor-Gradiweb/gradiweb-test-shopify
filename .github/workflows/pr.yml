@@ -1,0 +1,92 @@
+name: open/edit/sync Pull Request
+on:
+  pull_request:
+    types: ["opened", "edited", "synchronize"]
+    branches: ["dev"]
+
+jobs:
+  jslint:
+    name: JS review
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: reviewdog/action-eslint@v1
+        with:
+          reporter: github-pr-review
+          eslint_flags: "src/"
+          filter_mode: nofilter
+          fail_on_error: true
+  
+  stylelint:
+    name: Style review
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: reviewdog/action-stylelint@v1
+        with:
+          reporter: github-pr-review
+          stylelint_input: "src/scss"
+          filter_mode: nofilter
+          fail_on_error: true
+
+  lhci:
+    name: Lighthouse
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Lighthouse
+        uses: shopify/lighthouse-ci-action@v1.1.1
+        with:
+          store: ${{ secrets.SHOP_STORE }}
+          access_token: ${{ secrets.SHOP_ACCESS_TOKEN }}
+          password: ${{ secrets.SHOP_PASSWORD }}
+          collection_handle: all
+          lhci_min_score_performance: 0.6
+          lhci_min_score_accessibility: 0.8
+  
+  clean:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    needs: 
+      - jslint
+      - stylelint
+      - lhci
+      
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+      - run: npm run clean
+      - uses: stefanzweifel/git-auto-commit-action@v5
+  
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    needs: 
+      - jslint
+      - stylelint
+      - clean
+    
+    if: needs.jslint.result == 'success' &&  needs.stylelint.result == 'success'
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: node mode.js && webpack --config webpack.config.js --mode production --progress
+      - uses: stefanzweifel/git-auto-commit-action@v5

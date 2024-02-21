@@ -1,0 +1,100 @@
+name: EXAMPLE PULL REQUEST OPEN
+on:
+  pull_request:
+    types: ["opened", "edited", "synchronize"]
+    branches: ["staging", "main"]
+
+jobs:
+  jslint:
+    name: ESlint with comments
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: reviewdog/action-eslint@v1
+        with:
+          reporter: github-pr-review
+          eslint_flags: "src/"
+          filter_mode: nofilter
+          fail_on_error: true
+  
+  stylelint:
+    name: Stylelint with comments
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: reviewdog/action-stylelint@v1
+        with:
+          reporter: github-pr-review
+          stylelint_input: "src/scss"
+          filter_mode: nofilter
+          fail_on_error: true
+
+  deploy:
+    name: Deploy SH Theme
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1
+          bundler: 'latest'
+      - name: Install Shopify CLI
+        run: npm install -g @shopify/cli @shopify/theme
+      - name: Deploy
+        env:
+          # Store URL, like your-store.myshopify.com
+          SHOPIFY_FLAG_STORE: '${{ secrets.SHOPIFY_STORE }}'
+          # Password generated from Theme Access app
+          SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+          SHOPIFY_CLI_TTY: 0
+        run: shopify theme push --path ./ --theme 1234567
+  
+  #cypress-run:
+    #runs-on: ubuntu-22.04
+    #steps:
+      #- name: Checkout
+      #  uses: actions/checkout@v4
+      #- name: Use Node.js
+      #  uses: actions/setup-node@v3
+      #  with:
+      #    node-version: '20.x'
+      
+      #- name: Install dependencies
+      #  run: cd cypress-theme-sh && npm install
+
+      ## and run all Cypress tests
+      ##- name: Cypress run
+      #  uses: cypress-io/github-action@v6
+      #  with:
+      #    working-directory: cypress-theme-sh
+      #    config: baseUrl=https://gradi-theme-base.myshopify.com/
+      #    browser: chrome
+        
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    needs: 
+      - jslint
+      - stylelint
+    
+    if: needs.jslint.result == 'success' &&  needs.stylelint.result == 'success'
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: node mode.js && node clean.js && webpack --config webpack.config.js --mode production --progress
+      - uses: stefanzweifel/git-auto-commit-action@v5
