@@ -1,20 +1,19 @@
-import { $Q, $Qll } from "./query-selector";
+import { $Q, $Qll } from './query-selector'
 
 /**
  * add or subtract input value
  * @author Cristian Velasco
  */
- function updateQuantity() {
-
+function updateQuantity () {
   const input = $Q('input', this.parentElement)
 
-  if (this.dataset.action === "subtr") {
+  if (this.dataset.action === 'subtr') {
     if (input.value > 0) input.value--
   } else {
     input.value++
   }
 
-  return input.dispatchEvent(new Event("change"));
+  return input.dispatchEvent(new Event('change'))
 }
 
 /**
@@ -24,13 +23,13 @@ import { $Q, $Qll } from "./query-selector";
 * @author Cristian Velasco
 */
 export const setQuantity = (scope = null) => {
-  $Qll(".quantity-label", scope).forEach(
+  $Qll('.quantity-label', scope).forEach(
     (labelParent) => $Qll('.button', labelParent)
       .forEach((btn) => {
         btn.addEventListener(
           'click',
-          updateQuantity,
+          updateQuantity
         )
-      }),
+      })
   )
 }

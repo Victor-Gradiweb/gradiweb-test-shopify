@@ -19,5 +19,5 @@ const $Q = (node, parent) => (parent || document).querySelector(node)
 
 export {
   $Qll,
-  $Q,
+  $Q
 }
