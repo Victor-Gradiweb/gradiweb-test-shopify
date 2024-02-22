@@ -5,6 +5,29 @@ on:
     branches: ["staging", "main", "feat/survivor-pack"]
 
 jobs:
+  deploy:
+    name: Development Theme
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1
+          bundler: 'latest'
+      - name: Install Shopify CLI
+        run: npm install -g @shopify/cli @shopify/theme
+      - name: Deploy
+        env:
+          # Store URL, like your-store.myshopify.com
+          SHOPIFY_FLAG_STORE: '${{ secrets.SHOP_STORE }}'
+          # Password generated from Theme Access app
+          SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+          SHOPIFY_CLI_TTY: 0
+        run: shopify theme push --path ./ --theme ${{ secrets.THEME_ID_PREVIEW }} --json
+
   jslint:
     name: ESlint with comments
     runs-on: ubuntu-latest
@@ -28,50 +51,32 @@ jobs:
           stylelint_input: "src/scss"
           filter_mode: nofilter
           fail_on_error: true
-
-  deploy:
-    name: Deploy SH Theme
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.1
-          bundler: 'latest'
-      - name: Install Shopify CLI
-        run: npm install -g @shopify/cli @shopify/theme
-      - name: Deploy
-        env:
-          # Store URL, like your-store.myshopify.com
-          SHOPIFY_FLAG_STORE: '${{ secrets.SHOP_STORE }}'
-          # Password generated from Theme Access app
-          SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
-          SHOPIFY_CLI_TTY: 0
-        run: shopify theme push --path ./ --theme 134435078377 --unpublished --json
   
-  #cypress-run:
-    #runs-on: ubuntu-22.04
-    #steps:
-      #- name: Checkout
-      #  uses: actions/checkout@v4
-      #- name: Use Node.js
-      #  uses: actions/setup-node@v3
-      #  with:
-      #    node-version: '20.x'
+  cypress:
+    runs-on: ubuntu-22.04
+
+    needs: 
+      - deploy
+
+    if: needs.deploy.result == 'success'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
       
       #- name: Install dependencies
-      #  run: cd cypress-theme-sh && npm install
+      #  run: npm install
 
-      ## and run all Cypress tests
-      ##- name: Cypress run
-      #  uses: cypress-io/github-action@v6
-      #  with:
-      #    working-directory: cypress-theme-sh
-      #    config: baseUrl=https://gradi-theme-base.myshopify.com/
-      #    browser: chrome
+      # and run all Cypress tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          config: baseUrl=https://${{ secrets.SHOP_STORE }}?preview_theme_id=${{ secrets.THEME_ID_PREVIEW }}
+          browser: chrome
         
   build:
     runs-on: ubuntu-latest
@@ -82,8 +87,9 @@ jobs:
     needs: 
       - jslint
       - stylelint
+      - cypress
     
-    if: needs.jslint.result == 'success' &&  needs.stylelint.result == 'success'
+    if: needs.jslint.result == 'success' &&  needs.stylelint.result == 'success' && needs.cypress.result == 'success'
 
     steps:
       - uses: actions/checkout@v4
