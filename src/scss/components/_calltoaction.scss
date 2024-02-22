@@ -21,7 +21,7 @@
     margin: 4rem auto;
 
     &--50 {
-      @media screen and (min-width: 768px) {
+      @media screen and (width >= 768px) {
         width: 50%;
       }
     }
@@ -31,7 +31,7 @@
     flex-basis: 60%;
     color: var(--color-font);
 
-    @media screen and (max-width: 768px) {
+    @media screen and (width <= 768px) {
       flex-basis: 100%;
     }
   }
@@ -41,11 +41,11 @@
     flex-wrap: nowrap;
     justify-content: space-between;
 
-    @media screen and (max-width: 768px) {
+    @media screen and (width <= 768px) {
       flex-basis: 100%;
     }
 
-    @media screen and (max-width: 374px) {
+    @media screen and (width <= 374px) {
       flex-wrap: wrap;
     }
   }
@@ -59,12 +59,12 @@
       margin-left: 0.5rem;
     }
 
-    @media screen and (max-width: 768px) {
+    @media screen and (width <= 768px) {
       width: 50%;
       text-align: center;
     }
 
-    @media screen and (max-width: 374px) {
+    @media screen and (width <= 374px) {
       width: 100%;
 
       &:nth-child(2) {

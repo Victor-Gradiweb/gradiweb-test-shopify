@@ -43,13 +43,13 @@
     display: none;
   }
 
-  @media screen and (max-width: 749px) {
+  @media screen and (width <= 749px) {
     &-prev {
-      left: 0px;
+      left: 0;
     }
   
     &-next {
-      right: 0px;
+      right: 0;
     }
   }
 }

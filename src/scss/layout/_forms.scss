@@ -3,10 +3,8 @@
 
 .my-contact {
   display: grid;
-  grid-column-gap: 20px;
-  column-gap: 20px;
-  grid-row-gap: 20px;
-  row-gap: 20px;
+  grid-gap: 20px;
+  gap: 20px 20px;
   width: 50%;
   margin: 0 auto;
 }
@@ -57,7 +55,7 @@
       appearance: none;
     }
 
-    &:after {
+    &::after {
       content: "\203a";
       font-size: 1.5rem;
       position: absolute;
@@ -89,16 +87,15 @@
     height: 24px;
     width: 48px;
     border-radius: 12px;
-    border: 1px solid rgb(179, 179, 179);
+    border: 1px solid rgb(179 179 179);
     margin-right: 10px;
     display: block;
     position: relative;
     cursor: pointer;
     background: #ccc;
-    -webkit-transition: .2s;
     transition: .2s;
     
-    &:after {
+    &::after {
       height: 20px;
       width: 20px;
       top: 50%;
@@ -118,10 +115,10 @@
     &:checked + .slider {
       background: var(--color-base-principal);
 
-      &:after {
+      &::after {
         left: auto;
         right: 2px;
-        background-color: rgb(82, 82, 82);
+        background-color: rgb(82 82 82);
 
       }
     }
@@ -142,10 +139,8 @@
 
 .form__question {
   display: grid;
-  grid-column-gap: 20px;
-  column-gap: 20px;
-  grid-row-gap: 20px;
-  row-gap: 20px;
+  grid-gap: 20px;
+  gap: 20px 20px;
   text-align: left;
 
   &--answer {

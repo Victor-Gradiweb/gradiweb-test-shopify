@@ -2,12 +2,10 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: repeat(2, minmax(150px, 300px));
-  grid-column-gap: 16px;
-  column-gap: 16px;
-  grid-row-gap: 16px;
-  row-gap: 16px;
+  grid-gap: 16px;
+  gap: 16px 16px;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (width <= 768px) {
     grid-template-columns: 1fr;
     grid-template-rows: auto;
   }

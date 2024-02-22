@@ -32,7 +32,7 @@
 .cart-upsell .card-description__title {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
-  display: -webkit-box;
+  display: box;
   max-height: 35px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -53,7 +53,7 @@
 .cart-upsell .swiper-button-next {
   right: 0;
 }
-@media screen and (max-width: 749px) {
+@media screen and (width <= 749px) {
   .cart-upsell .swiper-button {
     display: block;
   }
@@ -157,13 +157,13 @@
   position: fixed;
   right: 0;
   top: 0;
-  background-color: #FFFFFF;
+  background-color: #FFF;
   overflow-y: auto;
   z-index: 2;
   transform: translateX(400px);
   transition: all 0.4s ease;
 }
-@media screen and (max-width: 767px) {
+@media screen and (width <= 767px) {
   .side-cart {
     width: 100%;
   }
@@ -171,7 +171,7 @@
 .side-cart[data-active=true] {
   opacity: 1;
   visibility: visible;
-  transform: translateX(0px);
+  transform: translateX(0);
 }
 .side-cart > *:not(:first-child) {
   padding-top: 1rem;
@@ -214,7 +214,7 @@
   text-align: center;
   position: sticky;
   bottom: 0;
-  background-color: #FFFFFF;
+  background-color: #FFF;
   z-index: 1;
 }
 .side-cart__button button {
@@ -225,7 +225,7 @@
   position: fixed;
   bottom: 0;
   left: 50%;
-  background: #FFFFFF;
+  background: #FFF;
   transform: translateX(-50%);
   z-index: 3;
 }

@@ -1,15 +1,12 @@
 $max-width--wrapper: 1440px;
-
 $paddings-side: 5rem;
 $paddings-side--movil: 1rem;
-
 $margin-section: 50px;
 $margin-section--movil: 30px;
 
 /* ====== Font ====== */
 $font-family--general: 'system', sans-serif;
 $font-size--general: 16px;
-
 $font-family--title: 'system', sans-serif;
 $font-size--h1: 30px;
 $font-size--h2: 25px;
@@ -24,9 +21,8 @@ $color-background: var(--color-base-bg);
 $color-link: var(--color-base-link);
 $color-success: #428445;
 $color-error: #EB001B;
-
-$color-black: #000000;
-$color-white: #FFFFFF;
+$color-black: #000;
+$color-white: #FFF;
 $color-gray: #C4C4C4;
 
 /* ====== Break points ====== */

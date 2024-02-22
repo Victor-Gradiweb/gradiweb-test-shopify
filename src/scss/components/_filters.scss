@@ -13,7 +13,6 @@
       margin-bottom: 15px;
 
       input[type="checkbox"] {
-
         &:checked + label {
           font-weight: 700;
           text-decoration: underline;
@@ -80,8 +79,7 @@
 
     &.color {
       display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
+      flex-flow: row wrap;
       align-items: flex-start;
       justify-content: flex-start;
 
@@ -101,7 +99,7 @@
           flex-direction: row;
           align-items: center;
           justify-content: center;
-          border: 1px solid rgba(0, 0, 0, 0.3);
+          border: 1px solid rgb(0 0 0 / 30%);
           border-radius: 100%;
           cursor: pointer;
           font-size: 0;
@@ -120,7 +118,7 @@
 
         &:checked + span {
           border: 1px solid variables.$color-black;
-          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 2px 5px rgb(0 0 0 / 30%);
         }
       }
     }

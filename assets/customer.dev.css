@@ -110,8 +110,7 @@
 }
 @media screen and (min-width: 800px) {
   .customer__layout {
-    flex-direction: row;
-    flex-wrap: nowrap;
+    flex-flow: row nowrap;
   }
   .customer__layout > *:first-child {
     margin-right: 50px;
@@ -136,7 +135,7 @@
 .customer__order-list {
   --columns: 1fr 2fr 2fr 2fr 1fr;
   --column-gap: 30px;
-  padding: 10px 0 10px;
+  padding: 10px 0;
 }
 .customer__order-list--header {
   display: none;

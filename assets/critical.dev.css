@@ -1,10 +1,10 @@
 /*!*****************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/critical.scss ***!
   \*****************************************************************************************************************/
-/*============================================================================
+/* ============================================================================
   #Normalize
   Based on normalize.css v3.0.2 | MIT License | git.io/normalize
-==============================================================================*/
+============================================================================== */
 article,
 aside,
 details,
@@ -26,7 +26,7 @@ textarea,
 select,
 .disclosure__toggle {
   -webkit-font-smoothing: antialiased;
-  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 a {
@@ -81,8 +81,6 @@ textarea {
 
 progress {
   border: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
   appearance: none;
 }
 
@@ -102,8 +100,6 @@ button:-moz-focusring,
 }
 
 input[type=search], input[type=number], input[type=email], input[type=password] {
-  -webkit-appearance: none;
-  -moz-appearance: none;
   appearance: none;
 }
 
@@ -120,11 +116,10 @@ th {
 
 textarea {
   overflow: auto;
-  -webkit-appearance: none;
-  -moz-appearance: none;
+  appearance: none;
 }
 
-/*================ RESET on the web ================*/
+/* ================ RESET on the web ================ */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -149,8 +144,7 @@ button,
 [type=button],
 [type=reset],
 [type=submit] {
-  -webkit-appearance: none;
-  -moz-appearance: none;
+  appearance: none;
 }
 
 /* ====== Font ====== */
@@ -242,7 +236,7 @@ a:hover {
   z-index: 2;
   padding: 0 50px;
   border-bottom: 1px solid var(--color-base-principal);
-  background-color: #FFFFFF;
+  background-color: #FFF;
   grid-template-columns: 2fr 7fr 2fr;
   grid-column-gap: 15px;
   column-gap: 15px;
@@ -254,7 +248,7 @@ a:hover {
   }
 }
 .header a {
-  color: #000000;
+  color: #000;
   text-decoration: none;
 }
 .header__logo > a {
@@ -332,7 +326,7 @@ a:hover {
   transform: translateX(-50%);
   position: absolute;
   display: none;
-  background-color: #FFFFFF;
+  background-color: #FFF;
   overflow-y: auto;
 }
 .nav__dropdown a {
@@ -416,12 +410,12 @@ a:hover {
 .hero--slider .swiper-pagination-bullet {
   width: 10px;
   height: 10px;
-  border: 1px solid #000000;
-  background-color: #FFFFFF;
+  border: 1px solid #000;
+  background-color: #FFF;
   border-radius: 50%;
 }
 .hero--slider .swiper-pagination-bullet-active {
-  background-color: #000000;
+  background-color: #000;
 }
 .hero--slider .swiper-pagination-bullet:not(:last-child) {
   margin-right: 10px;

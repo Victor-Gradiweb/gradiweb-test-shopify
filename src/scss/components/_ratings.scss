@@ -15,21 +15,22 @@
     color: variables.$color-text;
   }
 
-  &__empty-stars:before, &__full-stars:before {
+  &__empty-stars::before, &__full-stars::before {
     content: "\2605\2605\2605\2605\2605";
     font-size: 1rem;
   }
   
-  &__empty-stars:before {
+  &__empty-stars::before {
     -webkit-text-stroke: 1px variables.$color-title;
     color: transparent;
   }
   
-  &__full-stars:before {
+  &__full-stars::before {
     -webkit-text-stroke: 1px variables.$color-text;
   }
   
   /* Webkit-text-stroke is not supported on firefox or IE */
+
   /* Firefox */
   @-moz-document url-prefix() {
     &__full-stars {

@@ -4,10 +4,12 @@
   --column-gap: 30px;
   --row-gap: 50px;
   --rows: auto;
+
   border-top: 1px solid;
 
-  @media screen and (max-width: 650px) {
+  @media screen and (width <= 650px) {
     text-align: center;
+
     --columns: 1fr;
   }
 
@@ -17,6 +19,7 @@
 
   &-blocks {
     background-color: var(--color-base-bg);
+
     &__title {
       display: block;
       margin-bottom: 25px;
@@ -74,6 +77,7 @@
     padding: 20px 0;
     border-top: 1px solid;
     text-align: center;
+
     --gap-flex: 10px;
 
     & > span {
@@ -92,6 +96,7 @@
   &-success,
   &-success-exist {
     @extend %notification;
+
     color: variables.$color-success;
 
     &.error-js {
@@ -101,6 +106,7 @@
 
   &-error {
     @extend %notification;
+
     color: variables.$color-error;
   }
 }

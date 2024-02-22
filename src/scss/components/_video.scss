@@ -68,7 +68,7 @@
   &__close {
     display: none;
     position: fixed;
-    top: 0px;
+    top: 0;
     right: 0;
     z-index: 3;
     cursor: pointer;
@@ -83,8 +83,9 @@
     left: 50%;
     transform: translate(-50%, -50%);
 
-    &[data-active=true] {
+    &[data-active="true"] {
       display: block;
+
       + .video__close {
         display: block;
       }

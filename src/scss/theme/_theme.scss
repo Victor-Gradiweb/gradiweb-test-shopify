@@ -24,6 +24,7 @@ body {
   font-family: variables.$font-family--title;
   font-size: variables.$font-size--h1;
   font-weight: 600;
+
   @extend %margin-title;
 }
 
@@ -33,6 +34,7 @@ h1,
   font-family: variables.$font-family--title;
   font-size: variables.$font-size--h1;
   font-weight: 600;
+
   @extend %margin-title;
 }
 
@@ -42,6 +44,7 @@ h2,
   font-family: variables.$font-family--title;
   font-size: variables.$font-size--h2;
   font-weight: 600;
+
   @extend %margin-title;
 }
 
@@ -51,6 +54,7 @@ h3,
   font-family: variables.$font-family--title;
   font-size: variables.$font-size--h3;
   font-weight: 600;
+
   @extend %margin-title;
 }
 
@@ -61,6 +65,7 @@ h6 {
   font-family: variables.$font-family--title;
   font-size: variables.$font-size--hn;
   font-weight: 600;
+
   @extend %margin-title;
 }
 

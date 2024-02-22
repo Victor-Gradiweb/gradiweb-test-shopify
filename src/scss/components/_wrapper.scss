@@ -5,12 +5,12 @@
   margin-right: auto;
   margin-left: auto;
 
-  @media screen and (min-width: 750px) {
+  @media screen and (width >= 750px) {
     padding-right: variables.$paddings-side;
     padding-left: variables.$paddings-side;
   }
 
-  @media screen and (max-width: 749px) {
+  @media screen and (width <= 749px) {
     padding-right: variables.$paddings-side--movil;
     padding-left: variables.$paddings-side--movil;
   }

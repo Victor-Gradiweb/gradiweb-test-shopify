@@ -17,7 +17,7 @@ const commonConfig = {
     pagination: './assets/pagination.module.js',
     faq: './assets/faq-section.module.js',
     productcard: './assets/component-card-product.module.js',
-    cart: './src/templates/cart.js',
+    cart: './src/templates/cart.js'
   },
   module: {
     rules: [

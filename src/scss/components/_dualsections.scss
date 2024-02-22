@@ -18,7 +18,6 @@
 
     img {
       overflow: hidden;
-      height: 0;
       position: absolute;
       top: 0;
       left: 0;
@@ -53,7 +52,6 @@
   }
 
   .container__description {
-    
     div {
       padding: 20px 0;
       display: flex;
@@ -83,13 +81,13 @@
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .position__image-left {
     flex-direction: row;
     
     .container__description {
       div {
-        margin: 10px 0px 10px 20px;
+        margin: 10px 0 10px 20px;
       }
     }
   }
@@ -105,7 +103,6 @@
   }
 
   .container__dual-section {
-
     .container__media,
     .container__description {
       width: 50%;

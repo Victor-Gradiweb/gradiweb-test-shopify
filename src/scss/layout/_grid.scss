@@ -8,11 +8,11 @@
   grid-template-rows: var(--rows, 1fr);
   row-gap: var(--row-gap, 10px);
 
-  @media screen and (max-width: 749px) {
+  @media screen and (width <= 749px) {
     grid-template-columns: var(--columns, repeat(2, 1fr));
   }
 
-  @media screen and (max-width: 430px) {
+  @media screen and (width <= 430px) {
     grid-template-columns: var(--columns, 1fr);
   }
 }

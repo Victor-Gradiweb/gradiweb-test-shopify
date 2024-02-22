@@ -46,7 +46,7 @@
       white-space: nowrap;
     }
 
-    @media screen and (max-width: 750px) {
+    @media screen and (width <= 750px) {
       & > .form__textfield {
         width: 100%;
       }
@@ -73,10 +73,7 @@
 
       label {
         position: relative;
-        top: auto;
-        right: auto;
-        bottom: auto;
-        left: auto;
+        inset: auto;
         display: flex;
         overflow: hidden;
         height: 100%;
@@ -99,7 +96,7 @@
     }
 
     & > * {
-      @media screen and (max-width: 750px) {
+      @media screen and (width <= 750px) {
         width: calc(50% - 10px);
       }
     }

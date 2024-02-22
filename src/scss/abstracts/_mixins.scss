@@ -22,7 +22,7 @@
  * @param $line - Line from apply excerpt
 */
 @mixin excerpt($line: 2) {
-  display: -webkit-box;
+  display: box;
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: $line;

@@ -128,7 +128,7 @@
   border: 1px solid transparent;
 }
 .product-media__thumbs swiper-slide.swiper-slide-thumb-active > img {
-  border-color: #000000;
+  border-color: #000;
 }
 .product-media__thumbs > .swiper-button {
   left: 50%;
@@ -171,10 +171,10 @@
     width: 12px;
     height: 12px;
     margin: 6px;
-    border: 1px solid #000000;
+    border: 1px solid #000;
   }
   .product-media__bullet.visible {
-    background-color: #000000;
+    background-color: #000;
   }
 }
 
@@ -183,12 +183,12 @@
   --row-gap: 20px;
   --columns: repeat(4, 1fr);
 }
-@media screen and (max-width: 749px) {
+@media screen and (width <= 749px) {
   .recommendation__collection {
     --columns: repeat(2, 1fr);
   }
 }
-@media screen and (max-width: 350px) {
+@media screen and (width <= 350px) {
   .recommendation__collection {
     --columns: 1fr ;
   }

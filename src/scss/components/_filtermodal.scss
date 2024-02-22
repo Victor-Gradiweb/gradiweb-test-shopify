@@ -13,10 +13,10 @@
   width: 350px;
   height: 100%;
   background: #FFF;
-  box-shadow: 1px 3px 15px rgba(0, 0, 0, 0.131);
+  box-shadow: 1px 3px 15px rgb(0 0 0 / 13.1%);
   transition: right .3s;
 
-  @media screen and (max-width: 351px) {
+  @media screen and (width <= 351px) {
     width: 100%;
   }
 
@@ -25,7 +25,7 @@
   }
 
   .wrapper-filter {
-    padding: 20px 20px 40px 20px;
+    padding: 20px 20px 40px;
     background: white;
     border-radius: 10px;
   }
@@ -42,7 +42,7 @@
         left: 10px;
         width: 2px;
         height: 20px;
-        background: #995555;
+        background: #955;
         content: " ";
         transform: rotate(45deg);
       }
@@ -74,9 +74,10 @@
       background: white;
       outline: none;
     }
+
     input[type="number"]::-webkit-inner-spin-button,
     .field input[type="number"]::-webkit-outer-spin-button {
-      -webkit-appearance: none;
+      appearance: none;
     }
   }
 
@@ -86,33 +87,36 @@
     height: 5px;
     background: gray;
     border-radius: 5px;
+
     .pro {
       position: absolute;
       right: 4%;
       left: 7%;
       height: 5px;
-      background: #000000;
+      background: #000;
       border-radius: 5px;
     }
   }
 
   .range-in {
     position: relative;
+
     input {
       position: absolute;
       top: 10px;
       width: 100%;
       height: 5px;
-      -webkit-appearance: none;
+      appearance: none;
       background: none;
       pointer-events: none;
     }
+
     input[type="range"]::-webkit-slider-thumb {
       width: 17px;
       height: 17px;
       border: none;
-      -webkit-appearance: none;
-      background: #000000;
+      appearance: none;
+      background: #000;
       border-radius: 50px;
       pointer-events: auto;
     }
@@ -122,12 +126,12 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    color: #777777;
+    color: #777;
   }
 
   .accordions {
-    grid-row-gap: 0px;
-    row-gap: 0px;
+    grid-row-gap: 0;
+    row-gap: 0;
 
     .accordion-item {
       border-bottom: 1px solid #b1b1b1;
@@ -151,11 +155,13 @@
 
       &__content {
         margin-top: 0;
+
         & > ul {
           list-style: none;
 
           li {
             @extend %flex-center-between;
+
             margin-bottom: 15px;
 
             & > div {
@@ -173,6 +179,7 @@
 
         .range {
           @extend %flex-center-between;
+
           margin-bottom: 15px;
 
           &-element {
@@ -203,6 +210,7 @@
 
     &__name {
       @extend %flex-center-between;
+
       padding: 15px 0;
 
       svg {
@@ -214,7 +222,6 @@
 
     &__submit {
       position: sticky;
-      position: -webkit-sticky;
       bottom: 0;
       padding: 15px 0;
       background: #FFF;
@@ -223,7 +230,7 @@
 }
 
 input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
+  appearance: none;
   height: 20px;
   width: 20px;
   border-radius: 50%;

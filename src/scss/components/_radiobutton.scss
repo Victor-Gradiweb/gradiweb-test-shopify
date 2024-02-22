@@ -7,14 +7,14 @@
     input {
       &:checked + .variant__radio-button--design {
         border: 1px solid variables.$color-black;
-        box-shadow: 0 2px 5px rgba($color: variables.$color-black, $alpha: 0.3);
+        box-shadow: 0 2px 5px rgba($color: variables.$color-black, $alpha: 30%);
       }
     }
 
     &--design {
       width: 20px;
       height: 20px;
-      border: 1px solid rgba($color: variables.$color-black, $alpha: 0.3);
+      border: 1px solid rgba($color: variables.$color-black, $alpha: 30%);
       border-radius: 50%;
     }
   }
@@ -27,7 +27,7 @@
     left: 16px;
     width: 2px;
     height: 69%;
-    background: #995555;
+    background: #955;
     content: " ";
     transform: rotate(45deg);
   }

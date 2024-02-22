@@ -34,11 +34,5 @@
   },
   "eslintConfig": {
     "extends": "./node_modules/eslint-config-standard/.eslintrc.json"
-  },
-  "stylelint": {
-    "extends": [
-      "./node_modules/stylelint-config-standard-scss/index.js",
-      "./node_modules/stylelint-config-sass-guidelines/index.js"
-    ]
   }
 }

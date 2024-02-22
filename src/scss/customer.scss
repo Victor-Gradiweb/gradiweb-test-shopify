@@ -1,5 +1,4 @@
 @use "./abstracts/variables";
-
 @import "components/address";
 @import "components/auth";
 
@@ -32,8 +31,7 @@ $margin-customer: 50px;
     }
 
     @media screen and (min-width: $break-customer) {
-      flex-direction: row;
-      flex-wrap: nowrap;
+      flex-flow: row nowrap;
 
       > *:first-child {
         margin-right: $margin-customer;
@@ -83,7 +81,7 @@ $margin-customer: 50px;
         }
       }
 
-      padding: 10px 0 10px;
+      padding: 10px 0;
 
       &:not(:last-of-type) {
         border-bottom: 1px solid;
