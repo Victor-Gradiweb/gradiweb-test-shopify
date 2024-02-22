@@ -26,7 +26,7 @@
     "webpack-merge": "^5.9.0"
   },
   "dependencies": {
-    "axios": "^0.22.0",
+    "axios": "^1.6.7",
     "graditify-api": "^1.0.2",
     "graditify-utils": "^1.0.4",
     "import": "^0.0.6",

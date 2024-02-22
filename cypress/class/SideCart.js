@@ -24,6 +24,7 @@ export class SideCart {
   }
   // Method to close the SideCart
   closeSideCart() {
+    this.openSideCart();
     cy.get(this.close)
       .click()
       .then(() => {
@@ -50,28 +51,42 @@ export class SideCart {
   }
 
   // Method to add product
-  addProduct() {
-    //let totalAmount = 0; // Variable to store the total amount
+  addProductUpsell1() {
     for (let i = 0; i < 3; i++) {
       cy.get(this.section).find(this.cta).first().click();
       cy.get(this.item).should("have.length", i + 1);
-      //     .find('span[data-quantity="1"]')
-      //     .invoke("text")
-      //     .then((text) => {
-      //       const matches = text.match(/(\d+(\.\d{1,2})?)/); // Match numbers and decimals
-      //       if (matches) {
-      //         const amount = parseFloat(matches[0]);
-      //         totalAmount += amount; // Add the amount to the total
-      //       }
-      //     });
-      // }
-      // // Display the total after ensuring the sum is completed
-      // cy.then(() => {
-      //   const formattedTotal = totalAmount.toFixed(2);
-      //   cy.log(`Total Amount: $${formattedTotal}`);
-      // });
     }
-  } //<========= delete this bracket when enabling the price addition script
+  }
+
+  addProductUpsell2() {
+    cy.get(this.section).find(this.card_product).click();
+
+    cy.get(this.sectionProductPage)
+      .find(this.cta)
+      .then(($button) => {
+        if ($button.attr("disabled")) {
+          cy.log("out of stock");
+        } else {
+          cy.wrap($button).click();
+          cy.get(this.section)
+            .should("have.attr", "data-active", "true")
+            .find(this.item)
+            .should("exist");
+          this.closeSideCart();
+          // add quantity of product and verify that the product is not duplicated
+          cy.wrap($button)
+            .click()
+            .then(() => {
+              cy.get(this.input_quantity).should(
+                "have.attr",
+                "data-quantity",
+                "2"
+              );
+              cy.get(this.item).should("have.length", 1);
+            });
+        }
+      });
+  }
 
   // Method to add quantity product
   plusQuantity() {
@@ -88,16 +103,16 @@ export class SideCart {
   }
   // Method to remove quantity product
   removeQuantity() {
-    cy.get(this.section)
-      .find('[data-action="subtr"]')
-      .first()
-      .click()
-      .then(() => {
-        cy.get(this.section)
-          .find(this.input_quantity)
-          .first()
-          .should("have.attr", "data-quantity", "1");
+    cy.get(this.section).find('[data-action="subtr"]').first().click()
+    .then(()=>{
+      cy.get(this.item).then(($item_product)=>{
+        if ($item_product.length > 0) {
+          cy.get(this.input_quantity).first().should("have.attr", "data-quantity", "1")
+        }else{
+          cy.get(this.item).should("not.exist")
+        }
       });
+    });
   }
   // Method to Delete product
   deleteProduct() {
@@ -105,8 +120,14 @@ export class SideCart {
       .find(this.delete)
       .first()
       .click()
-      .then(() => {
-        cy.get(this.item).should("have.length", 2);
+      .then(()=>{
+        cy.get(this.item).then(($item_product)=>{
+          if ($item_product.length > 0) {
+            cy.get(this.item).should("have.length", $item_product.length - 1);
+          }else{
+            cy.get(this.item).should("not.exist")
+          }
+        });
       });
   }
   // Method GO Checkout
@@ -116,7 +137,7 @@ export class SideCart {
       .eq(6) // modify the index
       .click()
       .then(() => {
-        cy.wait(500)
+        cy.wait(500);
         cy.url().should("include", "checkout");
       });
   }
