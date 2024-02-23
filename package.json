@@ -38,6 +38,10 @@
       "browser": true,
       "mocha": true
     },
-    "globals": [ "describe", "beforeEach" ]
+    "globals": []
+  },
+  "standard": {
+    "globals": ["cy"],
+    "env": ["browser", "mocha"]
   }
 }
