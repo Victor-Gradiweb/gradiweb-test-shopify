@@ -75,7 +75,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          config: baseUrl=https://${{ secrets.SHOP_STORE }}?preview_theme_id=${{ secrets.THEME_ID_PREVIEW }}
+          config: baseUrl=https://${{ secrets.SHOP_STORE }}
           browser: chrome
         
   build:
