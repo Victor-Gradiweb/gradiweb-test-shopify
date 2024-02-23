@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { $Q } from 'graditify-utils'
 import { isLastPage, loadContentItems } from './pagination.core'
 

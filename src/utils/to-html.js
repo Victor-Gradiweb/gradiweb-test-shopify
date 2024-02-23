@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const support = () => {
   if (!window.DOMParser) return false
 

@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import api from '../services/api'
 import { $Q } from '../utils/query-selector'
 import { stringToHTML } from '../utils/to-html'

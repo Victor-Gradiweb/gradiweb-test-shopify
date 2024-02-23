@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { setQuantity } from '../../utils/input-quantity'
 import { changeItem, deleteItem } from './cart'
 

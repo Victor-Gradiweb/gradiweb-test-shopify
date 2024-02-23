@@ -1,125 +1,153 @@
 export class SideCart {
-  constructor() {
-    const sideCartConfig = Cypress.env("side_cart");
-    const globalConfig = Cypress.env("global");
+  constructor () {
+    const sideCartConfig = Cypress.env('sidecart')
+    const globalConfig = Cypress.env('global')
     // Properties
-    this.section = sideCartConfig.section;
-    this.open = sideCartConfig.open;
-    this.close = sideCartConfig.close;
-    this.item = sideCartConfig.item_cart;
-    this.input_quantity = sideCartConfig.input_quantity;
-    this.delete = sideCartConfig.delete_product;
+    this.section_sidecart = sideCartConfig.section_sidecart
+    this.open_sidecart_icon = sideCartConfig.open_sidecart_icon
+    this.close_sidecart_icon = sideCartConfig.close_sidecart_icon
+    this.item_cart = sideCartConfig.item_cart
+    this.input_quantity = sideCartConfig.input_quantity
+    this.delete_product = sideCartConfig.delete_product
 
-    this.next = globalConfig.slider_next;
-    this.prev = globalConfig.slider_prev;
-    this.cta = globalConfig.cta;
+    this.next = globalConfig.slider_next
+    this.prev = globalConfig.slider_prev
+    this.cta = globalConfig.cta
   }
+
   // Method to open the SideCart
-  openSideCart() {
-    cy.get(this.open)
+  openSideCart () {
+    cy.get(this.open_sidecart_icon)
       .click()
       .then(() => {
-        cy.get(this.section).should("have.attr", "data-active", "true");
-      });
+        cy.get(this.section_sidecart).should('have.attr', 'data-active', 'true')
+      })
   }
+
   // Method to close the SideCart
-  closeSideCart() {
-    cy.get(this.close)
+  closeSideCart () {
+    this.openSideCart()
+    cy.get(this.close_sidecart_icon)
       .click()
       .then(() => {
-        cy.get(this.section).should("have.attr", "data-active", "false");
-      });
+        cy.get(this.section_sidecart).should('have.attr', 'data-active', 'false')
+      })
   }
+
   // Method to next upsell
-  upsellNext() {
-    cy.get(this.section)
+  upsellNext () {
+    cy.get(this.section_sidecart)
       .find(this.next)
       .click()
       .then(() => {
-        cy.get(this.prev).should("not.have.attr", "aria-disabled", "false");
-      });
+        cy.get(this.prev).should('not.have.attr', 'aria-disabled', 'false')
+      })
   }
+
   // Method to prev upsell
-  upsellPrev() {
-    cy.get(this.section)
+  upsellPrev () {
+    cy.get(this.section_sidecart)
       .find(this.prev)
       .click()
       .then(() => {
-        cy.get(this.prev).should("not.have.attr", "aria-disabled", "true");
-      });
+        cy.get(this.prev).should('not.have.attr', 'aria-disabled', 'true')
+      })
   }
 
   // Method to add product
-  addProduct() {
-    //let totalAmount = 0; // Variable to store the total amount
+  addProductUpsell1 () {
     for (let i = 0; i < 3; i++) {
-      cy.get(this.section).find(this.cta).first().click();
-      cy.get(this.item).should("have.length", i + 1);
-      //     .find('span[data-quantity="1"]')
-      //     .invoke("text")
-      //     .then((text) => {
-      //       const matches = text.match(/(\d+(\.\d{1,2})?)/); // Match numbers and decimals
-      //       if (matches) {
-      //         const amount = parseFloat(matches[0]);
-      //         totalAmount += amount; // Add the amount to the total
-      //       }
-      //     });
-      // }
-      // // Display the total after ensuring the sum is completed
-      // cy.then(() => {
-      //   const formattedTotal = totalAmount.toFixed(2);
-      //   cy.log(`Total Amount: $${formattedTotal}`);
-      // });
+      cy.get(this.section_sidecart).find(this.cta).first().click()
+      cy.get(this.item_cart).should('have.length', i + 1)
     }
-  } //<========= delete this bracket when enabling the price addition script
+  }
+
+  addProductUpsell2 () {
+    cy.get(this.section_sidecart).find(this.card_product).click()
+
+    cy.get(this.section_product)
+      .find(this.cta)
+      .then(($button) => {
+        if ($button.attr('disabled')) {
+          cy.log('out of stock')
+        } else {
+          cy.wrap($button).click()
+          cy.get(this.section_sidecart)
+            .should('have.attr', 'data-active', 'true')
+            .find(this.item_cart)
+            .should('exist')
+          this.closeSideCart()
+          // add quantity of product and verify that the product is not duplicated
+          cy.wrap($button)
+            .click()
+            .then(() => {
+              cy.get(this.input_quantity).should(
+                'have.attr',
+                'data-quantity',
+                '2'
+              )
+              cy.get(this.item_cart).should('have.length', 1)
+            })
+        }
+      })
+  }
 
   // Method to add quantity product
-  plusQuantity() {
-    cy.get(this.section)
+  plusQuantity () {
+    cy.get(this.section_sidecart)
       .find('[data-action="plus"]')
       .first()
       .click()
       .then(() => {
-        cy.get(this.section)
+        cy.get(this.section_sidecart)
           .find(this.input_quantity)
           .first()
-          .should("have.attr", "data-quantity", "2");
-      });
+          .should('have.attr', 'data-quantity', '2')
+      })
   }
+
   // Method to remove quantity product
-  removeQuantity() {
-    cy.get(this.section)
-      .find('[data-action="subtr"]')
-      .first()
-      .click()
+  removeQuantity () {
+    cy.get(this.section_sidecart).find('[data-action="subtr"]').first().click()
       .then(() => {
-        cy.get(this.section)
-          .find(this.input_quantity)
-          .first()
-          .should("have.attr", "data-quantity", "1");
-      });
+        cy.get(this.item_cart).then(($item_product) => {
+          if ($item_product.length > 0) {
+            cy.get(this.input_quantity).first().should('have.attr', 'data-quantity', '1')
+          } else {
+            cy.get(this.item_cart).should('not.exist')
+          }
+        })
+      })
   }
+
   // Method to Delete product
-  deleteProduct() {
-    cy.get(this.section)
-      .find(this.delete)
+  deleteProduct () {
+    cy.get(this.section_sidecart)
+      .find(this.delete_product)
       .first()
       .click()
       .then(() => {
-        cy.get(this.item).should("have.length", 2);
-      });
+        cy.get(this.item_cart).then(($item_product) => {
+          if ($item_product.length > 0) {
+            cy.get(this.item_cart).should('have.length', $item_product.length - 1)
+          } else {
+            cy.get(this.item_cart).should('not.exist')
+          }
+        })
+      })
   }
+
   // Method GO Checkout
-  goCheckout() {
-    cy.get(this.section)
+  goCheckout () {
+    cy.get(this.section_sidecart)
       .find(this.cta)
       .eq(6) // modify the index
       .click()
       .then(() => {
         cy.wait(500)
-        cy.url().should("include", "checkout");
-      });
+        cy.url().should('include', 'checkout')
+      })
   }
 }
 
-export const sideCart = new SideCart();
+export const sideCart = new SideCart()

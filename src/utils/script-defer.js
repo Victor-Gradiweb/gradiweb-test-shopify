@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 /**
  * This function detects, by means of the observer,
  * the interception with the slider,

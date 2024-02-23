@@ -11,7 +11,7 @@ export const defaultSortBy = () => {
     .addEventListener(
       'change',
       ({ target }) => {
-      /* eslint-disable no-undef */
+  
         Shopify.queryParams.sort_by = target.value
         location.search = new URLSearchParams(Shopify.queryParams).toString()
       /* eslint-enable no-undef */
@@ -23,7 +23,6 @@ export const defaultSortBy = () => {
  */
 // eslint-disable-next-line func-names
 (function () {
-  /* eslint-disable no-undef */
   if (location.search.length) {
     const params = location.search.substring(1).split('&')
 
