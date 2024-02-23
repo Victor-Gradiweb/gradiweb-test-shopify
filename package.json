@@ -33,6 +33,11 @@
     "swiper": "^7.4.1"
   },
   "eslintConfig": {
-    "extends": "./node_modules/eslint-config-standard/.eslintrc.json"
+    "extends": "./node_modules/eslint-config-standard/.eslintrc.json",
+    "env": {
+      "browser": true,
+      "mocha": true
+    },
+    "globals": [ "describe", "beforeEach" ]
   }
 }

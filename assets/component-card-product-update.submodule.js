@@ -1,5 +1,5 @@
-import { stringToHTML, $Q  } from 'graditify-utils'
-import { shopifyVariantByUrl } from 'graditify-api';
+import { stringToHTML, $Q } from 'graditify-utils'
+import { shopifyVariantByUrl } from 'graditify-api'
 /**
  * Captures the HTML section of the product in question and returns data
  *
@@ -8,16 +8,16 @@ import { shopifyVariantByUrl } from 'graditify-api';
  * @param {String} variantId Id of the selected variant
  * @returns Object - price, available, button
  */
-export async function sectionHandle(handle, variantId) {
-  const htmlResponse = await shopifyVariantByUrl(`/products/${handle}`, variantId);
-  const variantPrice = $Q(".price-product-js", stringToHTML(htmlResponse));
-  const variantAvailable = $Q('[name="available"]', stringToHTML(htmlResponse));
-  const button = $Q('.btn-cart-js', stringToHTML(htmlResponse));
+export async function sectionHandle (handle, variantId) {
+  const htmlResponse = await shopifyVariantByUrl(`/products/${handle}`, variantId)
+  const variantPrice = $Q('.price-product-js', stringToHTML(htmlResponse))
+  const variantAvailable = $Q('[name="available"]', stringToHTML(htmlResponse))
+  const button = $Q('.btn-cart-js', stringToHTML(htmlResponse))
 
   return {
     price: variantPrice.outerHTML,
     available: variantAvailable.value,
-    button: button.textContent,
+    button: button.textContent
   }
 }
 
@@ -29,10 +29,10 @@ export async function sectionHandle(handle, variantId) {
  * with className 'product-js'
  *
  */
-export function updatePrice(variantPrice, parent) {
-  const sectionPrice = $Q(".price-product-js", parent);
+export function updatePrice (variantPrice, parent) {
+  const sectionPrice = $Q('.price-product-js', parent)
 
-  sectionPrice.innerHTML = variantPrice;
+  sectionPrice.innerHTML = variantPrice
 }
 
 /**
@@ -43,14 +43,13 @@ export function updatePrice(variantPrice, parent) {
  * with className 'product-js'
  * @param {String} newText - New text in button add to cart
  */
-export function updateButton(available, parent, newText) {
-  const button = $Q('.btn-cart-js', parent);
-  button.innerHTML = newText;
+export function updateButton (available, parent, newText) {
+  const button = $Q('.btn-cart-js', parent)
+  button.innerHTML = newText
 
   if (available === 'false') {
-    button.disabled = true;
+    button.disabled = true
   } else {
-    button.disabled = false;
+    button.disabled = false
   }
 }
-
