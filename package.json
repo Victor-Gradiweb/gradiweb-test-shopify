@@ -37,8 +37,7 @@
     "env": {
       "browser": true,
       "mocha": true
-    },
-    "globals": []
+    }
   },
   "standard": {
     "globals": ["cy"],
