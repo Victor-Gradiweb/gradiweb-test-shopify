@@ -36,7 +36,7 @@
   "eslintConfig": {
     "extends": [
       "./node_modules/eslint-config-standard/.eslintrc.json",
-      "./node_modules/eslint-plugin-cypress"
+      "./node_modules/eslint-plugin-cypress/.eslintrc.json"
     ],
     "env": {
       "browser": true,
