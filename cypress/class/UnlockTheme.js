@@ -1,11 +1,13 @@
 export class UnlockTheme {
   constructor () {
-    this.input = Cypress.env('unlock_store').input
-    this.password = Cypress.env('unlock_store').password
+    const unlockThemeConfig = Cypress.env('unlock_store')
+
+    this.input_password = unlockThemeConfig.input_password
+    this.password_store = unlockThemeConfig.password_store
   }
 
-  password_store () {
-    cy.get(this.input).type(this.password + '{enter}')
+  break_password () {
+    cy.get(this.input_password).type(this.password_store + '{enter}')
   }
 }
 export const unlockTheme = new UnlockTheme()

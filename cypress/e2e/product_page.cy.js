@@ -1,0 +1,58 @@
+import { productPage } from '../class/ProductPage'
+import { unlockTheme } from '../class/UnlockTheme'
+
+Cypress.on('uncaught:exception', () => { return false })
+
+const deviceDesktop = [{ viewport: [1440, 900], type: 'WXGA+' }]
+const urlPreview = `?${Cypress.env('url').preview_theme}`
+const collections = `${Cypress.env('url').collections}?${Cypress.env('url').preview_theme}`
+const productOne = `products/${Cypress.env('product_page').product_1}?${Cypress.env('url').preview_theme}`
+
+describe('Product Page', () => {
+  beforeEach(() => {
+    cy.session('break store password', () => {
+      cy.visit(urlPreview)
+      unlockTheme.break_password()
+    })
+    cy.visit(urlPreview)
+  })
+  afterEach(() => {
+    cy.wait(500)
+  })
+
+  context('Product page test within a collection', () => {
+    deviceDesktop.forEach((device) => {
+      context(`Test for ${device.type}`, () => {
+        beforeEach(() => {
+          const [width, height] = device.viewport
+          cy.viewport(width, height)
+          cy.visit(collections)
+        })
+        it('product ramdon collection', () => {
+          productPage.selectorProductCollection()
+          productPage.addProduct()
+        })
+      })
+    })
+  })
+
+  context('Product page testing for a specific product', () => {
+    deviceDesktop.forEach((device) => {
+      context(`Test for ${device.type}`, () => {
+        beforeEach(() => {
+          const [width, height] = device.viewport
+          cy.viewport(width, height)
+        })
+
+        context('Producto 1', () => {
+          beforeEach(() => {
+            cy.visit(productOne)
+          })
+          it('product 1', () => {
+            cy.log('test')
+          })
+        })
+      })
+    })
+  })
+})
