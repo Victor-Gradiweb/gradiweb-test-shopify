@@ -11,10 +11,8 @@ export const defaultSortBy = () => {
     .addEventListener(
       'change',
       ({ target }) => {
-  
         Shopify.queryParams.sort_by = target.value
         location.search = new URLSearchParams(Shopify.queryParams).toString()
-      /* eslint-enable no-undef */
       })
 }
 
@@ -36,5 +34,4 @@ export const defaultSortBy = () => {
       }
     }
   }
-  /* eslint-enable no-undef */
 }())
