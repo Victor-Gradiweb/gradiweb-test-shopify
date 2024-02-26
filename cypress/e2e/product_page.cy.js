@@ -6,7 +6,7 @@ Cypress.on('uncaught:exception', () => { return false })
 const deviceDesktop = [{ viewport: [1440, 900], type: 'WXGA+' }]
 const urlPreview = `?${Cypress.env('url').preview_theme}`
 const collections = `${Cypress.env('url').collections}?${Cypress.env('url').preview_theme}`
-const productOne = `products/${Cypress.env('product_page').product_1}?${Cypress.env('url').preview_theme}`
+const productTest = `products/${Cypress.env('product_page').product_1}?${Cypress.env('url').preview_theme}`
 
 describe('Product Page', () => {
   beforeEach(() => {
@@ -44,12 +44,21 @@ describe('Product Page', () => {
           cy.viewport(width, height)
         })
 
-        context('Producto 1', () => {
+        context('Producto Type 1', () => {
           beforeEach(() => {
-            cy.visit(productOne)
+            cy.visit(productTest)
           })
-          it('product 1', () => {
-            cy.log('test')
+          it('Breadcrumb title checker', () => {
+            productPage.checkTitleBreadcrumb()
+          })
+          it('product image checker', () => {
+            productPage.checkProductImage()
+          })
+          it('product title checker', () => {
+            productPage.checkProductTitle()
+          })
+          it('Add product', () => {
+            productPage.addProduct()
           })
         })
       })

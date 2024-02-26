@@ -110,8 +110,8 @@ export class SideCart {
   removeQuantity () {
     cy.get(this.section_sidecart).find('[data-action="subtr"]').first().click()
       .then(() => {
-        cy.get(this.item_cart).then(($item_product) => {
-          if ($item_product.length > 0) {
+        cy.get(this.item_cart).then(($itemProduct) => {
+          if ($itemProduct.length > 0) {
             cy.get(this.input_quantity).first().should('have.attr', 'data-quantity', '1')
           } else {
             cy.get(this.item_cart).should('not.exist')
@@ -127,9 +127,9 @@ export class SideCart {
       .first()
       .click()
       .then(() => {
-        cy.get(this.item_cart).then(($item_product) => {
-          if ($item_product.length > 0) {
-            cy.get(this.item_cart).should('have.length', $item_product.length - 1)
+        cy.get(this.item_cart).then(($itemProduct) => {
+          if ($itemProduct.length > 0) {
+            cy.get(this.item_cart).should('have.length', $itemProduct.length - 1)
           } else {
             cy.get(this.item_cart).should('not.exist')
           }
