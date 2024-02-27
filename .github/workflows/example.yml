@@ -39,6 +39,7 @@ jobs:
         run: npm list
 
       - name: Install Shopify CLI
+        if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
         run: npm install -g @shopify/cli @shopify/theme
 
       - name: Deploy
@@ -136,6 +137,7 @@ jobs:
         run: npm list
 
       - name: Install dependencies
+        if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
         run: npm install
 
       # and run all Cypress tests
@@ -185,6 +187,7 @@ jobs:
         run: npm list
 
       - name: Install dependencies
+        if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
         run: npm install
 
       - name: Build
