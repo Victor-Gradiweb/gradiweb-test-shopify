@@ -28,7 +28,7 @@ jobs:
           # Password generated from Theme Access app
           SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
           SHOPIFY_CLI_TTY: 0
-        run: shopify theme push --path ./ --theme ${{ secrets.THEME_ID_PREVIEW }} --json
+        run: shopify theme push --path ./ --theme ${{ secrets.THEME_ID_PREVIEW }}
 
   #deploy:
   #  name: Development Theme
@@ -88,35 +88,17 @@ jobs:
     if: needs.deploy.result == 'success'
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Use Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
         with:
-          node-version: '20.x'
-
-      - name: Cache node modules
-        id: cache-npm
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          path: |
+            ~/.cache/Cypress
+            node_modules
+          key: my-cache-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
       - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-        name: List the state of node modules
-        continue-on-error: true
-        run: npm list
-
-      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-        name: Install dependencies
-        run: npm ci
+        name: Install Cypress
+        run: npm i cypress
 
       # and run all Cypress tests
       - name: Cypress run
@@ -124,6 +106,7 @@ jobs:
         with:
           config: baseUrl=https://${{ secrets.SHOP_STORE }}
           browser: chrome
+          install: false
         
   build:
     runs-on: ubuntu-latest
