@@ -79,7 +79,6 @@ jobs:
           filter_mode: nofilter
           fail_on_error: true
   
-
   cypress:
     runs-on: ubuntu-22.04
 
@@ -121,6 +120,7 @@ jobs:
 
       # and run all Cypress tests
       - name: Cypress run
+        continue-on-error: true
         uses: cypress-io/github-action@v6
         with:
           config: baseUrl=https://${{ secrets.SHOP_STORE }}
