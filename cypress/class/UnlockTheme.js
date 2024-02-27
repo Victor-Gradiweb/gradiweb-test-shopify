@@ -21,5 +21,5 @@ export class UnlockTheme {
   }
 }
 
-// Export an instance of UnlockTheme class
+// Export an instance of UnlockTheme classs
 export const unlockTheme = new UnlockTheme()

@@ -58,7 +58,7 @@ describe('Product Page', () => {
             productPage.checkProductTitle()
           })
           it('Add product', () => {
-            productPage.addProduct()
+            productPage.addProductPage()
           })
         })
       })
