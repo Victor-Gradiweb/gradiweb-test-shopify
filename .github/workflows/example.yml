@@ -19,13 +19,13 @@ jobs:
           bundler: 'latest'
 
       - name: Cache node modules
-        id: cache-npm
+        id: cache-shopify
         uses: actions/cache@v3
         env:
           cache-name: cache-node-modules
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
+          path: ~/.shopify
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
@@ -33,7 +33,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install Shopify CLI
-        if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        if: ${{ steps.cache-shopify.outputs.cache-hit != 'true' }}
         run: npm install -g @shopify/cli @shopify/theme
 
       - name: Deploy
