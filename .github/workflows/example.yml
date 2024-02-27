@@ -39,7 +39,6 @@ jobs:
         run: npm list
 
       - name: Install Shopify CLI
-        if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
         run: npm install -g @shopify/cli @shopify/theme
 
       - name: Deploy
@@ -50,7 +49,6 @@ jobs:
           SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
           SHOPIFY_CLI_TTY: 0
         run: shopify theme push --path ./ --theme ${{ secrets.THEME_ID_PREVIEW }} --json
-
 
   #deploy:
   #  name: Development Theme
