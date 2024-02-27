@@ -15,42 +15,39 @@ $margin-icon: 30px;
 
       --gap-flex: 0;
     }
+  }
 
+  &__elements.slider-mobile {
     @media screen and (width <= 650px) {
-      &.slider-mobile {
-        --justify: flex-start;
+      --justify: flex-start;
 
-        overflow-x: auto;
-        flex-wrap: nowrap;
-        margin-left: -1rem;
-        margin-right: -1rem;
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      margin-left: -1rem;
+      margin-right: -1rem;
 
+      .row-icons__element {
+        flex-shrink: 0;
+        width: auto;
+        padding: 0 20px;
+      }
 
-        .row-icons__element {
-          flex-shrink: 0;
-          width: auto;
-          padding: 0 20px;
-        }
-
-        &::-webkit-scrollbar {
-          display: none;
-        }
+      &::-webkit-scrollbar {
+        display: none;
       }
     }
   }
 
-  &__description {
-    & > div {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: box;
-      -webkit-line-clamp: 2;
-      line-clamp: 2;
-      -webkit-box-orient: vertical;
+  &__description > div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
 
-      strong {
-        font-weight: 600;
-      }
+    strong {
+      font-weight: 600;
     }
   }
 
@@ -79,31 +76,31 @@ $margin-icon: 30px;
     h3 {
       margin: 10px 0;
     }
+  }
 
-    &.position__left {
-      justify-content: space-around;
+  &__element.position__left {
+    justify-content: space-around;
 
-      img {
-        margin-right: $margin-icon;
-      }
-
-      h3 {
-        font-size: 20px;
-      }
+    img {
+      margin-right: $margin-icon;
     }
 
-    &.position__top {
-      justify-content: center;
-      flex-direction: column;
+    h3 {
+      font-size: 20px;
+    }
+  }
 
-      h3 {
-        font-size: 20px;
-        text-align: center;
-      }
+  &__element.position__top {
+    justify-content: center;
+    flex-direction: column;
 
-      p {
-        text-align: center;
-      }
+    h3 {
+      font-size: 20px;
+      text-align: center;
+    }
+
+    p {
+      text-align: center;
     }
   }
 }

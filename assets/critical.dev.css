@@ -23,8 +23,7 @@ summary {
 
 input,
 textarea,
-select,
-.disclosure__toggle {
+select {
   -webkit-font-smoothing: antialiased;
   text-size-adjust: 100%;
 }
@@ -72,7 +71,6 @@ button,
 input,
 optgroup,
 select,
-.disclosure__toggle,
 textarea {
   margin: 0;
   color: inherit;
@@ -99,7 +97,10 @@ button:-moz-focusring,
   outline: 1px dotted ButtonText;
 }
 
-input[type=search], input[type=number], input[type=email], input[type=password] {
+input[type=search],
+input[type=number],
+input[type=email],
+input[type=password] {
   appearance: none;
 }
 
@@ -120,19 +121,87 @@ textarea {
 }
 
 /* ================ RESET on the web ================ */
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
   padding: 0;
   border: 0;
   margin: 0;
@@ -236,7 +305,7 @@ a:hover {
   z-index: 2;
   padding: 0 50px;
   border-bottom: 1px solid var(--color-base-principal);
-  background-color: #FFF;
+  background-color: #fff;
   grid-template-columns: 2fr 7fr 2fr;
   grid-column-gap: 15px;
   column-gap: 15px;
@@ -326,7 +395,7 @@ a:hover {
   transform: translateX(-50%);
   position: absolute;
   display: none;
-  background-color: #FFF;
+  background-color: #fff;
   overflow-y: auto;
 }
 .nav__dropdown a {
@@ -399,6 +468,7 @@ a:hover {
   padding-top: 150px;
   padding-bottom: 150px;
 }
+
 .hero--slider .swiper-pagination {
   position: absolute;
   z-index: 1;
@@ -411,7 +481,7 @@ a:hover {
   width: 10px;
   height: 10px;
   border: 1px solid #000;
-  background-color: #FFF;
+  background-color: #fff;
   border-radius: 50%;
 }
 .hero--slider .swiper-pagination-bullet-active {

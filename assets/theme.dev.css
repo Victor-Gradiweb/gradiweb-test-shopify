@@ -157,8 +157,8 @@
   border-color: #428445;
 }
 .form__message--error {
-  color: #EB001B;
-  border-color: #EB001B;
+  color: #eb001b;
+  border-color: #eb001b;
 }
 .form__message > svg {
   width: 25px;
@@ -186,6 +186,13 @@
 /* ====== Font ====== */
 /* ====== Colors ====== */
 /* ====== Break points ====== */
+#contact-footer-success,
+#contact-footer-success-exist, #contact-footer-error {
+  display: block;
+  margin-top: 15px;
+  font-size: 16px;
+}
+
 .footer {
   --column-gap: 30px;
   --row-gap: 50px;
@@ -201,6 +208,16 @@
 .footer > * {
   padding: 40px 0;
 }
+.footer > *:last-child {
+  padding: 20px 0;
+  border-top: 1px solid;
+  text-align: center;
+  --gap-flex: 10px;
+}
+.footer > *:last-child > span {
+  font-size: 10px;
+}
+
 .footer-blocks {
   background-color: var(--color-base-bg);
 }
@@ -231,9 +248,6 @@
 .footer-blocks__newslatter {
   padding: 2px 10px;
 }
-.footer-blocks__newslatter > input {
-  background-color: transparent;
-}
 .footer-blocks__newslatter button {
   display: flex;
   align-items: center;
@@ -246,37 +260,28 @@
   cursor: pointer;
   width: 20px;
 }
-.footer > *:last-child {
-  padding: 20px 0;
-  border-top: 1px solid;
-  text-align: center;
-  --gap-flex: 10px;
-}
-.footer > *:last-child > span {
-  font-size: 10px;
+.footer-blocks__newslatter > input {
+  background-color: transparent;
 }
 
-#ContactFooter-error, #ContactFooter-success, #ContactFooter-success-exist {
-  display: block;
-  margin-top: 15px;
-  font-size: 16px;
+#contact-footer-error {
+  color: #eb001b;
 }
 
-#ContactFooter-success, #ContactFooter-success-exist {
+#contact-footer-success,
+#contact-footer-success-exist {
   color: #428445;
 }
-#ContactFooter-success.error-js, #ContactFooter-success-exist.error-js {
+#contact-footer-success.error-js,
+#contact-footer-success-exist.error-js {
   display: none;
 }
-#ContactFooter-error {
-  color: #EB001B;
-}
 
+/* stylelint-disable declaration-block-no-redundant-longhand-properties */
 .grid {
   display: grid;
   column-gap: var(--column-gap, 10px);
   grid-column-gap: var(--column-gap, 10px);
-  /* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
   grid-row-gap: var(--row-gap, 10px);
   grid-template-columns: var(--columns, repeat(3, 1fr));
   grid-template-rows: var(--rows, 1fr);
@@ -694,7 +699,7 @@ div.product.price > .regular {
   width: 10px;
   height: 10px;
   border: 2px solid #000;
-  border-top-color: #C4C4C4;
+  border-top-color: #c4c4c4;
   border-radius: 50%;
   animation: spin 0.7s ease-in-out infinite;
 }
@@ -832,17 +837,17 @@ div.product.price > .regular {
   pointer-events: none;
   overflow: hidden;
 }
-.container__dual-section .container__media > .dual-section__iframe iframe, .container__dual-section .container__media > .dual-section__iframe video, .container__dual-section .container__media > .dual-section__video iframe, .container__dual-section .container__media > .dual-section__video video {
-  height: 56.25vw; /* Given a 16:9 aspect ratio, 9/16*100 = 56.25 */
+.container__dual-section .container__media > .dual-section__iframe iframe, .container__dual-section .container__media > .dual-section__video video {
+  height: 56.25vw;
   min-height: 100vh;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.container__dual-section .container__media > .dual-section__iframe video, .container__dual-section .container__media > .dual-section__video video {
+.container__dual-section .container__media > .dual-section__video video {
   width: 100vw;
-  min-width: 177.77vh; /* Given a 16:9 aspect ratio, 16/9*100 = 177.77 */
+  min-width: 177.77vh;
 }
 .container__dual-section .container__description div {
   padding: 20px 0;
@@ -850,16 +855,16 @@ div.product.price > .regular {
   flex-direction: column;
   align-items: flex-start;
 }
-.container__dual-section .container__description div > h2 + p, .container__dual-section .container__description div h3 + p, .container__dual-section .container__description div h4 + p {
+.container__dual-section .container__description div h2,
+.container__dual-section .container__description div h3,
+.container__dual-section .container__description div h4 {
   font-weight: 600;
-}
-.container__dual-section .container__description div > h2 + p + p, .container__dual-section .container__description div h3 + p + p, .container__dual-section .container__description div h4 + p + p {
   margin: 20px 0;
 }
-.container__dual-section .container__description div > h2 + p + p > strong, .container__dual-section .container__description div h3 + p + p > strong, .container__dual-section .container__description div h4 + p + p > strong {
+.container__dual-section .container__description div strong {
   font-weight: 600;
 }
-.container__dual-section .container__description div > a {
+.container__dual-section .container__description div a {
   display: block;
   text-align: center;
   text-decoration: none;
@@ -884,7 +889,7 @@ div.product.price > .regular {
     align-self: center;
   }
   .container__dual-section .container__media {
-    padding-top: 31.57894736%;
+    padding-top: 31.6%;
   }
 }
 /* ====== Font ====== */
@@ -901,11 +906,11 @@ div.product.price > .regular {
   text-decoration: none;
 }
 .text-buttons > h1 {
-  color: #FFF;
+  color: #fff;
 }
 .text-buttons__p {
   margin-bottom: 20px;
-  color: #FFF;
+  color: #fff;
   text-align: inherit;
 }
 .text-buttons__p strong {
@@ -1077,7 +1082,7 @@ div.product.price > .regular {
 .video__button > svg {
   height: 70px;
   width: 80px;
-  color: #FFF;
+  color: #fff;
 }
 .video__content {
   position: absolute;
@@ -1545,7 +1550,7 @@ div.product.price > .regular {
   top: 0;
   left: 0;
   position: fixed;
-  background-color: #FFF;
+  background-color: #fff;
   animation: slidewindow 0.3s ease;
 }
 .window > * {
@@ -1613,7 +1618,7 @@ div.product.price > .regular {
   border-radius: 10px;
 }
 .window__content::-webkit-scrollbar-thumb {
-  background-color: #C4C4C4;
+  background-color: #c4c4c4;
   border-radius: 10px;
 }
 .window__footer {
@@ -1623,7 +1628,7 @@ div.product.price > .regular {
   justify-content: center;
   position: sticky;
   bottom: 0;
-  background-color: #FFF;
+  background-color: #fff;
 }
 .window__footer-buttons {
   width: 100%;
@@ -1656,7 +1661,7 @@ div.product.price > .regular {
   top: 0;
   left: 0;
   z-index: 1;
-  background-color: #FFF;
+  background-color: #fff;
 }
 .window .truncate-1-line {
   max-width: 80%;

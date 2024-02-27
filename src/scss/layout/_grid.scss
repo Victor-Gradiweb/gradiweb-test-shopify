@@ -1,8 +1,8 @@
+/* stylelint-disable declaration-block-no-redundant-longhand-properties */
 .grid {
   display: grid;
   column-gap: var(--column-gap, 10px);
   grid-column-gap: var(--column-gap, 10px);
-  /* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
   grid-row-gap: var(--row-gap, 10px);
   grid-template-columns: var(--columns, repeat(3, 1fr));
   grid-template-rows: var(--rows, 1fr);

@@ -103,15 +103,17 @@
   display: flex;
   flex-direction: column-reverse;
 }
+@media screen and (min-width: 800px) {
+  .customer__layout {
+    flex-flow: row nowrap;
+  }
+}
 @media screen and (max-width: 800px) {
   .customer__layout > *:last-child {
     margin-bottom: 50px;
   }
 }
 @media screen and (min-width: 800px) {
-  .customer__layout {
-    flex-flow: row nowrap;
-  }
   .customer__layout > *:first-child {
     margin-right: 50px;
   }
@@ -158,7 +160,7 @@
 .customer__order-list:not(:last-of-type) {
   border-bottom: 1px solid;
 }
-.customer__order-list > div > .ref__hidden {
+.customer__order-list > div > .ref-hidden {
   display: none;
 }
 @media screen and (max-width: 800px) {
@@ -173,7 +175,7 @@
     display: flex;
     justify-content: space-between;
   }
-  .customer__order-list > div > .ref__hidden {
+  .customer__order-list > div > .ref-hidden {
     display: block;
     margin-right: 50px;
   }

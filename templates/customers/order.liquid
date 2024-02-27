@@ -37,7 +37,7 @@
       {%- for line_item in order.line_items -%}
         <div class="grid customer__order-list customer__order-list--detail">
           <div>
-            <span class="ref__hidden">
+            <span class="ref-hidden">
               {{ 'customer.order.product' | t }}:
             </span>
             <span>
@@ -46,7 +46,7 @@
           </div>
 
           <div>
-            <span class="ref__hidden">
+            <span class="ref-hidden">
               {{ 'customer.order.sku' | t }}:
             </span>
             <span>
@@ -55,7 +55,7 @@
           </div>
 
           <div>
-            <span class="ref__hidden">
+            <span class="ref-hidden">
               {{ 'customer.order.price' | t }}:
             </span>
             {%- if line_item.original_price != line_item.final_price or line_item.unit_price_measurement -%}
@@ -108,7 +108,7 @@
           </div>
 
           <div>
-            <span class="ref__hidden">
+            <span class="ref-hidden">
               {{ 'customer.order.quantity' | t }}:
             </span>
             <span>
@@ -117,7 +117,7 @@
           </div>
 
           <div>
-            <span class="ref__hidden">
+            <span class="ref-hidden">
               {{ 'customer.order.total' | t }}:
             </span>
             {%- if line_item.original_line_price != line_item.final_line_price -%}

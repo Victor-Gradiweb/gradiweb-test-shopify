@@ -11,7 +11,7 @@
   }
 }
 
-@mixin mediaCustom($media) {
+@mixin media-custom($media) {
   @media (min-width: $media) {
     @content;
   }
@@ -34,10 +34,7 @@
 * @param - $barWidthX - default: 5px - Bar width
 * @param - $barWidthY - default: 5px - Bar height
 */
-@mixin scrollCustom(
-  $barWidthX: 8px,
-  $barWidthY: 8px
-) {
+@mixin scroll-custom($barWidthX: 8px, $barWidthY: 8px) {
   &::-webkit-scrollbar {
     width: $barWidthY;
     height: $barWidthX;

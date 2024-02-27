@@ -1,7 +1,7 @@
 @use "../abstracts/variables";
 
 .wrapper {
-  max-width: variables.$max-width--wrapper;
+  max-width: variables.$max-width-wrapper;
   margin-right: auto;
   margin-left: auto;
 
@@ -11,8 +11,8 @@
   }
 
   @media screen and (width <= 749px) {
-    padding-right: variables.$paddings-side--movil;
-    padding-left: variables.$paddings-side--movil;
+    padding-right: variables.$paddings-side-movil;
+    padding-left: variables.$paddings-side-movil;
   }
 
   &--s {

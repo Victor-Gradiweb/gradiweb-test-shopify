@@ -1,126 +1,124 @@
-@use '../abstracts/variables';
+@use "../abstracts/variables";
 
-.filter-group-display {
-  &__list {
-    padding-left: 1px;
-    list-style: none;
+.filter-group-display__list {
+  padding-left: 1px;
+  list-style: none;
 
-    li:not(li:last-of-type) {
-      padding-bottom: .5rem;
+  li:not(li:last-of-type) {
+    padding-bottom: 0.5rem;
+  }
+}
+
+.filter-group-display__list li {
+  margin-bottom: 15px;
+
+  input[type="checkbox"] {
+    &:checked + label {
+      font-weight: 700;
+      text-decoration: underline;
     }
 
-    li {
-      margin-bottom: 15px;
-
-      input[type="checkbox"] {
-        &:checked + label {
-          font-weight: 700;
-          text-decoration: underline;
-        }
-
-        &:disabled + label {
-          display: none;
-        }
-      }
-
-      .checkbox__custom {
-        width: 14px;
-        height: 14px;
-        margin-right: .5rem;
-        background-color: variables.$color-white;
-        border-radius: 2px;
-        content: "";
-        cursor: pointer;
-        outline: 1px solid #ddd;
-      }
-
-      .checkbox__input {
-        position: absolute;
-        display: block;
-        width: 1px;
-        height: 1px;
-        margin-right: .5rem;
-        opacity: 0;
-        
-        &:checked+.checkbox__custom {
-          background-color: #009ae2;
-          outline: 1px solid variables.$color-black;
-      
-          &::after {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            color: variables.$color-white;
-            content: 'L';
-            font-size: 12px;
-            transform: rotateZ(45deg) rotateY(180deg) translate(1px, -1.5px);
-          }
-        }
-      }
-        
-      & > span {
-        color: #b1b1b1;
-        font-size: 14px
-      }
+    &:disabled + label {
+      display: none;
     }
+  }
 
-    &-item {
-      label {
+  .checkbox__custom {
+    width: 14px;
+    height: 14px;
+    margin-right: 0.5rem;
+    background-color: variables.$color-white;
+    border-radius: 2px;
+    content: "";
+    cursor: pointer;
+    outline: 1px solid #ddd;
+  }
+
+  .checkbox__input {
+    position: absolute;
+    display: block;
+    width: 1px;
+    height: 1px;
+    margin-right: 0.5rem;
+    opacity: 0;
+
+    &:checked + .checkbox__custom {
+      background-color: #009ae2;
+      outline: 1px solid variables.$color-black;
+
+      &::after {
         display: flex;
         flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
+        justify-content: center;
+        color: variables.$color-white;
+        content: "L";
+        font-size: 12px;
+        transform: rotateZ(45deg) rotateY(180deg) translate(1px, -1.5px);
       }
+    }
+  }
 
-      input {
-        margin-right: .5rem;
+  & > span {
+    color: #b1b1b1;
+    font-size: 14px;
+  }
+}
+
+.filter-group-display__list-item {
+  label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  input {
+    margin-right: 0.5rem;
+  }
+}
+
+.filter-group-display__list.color {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+
+  li {
+    padding-right: calc(0.5rem + 4px);
+  }
+
+  input[type="checkbox"] {
+    display: none;
+
+    & + span {
+      display: block;
+      display: flex;
+      width: 20px;
+      height: 20px;
+      box-sizing: content-box;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgb(0 0 0 / 30%);
+      border-radius: 100%;
+      cursor: pointer;
+      font-size: 0;
+      transition: all 0.3s;
+
+      & > span {
+        width: 24px;
+        height: 24px;
+        border-radius: 100%;
       }
     }
 
-    &.color {
-      display: flex;
-      flex-flow: row wrap;
-      align-items: flex-start;
-      justify-content: flex-start;
+    &[value="White"] + span > span {
+      border: 1px solid variables.$color-black;
+    }
 
-      li {
-        padding-right: calc(.5rem + 4px );
-      }
-
-      input[type="checkbox"] {
-        display: none;
-
-        & + span {
-          display: block;
-          display: flex;
-          width: 20px;
-          height: 20px;
-          box-sizing: content-box;
-          flex-direction: row;
-          align-items: center;
-          justify-content: center;
-          border: 1px solid rgb(0 0 0 / 30%);
-          border-radius: 100%;
-          cursor: pointer;
-          font-size: 0;
-          transition: all .3s;
-
-          & > span {
-            width: 24px;
-            height: 24px;
-            border-radius: 100%;
-          }
-        }
-
-        &[value="White"] + span > span {
-          border: 1px solid variables.$color-black;
-        }
-
-        &:checked + span {
-          border: 1px solid variables.$color-black;
-          box-shadow: 0 2px 5px rgb(0 0 0 / 30%);
-        }
-      }
+    &:checked + span {
+      border: 1px solid variables.$color-black;
+      box-shadow: 0 2px 5px rgb(0 0 0 / 30%);
     }
   }
 }

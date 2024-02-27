@@ -9,8 +9,8 @@
   text-align: center;
 
   @media screen and (width <= 749px) {
-    padding-right: variables.$paddings-side--movil;
-    padding-left: variables.$paddings-side--movil;
+    padding-right: variables.$paddings-side-movil;
+    padding-left: variables.$paddings-side-movil;
   }
 
   & > p {

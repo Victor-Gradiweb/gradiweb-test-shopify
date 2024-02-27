@@ -59,7 +59,7 @@ $max-width: 450px;
     cursor: pointer;
   }
 
-  &__header {    
+  &__header {
     cursor: pointer;
     height: 65px;
     padding: 21px;
@@ -81,7 +81,7 @@ $max-width: 450px;
     height: calc(100% - 65px);
     overflow-y: auto;
 
-    @include mixins.scrollCustom;
+    @include mixins.scroll-custom;
   }
 
   &__footer {
