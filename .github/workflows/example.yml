@@ -5,7 +5,6 @@ on:
     branches: ["staging", "main", "feat/survivor-pack"]
 
 jobs:
-
   deploy:
     name: Development Theme
     runs-on: ubuntu-latest
