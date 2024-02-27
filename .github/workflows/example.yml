@@ -45,6 +45,7 @@ jobs:
           SHOPIFY_CLI_TTY: 0
         run: shopify theme push --path ./ --theme ${{ secrets.THEME_ID_PREVIEW }} --json
 
+
   #deploy:
   #  name: Development Theme
   #  runs-on: ubuntu-latest
