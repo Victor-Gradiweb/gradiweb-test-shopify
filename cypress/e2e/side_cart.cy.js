@@ -26,39 +26,46 @@ describe('template spec', () => {
           cy.viewport(width, height)
         })
 
-        it('open sidecart', () => {
+        it('should open the side cart', () => {
           sideCart.openSideCart()
         })
-        it('close sidecart', () => {
+
+        it('should close the side cart', () => {
+          sideCart.openSideCart()
           sideCart.closeSideCart()
         })
-        it('slide upsell next', () => {
+
+        it('should navigate to the next upsell', () => {
           sideCart.openSideCart()
-          sideCart.upsellNext()
+          sideCart.navigateToNextUpsell()
         })
-        it('slide upsell prev', () => {
+
+        it('should navigate to the previous upsell', () => {
           sideCart.openSideCart()
-          sideCart.upsellNext()
-          sideCart.upsellPrev()
+          sideCart.navigateToPreviousUpsell()
         })
-        it('add product upsell type 1', () => {
+
+        it('should add a product to the cart', () => {
           sideCart.openSideCart()
-          sideCart.addProductUpsell1()
+          sideCart.addToCart()
         })
-        it('add plus quantity product', () => {
+
+        it('should increase quantity of the added product', () => {
           sideCart.openSideCart()
-          sideCart.addProductUpsell1()
+          sideCart.addToCart()
           sideCart.plusQuantity()
         })
-        it('remove quantity product', () => {
+
+        it('should decrease quantity of the added product', () => {
           sideCart.openSideCart()
-          sideCart.addProductUpsell1()
+          sideCart.addToCart()
           sideCart.removeQuantity()
         })
-        it('Delete quantity product', () => {
+
+        it('should delete the first product from the cart', () => {
           sideCart.openSideCart()
-          sideCart.addProductUpsell1()
-          sideCart.deleteProduct()
+          sideCart.addToCart()
+          sideCart.deleteFirstProduct()
         })
         // sideCart.goCheckout()
       })
