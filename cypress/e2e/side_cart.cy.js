@@ -59,7 +59,6 @@ describe('template spec', () => {
         it('should decrease quantity of the added product', () => {
           sideCart.openSideCart()
           sideCart.addToCart()
-          sideCart.plusQuantity()
           sideCart.removeQuantity()
         })
 

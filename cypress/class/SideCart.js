@@ -243,11 +243,17 @@ export class SideCart {
     cy.get(this.sidecartSelectors.input_quantity).should('have.attr', 'data-quantity', value.toString())
   }
 
+  goToHomePageAndOpenCart () {
+    cy.visit('')
+    this.openSideCart()
+  }
+
   /**
    * Public method: plusQuantity
    * @description Increases the quantity of the product.
    */
   plusQuantity () {
+    this.goToHomePageAndOpenCart()
     this.incrementQuantity(2)
   }
 
@@ -256,6 +262,8 @@ export class SideCart {
    * @description Decreases the quantity of the product.
    */
   removeQuantity () {
+    this.plusQuantity()
+    this.goToHomePageAndOpenCart()
     this.decrementQuantity(1)
   }
 
