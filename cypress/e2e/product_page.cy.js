@@ -30,7 +30,7 @@ describe('Product Page', () => {
         })
         it('product ramdon collection', () => {
           productPage.selectorProductCollection()
-          productPage.addProduct()
+          productPage.addToCartProductPage()
         })
       })
     })
@@ -58,7 +58,10 @@ describe('Product Page', () => {
             productPage.checkProductTitle()
           })
           it('Add product', () => {
-            productPage.addProductPage()
+            productPage.addToCartProductPage()
+          })
+          it.only('Add product 2 cantidaes', () => {
+            productPage.addMultipleToCartProductPage()
           })
         })
       })

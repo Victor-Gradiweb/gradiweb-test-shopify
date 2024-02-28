@@ -1,3 +1,5 @@
+import { sideCart } from './SideCart'
+
 /**
  * The ProductPage class represents the page object for the product page.
  * It initializes the selectors for product and sidecart elements from Cypress environment variables.
@@ -185,7 +187,7 @@ export class ProductPage {
    * Description: Clicks the add product button and checks if the cart item exists in the sidecart.
    */
   addToCartProductPage () {
-    const addProductSelector = this.productSelectors.section_product + ' ' + this.productSelectors.cta_product_page
+    const addProductSelector = `${this.productSelectors.section_product} ${this.productSelectors.cta_product_page}`
     this.checkElementExistsAndIsEnabled(addProductSelector, 'The add product button does not exist or is disabled')
     cy.get(addProductSelector).click()
     this.checkCartItemExists()
@@ -217,6 +219,66 @@ export class ProductPage {
       .find(this.sidecartSelectors.item_cart)
       .should('exist')
       .and('be.visible')
+  }
+
+  /**
+ * Adds multiple products to the cart from the product page.
+ * @returns {void}
+ * @description This method performs the following steps:
+ * 1. Select two product quantities.
+ * 2. Verifies the quantity attribute of the product.
+ * 3. Adds the product to the cart.
+ * 4. Checks the side cart and the quantity of products.
+ */
+  addMultipleToCartProductPage () {
+    this.selectTwoProductQuantities()
+    this.verifyQuantityAttribute()
+    this.addProductToCart()
+    this.checkSideCartAndQuantity()
+  }
+
+  /**
+ * Selects the second option of the product.
+ * @returns {void}
+ */
+  selectTwoProductQuantities () {
+    cy.get(this.productSelectors.section_product).find('.btn-change').eq(1).click()
+  }
+
+  /**
+ * Verifies the quantity attribute of the product.
+ * @returns {number} The accumulated value.
+ */
+  verifyQuantityAttribute () {
+    cy.get(this.productSelectors.section_product).find('#quantity').then((quantity) => {
+      const lengthValue = quantity.length
+      const accumulated = 1 + lengthValue
+      cy.log(`The length value is: ${lengthValue}, and the accumulated value is: ${accumulated}`)
+      // Use cy.wrap to properly chain the asynchronous value
+      cy.wrap(accumulated).as('accumulated')
+    })
+  }
+
+  /**
+ * Adds the product to the cart.
+ * @returns {void}
+ */
+  addProductToCart () {
+    const addProductSelector = `${this.productSelectors.section_product} ${this.productSelectors.cta_product_page}`
+    this.checkElementExistsAndIsEnabled(addProductSelector, 'The add product button does not exist or is disabled')
+    cy.get(addProductSelector).click()
+  }
+
+  /**
+ * Checks the side cart and the quantity of products.
+ * @returns {void}
+ */
+  checkSideCartAndQuantity () {
+    sideCart.checkIfSideCartIsActive()
+    // Use cy.get to retrieve the accumulated value and then pass it to sideCart.verifyQuantityAttribute
+    cy.get('@accumulated').then((accumulated) => {
+      sideCart.verifyQuantityAttribute(accumulated)
+    })
   }
 }
 

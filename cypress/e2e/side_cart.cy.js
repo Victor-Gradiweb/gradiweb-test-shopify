@@ -26,7 +26,7 @@ describe('template spec', () => {
           cy.viewport(width, height)
         })
 
-        it('should open the side cart', () => {
+        it.only('should open the side cart', () => {
           sideCart.openSideCart()
         })
 
