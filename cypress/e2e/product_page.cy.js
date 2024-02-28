@@ -60,7 +60,7 @@ describe('Product Page', () => {
           it('Add product', () => {
             productPage.addToCartProductPage()
           })
-          it.only('Add product 2 cantidaes', () => {
+          it('Should add two quantities of the product and compare them in the shopping cart', () => {
             productPage.addMultipleToCartProductPage()
           })
         })
