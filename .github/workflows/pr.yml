@@ -29,7 +29,7 @@ jobs:
           filter_mode: nofilter
           fail_on_error: true
   
-  deploy:
+  preview:
     name: Development Theme
     runs-on: ubuntu-latest
     
@@ -52,7 +52,7 @@ jobs:
       - name: Install Shopify CLI
         run: npm install -g @shopify/cli @shopify/theme
 
-      - name: Deploy
+      - name: Deploy preview
         env:
           # Store URL, like your-store.myshopify.com
           SHOPIFY_FLAG_STORE: '${{ secrets.SHOP_STORE }}'
@@ -65,9 +65,9 @@ jobs:
     runs-on: ubuntu-22.04
 
     needs: 
-      - deploy
+      - preview
 
-    if: needs.deploy.result == 'success'
+    if: needs.preview.result == 'success'
 
     steps:
       - uses: actions/checkout@v4
@@ -150,30 +150,4 @@ jobs:
 
       - name: Build
         run: node mode.js && node clean.js && webpack --config webpack.config.js --mode production --progress
-      - uses: stefanzweifel/git-auto-commit-action@v5
-
-    runs-on: ubuntu-latest
-
-    permissions:
-      contents: write
-
-    needs: 
-      - jslint
-      - stylelint
-      - clean
-    
-    if: needs.jslint.result == 'success' &&  needs.stylelint.result == 'success'
-
-    steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20.x'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build
-        run: node mode.js && webpack --config webpack.config.js --mode production --progress
       - uses: stefanzweifel/git-auto-commit-action@v5
