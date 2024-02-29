@@ -2,7 +2,7 @@ name: EXAMPLE PULL REQUEST OPEN
 on:
   pull_request:
     types: ["opened", "edited", "synchronize"]
-    branches: ["staging", "main", "feat/survivor-pack", "feat/ci-config"]
+    branches: ["staging", "main"]
 
 jobs:
   deploy:
@@ -29,31 +29,26 @@ jobs:
           SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
           SHOPIFY_CLI_TTY: 0
         run: shopify theme push --path ./ --theme ${{ secrets.THEME_ID_PREVIEW }}
-
-  #deploy:
-  #  name: Development Theme
+  
+  #clean:
   #  runs-on: ubuntu-latest
-  #  steps:
-  #    - uses: actions/checkout@v1
-  #    - uses: actions/setup-node@v3
-  #      with:
-  #        node-version: 18
-  #    - uses: ruby/setup-ruby@v1
-  #      with:
-  #        ruby-version: 3.1
-  #        bundler: 'latest'
   #
-  #    - name: Install Shopify CLI
-  #      run: npm install -g @shopify/cli @shopify/theme
+  #  permissions:
+  #    contents: write
+  #
+  #  needs: 
+  #    - deploy
+
+  #  if: needs.deploy.result == 'success'
   #    
-  #    - name: Deploy
-  #      env:
-  #        # Store URL, like your-store.myshopify.com
-  #        SHOPIFY_FLAG_STORE: '${{ secrets.SHOP_STORE }}'
-  #        # Password generated from Theme Access app
-  #        SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
-  #        SHOPIFY_CLI_TTY: 0
-  #      run: shopify theme push --path ./ --theme ${{ secrets.THEME_ID_PREVIEW }} --json
+  #  steps:
+  #    - uses: actions/checkout@v4
+  #    - name: Use Node.js
+  #      uses: actions/setup-node@v3
+  #      with:
+  #        node-version: '20.x'
+  #    - run: npm run clean
+  #    - uses: stefanzweifel/git-auto-commit-action@v5
 
   jslint:
     name: ESlint with comments
@@ -110,7 +105,28 @@ jobs:
           config: baseUrl=https://${{ secrets.SHOP_STORE }}
           browser: chrome
           install: false
-        
+
+  lhci:
+    name: Lighthouse
+    runs-on: ubuntu-latest
+    
+    needs: 
+      - deploy
+
+    if: needs.deploy.result == 'success'
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Lighthouse
+        uses: shopify/lighthouse-ci-action@v1.1.1
+        with:
+          store: ${{ secrets.SHOP_STORE }}
+          access_token: ${{ secrets.SHOP_ACCESS_TOKEN }}
+          password: ${{ secrets.SHOP_PASSWORD }}
+          collection_handle: all
+          lhci_min_score_performance: 0.6
+          lhci_min_score_accessibility: 0.8      
+  
   build:
     runs-on: ubuntu-latest
 

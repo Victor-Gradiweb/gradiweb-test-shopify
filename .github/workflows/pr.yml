@@ -2,11 +2,11 @@ name: open/edit/sync Pull Request
 on:
   pull_request:
     types: ["opened", "edited", "synchronize"]
-    branches: ["dev"]
+    branches: ["feat/survivor-pack"]
 
 jobs:
   jslint:
-    name: JS review
+    name: ESlint with comments
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,7 +18,7 @@ jobs:
           fail_on_error: true
   
   stylelint:
-    name: Style review
+    name: Stylelint with comments
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,10 +28,80 @@ jobs:
           stylelint_input: "src/scss"
           filter_mode: nofilter
           fail_on_error: true
+  
+  deploy:
+    name: Development Theme
+    runs-on: ubuntu-latest
+    
+    needs: 
+      - jslint
+      - stylelint
+
+    if: needs.jslint.result == 'success' &&  needs.stylelint.result == 'success'
+    
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1
+          bundler: 'latest'
+
+      - name: Install Shopify CLI
+        run: npm install -g @shopify/cli @shopify/theme
+
+      - name: Deploy
+        env:
+          # Store URL, like your-store.myshopify.com
+          SHOPIFY_FLAG_STORE: '${{ secrets.SHOP_STORE }}'
+          # Password generated from Theme Access app
+          SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+          SHOPIFY_CLI_TTY: 0
+        run: shopify theme push --path ./ --theme ${{ secrets.THEME_ID_PREVIEW }}
+
+  cypress:
+    runs-on: ubuntu-22.04
+
+    needs: 
+      - deploy
+
+    if: needs.deploy.result == 'success'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache cypress
+        id: cache-cypress
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/Cypress
+            node_modules
+          key: cypress-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - if: ${{ steps.cache-cypress.outputs.cache-hit != 'true' }}
+        name: Install Cypress
+        run: npm i cypress
+
+      # and run all Cypress tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          config: baseUrl=https://${{ secrets.SHOP_STORE }}
+          browser: chrome
+          install: false
 
   lhci:
     name: Lighthouse
     runs-on: ubuntu-latest
+    
+    needs: 
+      - cypress
+
+    if: needs.cypress.result == 'success'
+
     steps:
       - uses: actions/checkout@v3
       - name: Lighthouse
@@ -42,29 +112,46 @@ jobs:
           password: ${{ secrets.SHOP_PASSWORD }}
           collection_handle: all
           lhci_min_score_performance: 0.6
-          lhci_min_score_accessibility: 0.8
+          lhci_min_score_accessibility: 0.8      
   
-  clean:
+  build:
     runs-on: ubuntu-latest
 
     permissions:
       contents: write
 
     needs: 
-      - jslint
-      - stylelint
-      - lhci
-      
+      - cypress
+
+    if: needs.cypress.result == 'success'
+
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js
-        uses: actions/setup-node@v3
+      
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v4
+        env:
+          cache-name: cache-node-modules
         with:
-          node-version: '20.x'
-      - run: npm run clean
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: |
+            ~/.npm
+            node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: node mode.js && node clean.js && webpack --config webpack.config.js --mode production --progress
       - uses: stefanzweifel/git-auto-commit-action@v5
-  
-  build:
+
     runs-on: ubuntu-latest
 
     permissions:
