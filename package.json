@@ -15,7 +15,6 @@
     "eslint-plugin-cypress": "^2.15.1",
     "mini-css-extract-plugin": "^2.7.6",
     "prettier": "^3.2.5",
-    "puppeteer": "^22.3.0",
     "sass": "^1.64.2",
     "sass-loader": "^13.3.2",
     "standard": "^17.1.0",

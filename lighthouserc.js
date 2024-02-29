@@ -17,6 +17,7 @@ module.exports = {
       ],
       puppeteerScript: './setPreviewCookies.js',
       puppeteerLaunchOptions: {
+        headless: 'new',
         args: [
           "--no-sandbox",
           "--disable-setuid-sandbox",
