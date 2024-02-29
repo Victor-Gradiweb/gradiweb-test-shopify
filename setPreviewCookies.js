@@ -1,11 +1,11 @@
-const env = {
-  host: 'https://gradi-theme-base.myshopify.com',
-  queryString: '?preview_theme_id=134439108788&_fd=0&pb=0',
-  password: 'gradiweb',
-  previewUrl: 'https://gradi-theme-base.myshopify.com?preview_theme_id=134439108788'
-}
-
 module.exports = async (browser) => {
+  const env = {
+    host: 'https://gradi-theme-base.myshopify.com',
+    queryString: '?preview_theme_id=134439108788&_fd=0&pb=0',
+    password: 'gradiweb',
+    previewUrl: 'https://gradi-theme-base.myshopify.com?preview_theme_id=134439108788'
+  }
+  
   // launch browser for LHCI
   console.error('Getting a new page...');
   const page = await browser.newPage();
