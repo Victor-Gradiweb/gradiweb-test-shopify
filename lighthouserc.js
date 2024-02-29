@@ -15,7 +15,7 @@ module.exports = {
         `${env.host}${env.collectionUrl}${env.queryString}`,
         `${env.host}${env.productUrl}${env.queryString}`
       ],
-      puppeteerScript: './setPreviewCookies.js',
+      /* puppeteerScript: './setPreviewCookies.js',
       puppeteerLaunchOptions: {
         args: [
           "--no-sandbox",
@@ -23,7 +23,7 @@ module.exports = {
           "--disable-dev-shm-usage",
           "--disable-gpu"
         ]
-      }
+      } */
     },
     upload: {
       target: 'temporary-public-storage',
