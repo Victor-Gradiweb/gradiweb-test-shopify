@@ -2,7 +2,7 @@ name: open/edit/sync Pull Request
 on:
   pull_request:
     types: ["opened", "edited", "synchronize"]
-    branches: ["feat/survivor-pack"]
+    branches: ["dev"]
 
 jobs:
   jslint:
@@ -105,7 +105,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
 
       - name: run Lighthouse CI
         run: |

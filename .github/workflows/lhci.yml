@@ -1,0 +1,25 @@
+name: open/edit/sync Pull Request
+on:
+  pull_request:
+    types: ["opened", "edited", "synchronize"]
+    branches: ["feat/survivor-pack"]
+
+jobs:
+  lhci:
+    name: Lighthouse CI
+    runs-on: ubuntu-latest
+    
+    needs: 
+      - cypress
+
+    if: needs.cypress.result == 'success'
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: run Lighthouse CI
+        run: |
+          npm install -g @lhci/cli@0.13.x
+          lhci autorun
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
