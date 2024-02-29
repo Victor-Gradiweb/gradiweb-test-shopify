@@ -8,7 +8,6 @@ const env = {
 module.exports = async (browser) => {
   // launch browser for LHCI
   console.error('Getting a new page...');
-  console.log(browser);
   const page = await browser.newPage();
   // Get password cookie if password is set
    

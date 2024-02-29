@@ -3,8 +3,8 @@ const env = {
   queryString: '?preview_theme_id=134439108788&_fd=0&pb=0',
   password: 'gradiweb',
   previewUrl: 'https://gradi-theme-base.myshopify.com?preview_theme_id=134439108788',
-  collectionUrl: 'collections/all',
-  productUrl: 'products/ricoh-theta-sc2'
+  collectionUrl: '/collections/all',
+  productUrl: '/products/ricoh-theta-sc2'
 }
 
 module.exports = {
@@ -15,15 +15,16 @@ module.exports = {
         `${env.host}${env.collectionUrl}${env.queryString}`,
         `${env.host}${env.productUrl}${env.queryString}`
       ],
-      /* puppeteerScript: './setPreviewCookies.js',
+      puppeteerScript: './setPreviewCookies.js',
       puppeteerLaunchOptions: {
+        executablePath: '/usr/bin/google-chrome-stable',
         args: [
           "--no-sandbox",
           "--disable-setuid-sandbox",
           "--disable-dev-shm-usage",
           "--disable-gpu"
         ]
-      } */
+      }
     },
     upload: {
       target: 'temporary-public-storage',
