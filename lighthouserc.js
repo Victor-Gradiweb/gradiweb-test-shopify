@@ -16,7 +16,6 @@ module.exports = {
         `${env.host}${env.productUrl}${env.queryString}`
       ],
       puppeteerScript: './setPreviewCookies.js',
-      chromePath: '/usr/bin/google-chrome-stable',
       puppeteerLaunchOptions: {
         args: [
           "--no-sandbox",
