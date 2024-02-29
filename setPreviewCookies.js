@@ -11,7 +11,7 @@ module.exports = async (browser) => {
   console.log(browser);
   const page = await browser.newPage();
   // Get password cookie if password is set
-  
+   
   if (env.password !== '') {
     console.error('Getting password cookie...');
     await page.goto(`${env.host}/password${env.queryString}`);
