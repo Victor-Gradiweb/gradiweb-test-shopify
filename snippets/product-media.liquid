@@ -10,11 +10,13 @@
 
 {% liquid
   assign is_first = true
+  assign thumbs = true
+  assign pagination = true
   
-  if product.media.size > 1
-    assign pagination = true
-  elsif product.media.size > 2
-    assign thumbs = true
+  if product.media.size < 1
+    assign pagination = false
+  elsif product.media.size < 2
+    assign thumbs = false
   endif
 %}
 

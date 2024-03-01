@@ -24,7 +24,7 @@
   %}
 {% endcomment %}
 
-<script>
+<script defer>
   const container = document.querySelector('.{{ id_slider }}')
   const parent = container.parentNode
 
@@ -72,32 +72,44 @@
     }
   {% endif %}
 
-  const library = document.head
-  const observer = new MutationObserver(
-    (mutationList, observe) => {
-      mutationList.forEach((mutation) => {
-        if (!mutation.addedNodes) return;
-        const newNode = [...mutation.addedNodes].find((node) => node.id === "swiper-element-styles")
-        if (!newNode) return;
+  if (!container.initialize) {
+    libraryObserver()
+  } else {
+    initializeConfig()
+  }
+
+  function libraryObserver () {
+    const library = document.getElementsByTagName('head')[0]
+    const observer = new MutationObserver(
+      (mutationList, observe) => {
+        mutationList.forEach((mutation) => {
+          if (!mutation.addedNodes) return;
+          const newNode = [...mutation.addedNodes].find((node) => node.id === "swiper-element-styles")
+          if (!newNode) return;
+          
+          initializeConfig();
+        })
         
-        {% if thumbs %}
-          thumbs.initialize()
-
-          swiperParams['thumbs'] = {
-            swiper: thumbs,
-          }
-        {% endif %}
-
-        Object.assign(container, swiperParams)
-        container.initialize()
-      })
-      
-      if (container.swiper) {
-        console.log('Swiper exist')
-        observe.disconnect()
+        if (container.swiper) {
+          console.log('Swiper exist')
+          observe.disconnect()
+        }
       }
-    }
-  );
+    );
 
-  observer.observe(library, { attributes: true, childList: true, subtree: true })
+    observer.observe(library, { attributes: true, childList: true, subtree: true })
+  }
+
+  function initializeConfig () {
+    {% if thumbs %}
+      thumbs.initialize()
+
+      swiperParams['thumbs'] = {
+        swiper: thumbs,
+      }
+    {% endif %}
+
+    Object.assign(container, swiperParams)
+    container.initialize()
+  }
 </script>

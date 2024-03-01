@@ -15,13 +15,13 @@ const replaceRenderLiquidTag = async () => {
 
   if (isDevelopment) {
     modifiedHtmlContent = htmlContent.replace(
-      /{% render 'compilation-tag', development: (false|true)?/g, 
-      `{% render 'compilation-tag', development: true`
+      /{% render 'compilation-tag', development: (false|true)?/g,
+      '{% render \'compilation-tag\', development: true'
     )
   } else {
     modifiedHtmlContent = htmlContent.replace(
-      /{% render 'compilation-tag', development: (false|true)?/g, 
-      `{% render 'compilation-tag', development: false`
+      /{% render 'compilation-tag', development: (false|true)?/g,
+      '{% render \'compilation-tag\', development: false'
     )
   }
 
@@ -29,7 +29,7 @@ const replaceRenderLiquidTag = async () => {
     if (err) {
       console.error(err)
     } else {
-      console.log(`Successfully updated ${liquidFilePath} with and COMPILE TO PROD`)
+      console.log(`Successfully updated ${liquidFilePath} with and compile`)
     }
   })
 }

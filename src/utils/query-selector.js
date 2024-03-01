@@ -5,8 +5,8 @@
  */
 const $Qll = (
   nodes,
-  // eslint-disable-next-line no-undef
-  parent) => [...(parent || document).querySelectorAll(nodes)]
+  parent
+) => [...(parent || document).querySelectorAll(nodes)]
 
 /**
  *
@@ -14,7 +14,6 @@ const $Qll = (
  * @param {HTMLElement} parent - Parent of nodes
  * @returns {Node} Node in DOM
  */
-// eslint-disable-next-line no-undef
 const $Q = (node, parent) => (parent || document).querySelector(node)
 
 export {

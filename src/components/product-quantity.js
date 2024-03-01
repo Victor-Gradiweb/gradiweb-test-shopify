@@ -46,6 +46,11 @@ function minusCount () {
 }
 
 export const initProductQuantity = () => {
-  $Q('.num-minus').addEventListener('click', minusCount)
-  $Q('.num-add').addEventListener('click', addCount)
+  const minus = $Q('.num-minus')
+  const plus = $Q('.num-add')
+
+  if (!minus || !plus) return
+
+  minus.addEventListener('click', minusCount)
+  plus.addEventListener('click', addCount)
 }

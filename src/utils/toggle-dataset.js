@@ -57,15 +57,20 @@ export function dataToggle (node, overlay) {
  */
 export const toggleDataActive = (control, node, config = {}) => {
   const { overlay, closeSelector, video } = config
+  const controlNode = $Q(control)
+  const elementActive = $Q(node)
+  const closeNode = $Q(closeSelector)
 
-  $Q(control).addEventListener('click', () => {
-    dataToggle($Q(node), overlay, video)
+  if (!controlNode || !elementActive) return
+
+  controlNode.addEventListener('click', () => {
+    dataToggle(elementActive, overlay, video)
   })
 
-  if (closeSelector) {
-    $Q(closeSelector).addEventListener(
+  if (closeNode) {
+    closeNode.addEventListener(
       'click',
-      () => dataToggle($Q(node), overlay)
+      () => dataToggle(elementActive, overlay)
     )
   }
 }

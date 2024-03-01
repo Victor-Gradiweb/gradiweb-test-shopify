@@ -63,6 +63,8 @@ export const addProducts = async (event) => {
  * @param {ElementHTML} form - Element node to add product. Its HTML form
  */
 export const submitForm = (form) => {
+  if (!form) return
+
   form.addEventListener(
     'submit',
     (e) => {
