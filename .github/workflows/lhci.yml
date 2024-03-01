@@ -15,8 +15,11 @@ jobs:
         with:
           node-version: 18.x
       
-      - name: npm install
-        run: npm install
+      - name: Install chrome
+        run: |
+          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo apt-get update
+          sudo apt-get install -y ./google-chrome-stable_current_amd64.deb
 
       - name: run Lighthouse CI
         run: |
@@ -24,4 +27,3 @@ jobs:
           lhci autorun
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-          PUPPETEER_EXECUTABLE_PATH: '/usr/bin/google-chrome-stable'
