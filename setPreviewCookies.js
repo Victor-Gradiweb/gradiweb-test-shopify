@@ -13,8 +13,8 @@ module.exports = async (browser, context) => {
   // launch browser for LHCI 
   console.error('Getting a new page...');
   const page = await browser.newPage();
-  // Get password cookie if password is set
-   
+  
+  // Get password cookie if password is set 
   if ('gradiweb' !== '' && counter === 1) {
     console.error('Getting password cookie...');
     await page.goto(context.url);
