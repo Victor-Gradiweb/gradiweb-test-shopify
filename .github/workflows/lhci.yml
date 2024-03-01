@@ -15,11 +15,10 @@ jobs:
         with:
           node-version: 18.x
       
-      - name: Install chrome
-        run: |
-          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          sudo apt-get update
-          sudo apt-get install -y ./google-chrome-stable_current_amd64.deb
+      - uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+      - run: |
+          ${{ steps.setup-chrome.outputs.chrome-path }} --version
 
       - name: run Lighthouse CI
         run: |
