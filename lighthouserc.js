@@ -19,21 +19,21 @@ module.exports = {
       puppeteerScript: './setPreviewCookies.js',
       puppeteerLaunchOptions: {
         args: [
-          "--no-sandbox",
-          "--disable-setuid-sandbox",
-          "--disable-dev-shm-usage",
-          "--disable-gpu"
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-dev-shm-usage',
+          '--disable-gpu'
         ]
       }
     },
     upload: {
-      target: 'temporary-public-storage',
+      target: 'temporary-public-storage'
     },
     assert: {
       assertions: {
-        "categories:performance": ["error", {"minScore": 0.6}],
-        "categories:accessibility": ["warn", {"minScore": 0.8}]
+        'categories:performance': ['error', { minScore: 0.6 }],
+        'categories:accessibility': ['warn', { minScore: 0.8 }]
       }
     }
-  },
-};
+  }
+}

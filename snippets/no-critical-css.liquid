@@ -7,23 +7,29 @@
 <link
   rel="stylesheet"
   href="{{ 'critical' | append: ext | asset_url }}"
->
+  fetchpriority="high"
+/>
 
-<link
-  rel="stylesheet"
-  href="{{ 'theme' | append: ext | asset_url }}"
->
-
+{% render 'preload-css', ext: ext, asset: 'theme' %}
 {% render 'preload-css', ext: ext, asset: 'cart' %}
 
 {%- if request.page_type == 'product' -%}
-  {% render 'preload-css', ext: ext, asset: 'product' %}
+  <link
+    rel="stylesheet"
+    href="{{ 'product' | append: ext | asset_url }}"
+  />
 {%- endif -%}
 
 {%- if request.page_type == 'collection' -%}
-  {% render 'preload-css', ext: ext, asset: 'collection' %}
+  <link
+    rel="stylesheet"
+    href="{{ 'collection' | append: ext | asset_url }}"
+  />
 {%- endif -%}
 
 {%- if request.page_type contains 'customers' -%}
-  {% render 'preload-css', ext: ext, asset: 'customer' %}
+  <link
+    rel="stylesheet"
+    href="{{ 'customer' | append: ext | asset_url }}"
+  />
 {%- endif -%}

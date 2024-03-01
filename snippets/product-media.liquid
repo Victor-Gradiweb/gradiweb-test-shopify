@@ -3,19 +3,18 @@
 
   Accepts:
   - product: {Object} Required - Product object element
-  - thumbs: {Boolean} Optional - Have a thumbs media. Default is false
 
   Usage:
-  {% render 'product-media'
-    product: product,
-    thumbs: true
-  %}
+  {% render 'product-media', product: product %}
 {% endcomment %}
 
 {% liquid
   assign is_first = true
-  if thumbs and product.media.size > 4
-    assign navigation = true
+  
+  if product.media.size > 1
+    assign pagination = true
+  elsif product.media.size > 2
+    assign thumbs = true
   endif
 %}
 
@@ -23,7 +22,7 @@
   <swiper-container
     id="product-media-js"
     init="false"
-    class="product-media__principal"
+    class="product-media-js product-media__principal"
   >
     {% for media in product.media %}
       {% capture custom_attr %}id="product-image-{{ forloop.index }}" class="product-image-js"{% endcapture %}
@@ -58,34 +57,34 @@
         {% endfor %}
       </swiper-container>
       
-      {% if navigation %}
-        <button
-          type="button"
-          class="swiper-button swiper-button-prev {{ id_slider }}"
-          aria-label="Arrow slider{{ id_slider }} prev"
-        >
-          {% render "button-arrow" %}
-        </button>
-        <button
-          type="button"
-          class="swiper-button swiper-button-next {{ id_slider }}"
-          aria-label="Arrow slider{{ id_slider }} next"
-        >
-          {% render "button-arrow", direction: "right" %}
-        </button>
-      {% endif %}
+      <button
+        type="button"
+        class="swiper-button swiper-button-prev {{ id_slider }}"
+        aria-label="Arrow slider{{ id_slider }} prev"
+      >
+        {% render "button-arrow" %}
+      </button>
+      <button
+        type="button"
+        class="swiper-button swiper-button-next {{ id_slider }}"
+        aria-label="Arrow slider{{ id_slider }} next"
+      >
+        {% render "button-arrow", direction: "right" %}
+      </button>
     </div>
   {% endif %}
 
-  <div class="product-media__pagination">
-    {% for media in product.media %}
-      {% if media.media_type == 'image' %}
-        <div
-          data-id="product-image-{{ forloop.index }}"
-          class="product-bullet-js product-media__bullet {% if forloop.first %} visible{% endif %}"
-        >
-        </div>
-      {% endif %}
-    {% endfor %}
+  <div class="swiper-pagination product-media__pagination">
   </div>
 </div>
+
+{% if pagination %}
+  {% render 'critical-swiper-config',
+    id_slider: 'product-media-js',
+    pagination: pagination,
+    navigation: thumbs,
+    perpage: 1,
+    space_between: 0
+    thumbs: thumbs,
+  %}
+{% endif %}

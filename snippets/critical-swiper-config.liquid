@@ -1,0 +1,103 @@
+{% comment %}
+  Critical config of swiper library
+
+  Accepts:
+  - pagination: {Boolean} show default pagination
+  - navigation: {Boolean} show default navigation
+  - perpage: {Number} items per page
+  - auto: {boolean} If auto move slider
+  - mobile_grid: {boolean} If need a grid card on mobile
+  - perpage_mobile: {Number}
+  - space_between: {Number}
+  - speed: {Number}
+
+  Usage:
+  {% render 'critical-swiper-config',
+    pagination: {Boolean} show default pagination
+    navigation: {Boolean} show default navigation
+    perpage: {Number} items per page
+    auto: {boolean} If auto move slider
+    mobile_grid: {boolean} If need a grid card on mobile
+    perpage_mobile: {Number}
+    space_between: {Number}
+    speed: {Number}
+  %}
+{% endcomment %}
+
+<script>
+  const container = document.querySelector('.{{ id_slider }}')
+  const parent = container.parentNode
+
+  let swiperParams = {
+    slidesPerView: {{ perpage }},
+    spaceBetween: {{ space_between }},
+    centerInsufficientSlides: true,
+  }
+
+  {% if thumbs %}
+    const thumbs = document.querySelector('#product-media-thumbs-js');
+    const thumbsParams = {
+      slidesPerView: 4,
+      spaceBetween: 12,
+      direction: "vertical",
+    };
+
+    Object.assign(thumbs, thumbsParams);
+  {% endif %}
+
+  {% if auto or speed %}
+    swiperParams['autoplay'] = {
+      delay: {{ speed }},
+      disableOnInteraction: false,
+    }
+
+    swiperParams['loop'] = true
+  {% endif %}
+
+  {% if pagination %}
+    const paginationContainer = parent.querySelector('.swiper-pagination')
+    swiperParams['pagination'] = {
+      el: paginationContainer,
+      clickable: true,
+    }
+  {% endif %}
+
+  {% if navigation %}
+    const buttonNext = parent.querySelector('.swiper-button-next')
+    const buttonPrev = parent.querySelector('.swiper-button-prev')
+
+    swiperParams['navigation'] = {
+      nextEl: buttonNext,
+      prevEl: buttonPrev,
+    }
+  {% endif %}
+
+  const library = document.head
+  const observer = new MutationObserver(
+    (mutationList, observe) => {
+      mutationList.forEach((mutation) => {
+        if (!mutation.addedNodes) return;
+        const newNode = [...mutation.addedNodes].find((node) => node.id === "swiper-element-styles")
+        if (!newNode) return;
+        
+        {% if thumbs %}
+          thumbs.initialize()
+
+          swiperParams['thumbs'] = {
+            swiper: thumbs,
+          }
+        {% endif %}
+
+        Object.assign(container, swiperParams)
+        container.initialize()
+      })
+      
+      if (container.swiper) {
+        console.log('Swiper exist')
+        observe.disconnect()
+      }
+    }
+  );
+
+  observer.observe(library, { attributes: true, childList: true, subtree: true })
+</script>

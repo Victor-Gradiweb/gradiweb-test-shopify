@@ -96,13 +96,24 @@
     }
   }
 
-  &__pagination {
+  &__pagination.swiper-pagination {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    position: static;
+    margin: 20px 0;
 
     @media screen and (min-width: variables.$break-point-product) {
       display: none;
+    }
+  }
+
+  .swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+
+    &-active {
+      background-color: variables.$color-black;
     }
   }
 

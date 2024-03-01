@@ -1,5 +1,3 @@
-/* eslint-disable max-len */
-import { addSwiperScript } from '../utils/add-script-tag'
 import { blackListSlider } from '../utils/blackListSlider'
 import { $Q, $Qll } from '../utils/query-selector'
 import { createInterception } from '../utils/script-defer'
@@ -55,7 +53,13 @@ export const createSlider = (container) => {
   return container.initialize()
 }
 
-const loadPagination = (slider, params) => {
+/**
+ * Mount pagination config
+ * @param {HTMLElement} slider - Slider element, swiper will initialized
+ * @param {Object} params - Swiper params - configuration to initialized slider
+ * @returns {Object} - New params with pagination
+ */
+export const loadPagination = (slider, params) => {
   const paginationContainer = $Q('.swiper-pagination', slider.parentNode)
   if (!paginationContainer || !params) return
 
@@ -68,6 +72,12 @@ const loadPagination = (slider, params) => {
   return mutationParams
 }
 
+/**
+ * Mount navigation config
+ * @param {HTMLElement} slider - Slider element, swiper will initialized
+ * @param {Object} params - Swiper params - configuration to initialized slider
+ * @returns {Object} - New params with navigation
+ */
 export const loadNavigation = (slider, params) => {
   const parent = slider.parentNode
   if ($Qll('.swiper-button', parent).length < 2 || !params) return
@@ -85,38 +95,18 @@ export const loadNavigation = (slider, params) => {
 }
 
 /**
-A function that loads sliders on a page by
-creating an intersection observer for each slider container element.
-@returns {void}
-*/
+ * A function that loads sliders on a page by
+ * creating an intersection observer for each slider container element.
+ * @returns {void}
+ */
 export const loadSlider = () => {
   const dataSliders = $Qll('.slider-js')
-  let loadingScript = false
 
   dataSliders.forEach((slider) => {
     if (blackListSlider(slider)) return
 
-    createInterception(slider, async () => {
-      if (!loadingScript) {
-        loadingScript = true
-        await addSwiperScript()
-      }
-
-      return createSlider(slider)
-    })
-  })
-}
-
-/**
- * this script only select one slider predefine. example at doing click button
- * @param {Node} slider - node slider
- */
-export const loadSliderByEvent = (slider) => {
-  createInterception(slider, async () => {
-    const loadScript = await addSwiperScript()
-
-    if (loadScript) {
-      createSlider(slider)
-    }
+    createInterception(slider,
+      () => createSlider(slider)
+    )
   })
 }

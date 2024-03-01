@@ -1,8 +1,11 @@
-import { addSwiperScript } from '../utils/add-script-tag'
 import { $Qll, $Q } from '../utils/query-selector'
 import { createInterception } from '../utils/script-defer'
-import { loadNavigation } from './slider-component'
+import { loadNavigation, loadPagination } from './slider-component'
 
+/**
+ * Product media init
+ * @returns {VoidFunction}
+ */
 function productMedia () {
   const { matches } = window.matchMedia('(max-width: 768px)')
 
@@ -11,16 +14,19 @@ function productMedia () {
   return initProductMedia()
 }
 
-const initProductMedia = async () => {
+/**
+ * Product media with swiper
+ * @returns {VoidFunction}
+ */
+const initProductMedia = () => {
   const thumbs = $Q('#product-media-thumbs-js')
   const media = $Q('#product-media-js')
 
   if (!thumbs) return
-  await addSwiperScript()
 
   const thumbsParams = {
     slidesPerView: 4,
-    spaceBetween: 15,
+    spaceBetween: 12,
     direction: 'vertical'
   }
 
@@ -34,11 +40,18 @@ const initProductMedia = async () => {
   }
 
   mediaParams = loadNavigation(media, mediaParams)
+  mediaParams = loadPagination(media, mediaParams)
 
   Object.assign(media, mediaParams)
   return media.initialize()
 }
 
+/**
+ * When image is visible
+ * @param {HTMLElement} target - image on viewport
+ * @param {Array} bullets - Collection of bullets point
+ * @returns {VoidFunction}
+ */
 const imageVisible = (target, bullets) => {
   const { id } = target
   if (!id) return
@@ -49,6 +62,9 @@ const imageVisible = (target, bullets) => {
   return bulletTarget.classList.add('visible')
 }
 
+/**
+ * Product media custom with interception observer
+ */
 const bulletsMobile = () => {
   const images = $Qll('.product-image-js')
   const bullets = $Qll('.product-bullet-js')
