@@ -6,7 +6,7 @@ module.exports = defineConfig({
     screenshotsFolder: false,
     setupNodeEvents (on, config) {
       // implement node event listeners here
-    },
+    }
     /* excludeSpecPattern: 'cypress/e2e/side_cart.cy.js' */
   },
   retries: 2

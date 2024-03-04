@@ -1,10 +1,10 @@
+const process = require('process')
 const env = {
-  host: 'https://gradi-theme-base.myshopify.com',
-  queryString: '?preview_theme_id=134439108788&_fd=0&pb=0',
-  password: 'gradiweb',
-  previewUrl: 'https://gradi-theme-base.myshopify.com?preview_theme_id=134439108788',
-  collectionUrl: '/collections/all',
-  productUrl: '/products/ricoh-theta-sc2'
+  host: process.env.HOST || 'https://gradi-theme-base.myshopify.com',
+  queryString: `?preview_theme_id=${process.env.THEME_ID || '134439108788'}&_fd=0&pb=0`,
+  previewUrl: `${process.env.HOST}?preview_theme_id=${process.env.THEME_ID || '134439108788'}&_fd=0&pb=0`,
+  collectionUrl: process.env.COLLECTION_URL || '/collections/all',
+  productUrl: process.env.PRODUCT_URL || '/products/ricoh-theta-sc2'
 }
 
 module.exports = {
