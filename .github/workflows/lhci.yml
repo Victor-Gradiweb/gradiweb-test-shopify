@@ -2,7 +2,7 @@ name: open/edit/sync Pull Request
 on:
   pull_request:
     types: ["opened", "edited", "synchronize"]
-    branches: ["dev"]
+    branches: ["feat/survivor-pack"]
 
 jobs:
   lhci:
@@ -25,5 +25,10 @@ jobs:
           npm install -g @lhci/cli
           lhci autorun
         env:
-          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
           PUPPETEER_EXECUTABLE_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+          HOST: https://${{ secrets.SHOP_STORE }}
+          THEME_ID_PREVIEW: ${{ secrets.THEME_ID_PREVIEW }}
+          SHOP_PASSWORD: ${{ secrets.SHOP_PASSWORD }}
+          COLLECTION_URL: ${{ secrets.COLLECTION_URL }}
+          PRODUCT_URL: ${{ secrets.PRODUCT_URL }}
