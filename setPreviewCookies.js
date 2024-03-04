@@ -4,7 +4,7 @@ let counter = 1
 module.exports = async (browser, context) => {
   const password = process.env.SHOP_PASSWORD
 
-  console.log({ password })
+  console.log({ context })
   // launch browser for LHCI
   console.error('Getting a new page...')
   const page = await browser.newPage()
