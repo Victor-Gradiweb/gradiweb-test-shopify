@@ -1,10 +1,10 @@
 const process = require('process')
 let counter = 1
 
-module.exports = async (browser, context) => {
+module.exports = async (browser, context, ...args) => {
   const password = process.env.SHOP_PASSWORD
 
-  console.log({ context })
+  console.log(...args)
   // launch browser for LHCI
   console.error('Getting a new page...')
   const page = await browser.newPage()
