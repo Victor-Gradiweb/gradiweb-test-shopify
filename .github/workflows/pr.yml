@@ -2,7 +2,7 @@ name: open/edit/sync Pull Request
 on:
   pull_request:
     types: ["opened", "edited", "synchronize"]
-    branches: ["dev"]
+    branches: ["feat/survivor-pack"]
 
 jobs:
   jslint:
@@ -115,22 +115,11 @@ jobs:
         id: setup-chrome
       - run: |
           ${{ steps.setup-chrome.outputs.chrome-path }} --version
-      
-      - name: Cache Lighthouse
-        id: cache-lhci
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cache
-            node_modules
-          key: lhci-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-
-      - if: ${{ steps.cache-lhci.outputs.cache-hit != 'true' }}
-        name: Lighthouse install
-        run: npm install -g @lhci/cli
 
       - name: run Lighthouse CI
-        run: lhci autorun
+        run: |
+          npm install -g @lhci/cli
+          lhci autorun
         env:
           PUPPETEER_EXECUTABLE_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
