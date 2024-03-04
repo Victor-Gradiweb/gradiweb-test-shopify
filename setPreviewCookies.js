@@ -13,7 +13,7 @@ module.exports = async (browser, context) => {
     await page.waitForSelector('form[action*=password] input[type="password"]')
     await page.$eval(
       'form[action*=password] input[type="password"]',
-      (input) => {
+      (input, options) => {
         input.value = options.shopPassword
       },
       options
