@@ -121,11 +121,11 @@ jobs:
           npm install -g @lhci/cli
           lhci autorun
         env:
-          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
           PUPPETEER_EXECUTABLE_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
           HOST: https://${{ secrets.SHOP_STORE }}
           THEME_ID: ${{ secrets.THEME_ID_PREVIEW }}
-          PASSWORD: ${{ secrets.PASSWORD }}
+          SHOP_PASSWORD: ${{ secrets.SHOP_PASSWORD }}
           COLLECTION_URL: ${{ secrets.COLLECTION_URL }}
           PRODUCT_URL: ${{ secrets.PRODUCT_URL }}
 

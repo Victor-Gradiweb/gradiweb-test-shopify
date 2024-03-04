@@ -1,5 +1,5 @@
 const process = require('process')
-const password = process.env.PASSWORD || 'gradiweb'
+const password = process.env.SHOP_PASSWORD || 'gradiweb'
 let counter = 1
 
 module.exports = async (browser, context) => {
