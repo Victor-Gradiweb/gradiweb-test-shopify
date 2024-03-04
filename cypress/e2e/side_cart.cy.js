@@ -4,7 +4,7 @@ import { unlockTheme } from '../class/UnlockTheme'
 Cypress.on('uncaught:exception', () => { return false })
 
 const deviceDesktop = [{ viewport: [1440, 900], type: 'WXGA+' }]
-const urlPreview = `?${Cypress.env('url').preview_theme}`
+const urlPreview = `?${Cypress.env('preview_theme')}`
 
 describe('template spec', () => {
   beforeEach(() => {

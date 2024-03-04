@@ -1,6 +1,6 @@
 import { productPage } from '../class/ProductPage'
 
-const productTest = `products/${Cypress.env('product_page').product_1}?${Cypress.env('url').preview_theme}`
+const productTest = `products/${Cypress.env('product_page').product_1}?${Cypress.env('preview_theme')}`
 
 /**
  * The SideCart class represents the page object for the side cart functionality.

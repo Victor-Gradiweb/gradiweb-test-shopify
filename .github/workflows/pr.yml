@@ -93,6 +93,8 @@ jobs:
           config: baseUrl=https://${{ secrets.SHOP_STORE }}
           browser: chrome
           install: false
+        env:
+          CYPRESS_preview_theme: preview_theme_id=${{ secrets.THEME_ID_PREVIEW }}
 
   lhci:
     name: Lighthouse CI
