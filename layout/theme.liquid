@@ -53,7 +53,7 @@
       fetchpriority="high"
     ></script>
 
-    {% render 'compilation-tag', development: true, head: true %}
+    {% render 'compilation-tag', development: false, head: true %}
 
     <script>
       let documentClass = document.documentElement.className;
@@ -104,7 +104,7 @@
       }
     </script>
 
-    {% render 'compilation-tag', development: true %}
+    {% render 'compilation-tag', development: false %}
 
     <script
       src="{{ 'lazysizes.min.js' | asset_url }}"
