@@ -1,7 +1,6 @@
 let counter = 1
 
 module.exports = async (browser, context) => {
-  console.log({ context })
   const options = context.options
   // launch browser for LHCI
   console.error('Getting a new page...')
@@ -12,7 +11,13 @@ module.exports = async (browser, context) => {
     console.error('Getting password page cookie...')
     await page.goto(context.url)
     await page.waitForSelector('form[action*=password] input[type="password"]')
-    await page.$eval('form[action*=password] input[type="password"]', (input) => { input.value = options.shopPassword })
+    await page.$eval(
+      'form[action*=password] input[type="password"]',
+      (input) => {
+        input.value = options.shopPassword
+      },
+      options
+    )
     await Promise.all([
       page.waitForNavigation(),
       page.$eval('form[action*=password]', form => form.submit())
