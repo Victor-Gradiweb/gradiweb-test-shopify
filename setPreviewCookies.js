@@ -2,7 +2,7 @@ const process = require('process')
 let counter = 1
 
 module.exports = async (browser, context) => {
-  const password = process.env.SHOP_PASSWORD || 'gradiweb'
+  const password = process.env.SHOP_PASSWORD
 
   console.log({ password })
   // launch browser for LHCI
