@@ -11,7 +11,7 @@ export class UnlockTheme {
      */
     const unlockThemeConfig = Cypress.env('unlock_store')
     this.input_password = unlockThemeConfig.input_password
-    this.password_store = unlockThemeConfig.password_store
+    this.password_store = Cypress.env('password_store')
   }
 
   /**
