@@ -9,11 +9,6 @@ jobs:
     name: Cypress CI
     runs-on: ubuntu-22.04
 
-    needs: 
-      - preview
-
-    if: needs.preview.result == 'success'
-
     steps:
       - uses: actions/checkout@v4
 
