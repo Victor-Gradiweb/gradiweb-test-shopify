@@ -40,6 +40,11 @@
     "env": {
       "browser": true,
       "mocha": true
-    }
+    },
+    "globals": ["describe", "beforeEach"]
+  },
+  "standard": {
+    "globals": ["cy", "Cypress"],
+    "env": ["browser", "mocha"]
   }
 }

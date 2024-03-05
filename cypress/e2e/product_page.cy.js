@@ -5,8 +5,8 @@ Cypress.on('uncaught:exception', () => { return false })
 
 const deviceDesktop = [{ viewport: [1440, 900], type: 'WXGA+' }]
 const urlPreview = `?${Cypress.env('preview_theme')}`
-const collections = `${Cypress.env('url').collections}?${Cypress.env('preview_theme')}`
-const productTest = `products/${Cypress.env('product_page').product_1}?${Cypress.env('preview_theme')}`
+const collectionUrl = `${Cypress.env('collection_url')}?${Cypress.env('preview_theme')}`
+const productTest = `products/${Cypress.env('product_url')}?${Cypress.env('preview_theme')}`
 
 describe('Product Page', () => {
   beforeEach(() => {
@@ -26,7 +26,7 @@ describe('Product Page', () => {
         beforeEach(() => {
           const [width, height] = device.viewport
           cy.viewport(width, height)
-          cy.visit(collections)
+          cy.visit(collectionUrl)
         })
         it('product ramdon collection', () => {
           productPage.selectorProductCollection()
