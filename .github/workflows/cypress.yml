@@ -1,0 +1,41 @@
+name: open/edit/sync Pull Request
+on:
+  pull_request:
+    types: ["opened", "edited", "synchronize"]
+    branches: ["feat/survivor-pack"]
+
+jobs:
+  cypress:
+    name: Cypress CI
+    runs-on: ubuntu-22.04
+
+    needs: 
+      - preview
+
+    if: needs.preview.result == 'success'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache cypress
+        id: cache-cypress
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/Cypress
+            node_modules
+          key: cypress-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - if: ${{ steps.cache-cypress.outputs.cache-hit != 'true' }}
+        name: Install Cypress
+        run: npm i cypress
+
+      # and run all Cypress tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          config: baseUrl=https://${{ secrets.SHOP_STORE }}
+          browser: chrome
+          install: false
+        env:
+          CYPRESS_preview_theme: preview_theme_id=${{ secrets.THEME_ID_PREVIEW }}
