@@ -5,24 +5,28 @@ module.exports = async (browser, context) => {
   // launch browser for LHCI
   console.error('Getting a new page...')
   const page = await browser.newPage()
-  const passwordInput = await page.$('form[action*=password] input[type="password"]')
 
   // Get password cookie if password is set
-  if (options.shopPassword !== '' && counter === 1 && passwordInput !== null) {
+  if (options.shopPassword !== '' && counter === 1) {
     console.error('Getting password page cookie...')
     await page.goto(context.url)
-    await page.waitForSelector('form[action*=password] input[type="password"]')
-    await page.$eval(
-      'form[action*=password] input[type="password"]',
-      (input, options) => {
-        input.value = options.shopPassword
-      },
-      options
-    )
-    await Promise.all([
-      page.waitForNavigation(),
-      page.$eval('form[action*=password]', form => form.submit())
-    ])
+
+    const passwordInput = await page.$('form[action*=password] input[type="password"]')
+
+    if (passwordInput !== null) {
+      await page.waitForSelector('form[action*=password] input[type="password"]')
+      await page.$eval(
+        'form[action*=password] input[type="password"]',
+        (input, options) => {
+          input.value = options.shopPassword
+        },
+        options
+      )
+      await Promise.all([
+        page.waitForNavigation(),
+        page.$eval('form[action*=password]', form => form.submit())
+      ])
+    }
   }
 
   // Get preview cookie
