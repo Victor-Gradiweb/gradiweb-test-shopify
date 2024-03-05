@@ -46,14 +46,14 @@
 
     {{ content_for_header }}
 
+    {% render 'compilation-tag', development: false, head: true %}
+
     <script
       id="script-swiper-js"
       src="{{ 'swiper-element-bundle.min.js' | asset_url }}"
       async
       fetchpriority="high"
     ></script>
-
-    {% render 'compilation-tag', development: false, head: true %}
 
     <script>
       let documentClass = document.documentElement.className;
