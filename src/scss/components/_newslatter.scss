@@ -8,9 +8,9 @@
   margin: 0 auto;
   text-align: center;
 
-  @media screen and (max-width: 749px) {
-    padding-right: variables.$paddings-side--movil;
-    padding-left: variables.$paddings-side--movil;
+  @media screen and (width <= 749px) {
+    padding-right: variables.$paddings-side-movil;
+    padding-left: variables.$paddings-side-movil;
   }
 
   & > p {
@@ -28,6 +28,7 @@
         margin-top: 20px;
         background-color: #4caf4f41;
       }
+
       &--error {
         display: none;
         border-color: #853833;

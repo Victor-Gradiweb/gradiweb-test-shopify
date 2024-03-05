@@ -6,8 +6,8 @@
 
 body {
   color: variables.$color-text;
-  font-family: variables.$font-family--general;
-  font-size: variables.$font-size--general;
+  font-family: variables.$font-family-general;
+  font-size: variables.$font-size-general;
 }
 
 .margin-title {
@@ -21,36 +21,40 @@ body {
 .title {
   display: block;
   color: variables.$color-title;
-  font-family: variables.$font-family--title;
-  font-size: variables.$font-size--h1;
+  font-family: variables.$font-family-title;
+  font-size: variables.$font-size-h1;
   font-weight: 600;
+
   @extend %margin-title;
 }
 
 h1,
 .h1 {
   color: variables.$color-title;
-  font-family: variables.$font-family--title;
-  font-size: variables.$font-size--h1;
+  font-family: variables.$font-family-title;
+  font-size: variables.$font-size-h1;
   font-weight: 600;
+
   @extend %margin-title;
 }
 
 h2,
 .h2 {
   color: variables.$color-title;
-  font-family: variables.$font-family--title;
-  font-size: variables.$font-size--h2;
+  font-family: variables.$font-family-title;
+  font-size: variables.$font-size-h2;
   font-weight: 600;
+
   @extend %margin-title;
 }
 
 h3,
 .h3 {
   color: variables.$color-title;
-  font-family: variables.$font-family--title;
-  font-size: variables.$font-size--h3;
+  font-family: variables.$font-family-title;
+  font-size: variables.$font-size-h3;
   font-weight: 600;
+
   @extend %margin-title;
 }
 
@@ -58,9 +62,10 @@ h4,
 h5,
 h6 {
   color: variables.$color-title;
-  font-family: variables.$font-family--title;
-  font-size: variables.$font-size--hn;
+  font-family: variables.$font-family-title;
+  font-size: variables.$font-size-hn;
   font-weight: 600;
+
   @extend %margin-title;
 }
 
@@ -77,4 +82,3 @@ a {
   width: 20px;
   height: 20px;
 }
-

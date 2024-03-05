@@ -9,7 +9,7 @@
     background-position: center;
 
     &::before {
-      content: '';
+      content: "";
       display: block;
       padding-top: 56.25%;
     }
@@ -54,10 +54,9 @@
       }
 
       a {
-        font-size: variables.$font-size--h2;
+        font-size: variables.$font-size-h2;
       }
     }
-
 
     & > a.btn-1 {
       display: block;
@@ -68,7 +67,7 @@
   &__close {
     display: none;
     position: fixed;
-    top: 0px;
+    top: 0;
     right: 0;
     z-index: 3;
     cursor: pointer;
@@ -83,8 +82,9 @@
     left: 50%;
     transform: translate(-50%, -50%);
 
-    &[data-active=true] {
+    &[data-active="true"] {
       display: block;
+
       + .video__close {
         display: block;
       }

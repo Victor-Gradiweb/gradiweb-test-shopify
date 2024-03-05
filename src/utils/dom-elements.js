@@ -5,8 +5,8 @@
 export const domElements = () => {
   const elements = {
     // eslint-disable-next-line no-undef
-    $MainContent: document.querySelector('#MainContent'),
-  };
+    $MainContent: document.querySelector('#MainContent')
+  }
 
-  return elements;
+  return elements
 }

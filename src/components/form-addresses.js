@@ -1,5 +1,5 @@
-import { forceNumeric } from '../utils/numeric-validation';
-import { $Q, $Qll } from '../utils/query-selector';
+import { forceNumeric } from '../utils/numeric-validation'
+import { $Q, $Qll } from '../utils/query-selector'
 
 /**
  * Handle form events
@@ -9,37 +9,37 @@ import { $Q, $Qll } from '../utils/query-selector';
  */
 const eventHandler = (currents) => {
   currents.forEach((current) => {
-    const [{ dataset }, isEdit = false] = current;
+    const [{ dataset }, isEdit = false] = current
 
     if (isEdit) {
-      dataset.active = true;
+      dataset.active = true
     } else {
-      dataset.active = false;
+      dataset.active = false
     }
   })
-};
+}
 
 const addressForm = (form, parentNode, isCancel = false) => {
-  if (!form) return null;
+  if (!form) return null
 
-  const formById = $Q(`.address__edit[data-form="${form}"]`);
-  const detailsById = $Q(`.address__detail[data-form="${form}"]`);
+  const formById = $Q(`.address__edit[data-form="${form}"]`)
+  const detailsById = $Q(`.address__detail[data-form="${form}"]`)
 
   if (isCancel) {
-    const actionsById = $Q(`.address__actions[data-form="${form}"]`);
+    const actionsById = $Q(`.address__actions[data-form="${form}"]`)
 
     return eventHandler([
       [formById],
       [detailsById, true],
-      [actionsById, true],
-    ]);
+      [actionsById, true]
+    ])
   }
 
   return eventHandler([
     [formById, true],
     [detailsById],
-    [parentNode],
-  ]);
+    [parentNode]
+  ])
 }
 
 /**
@@ -47,42 +47,42 @@ const addressForm = (form, parentNode, isCancel = false) => {
  * @param {String} ev event
  */
 const clickFormAddresse = (ev) => {
-  const { target } = ev;
+  const { target } = ev
   const {
     parentNode,
     nextElementSibling,
-    dataset: { event, form },
-  } = target;
+    dataset: { event, form }
+  } = target
 
   const actions = {
     edit: () => addressForm(form, parentNode),
     new: () => eventHandler([[nextElementSibling, true], [target]]),
     cancel: () => {
       if (form) {
-        return addressForm(form, null, true);
+        return addressForm(form, null, true)
       }
 
       return eventHandler([
         [parentNode],
-        [$Q(`.address-js[data-event="new"]`), true],
-      ]);
-    },
+        [$Q('.address-js[data-event="new"]'), true]
+      ])
+    }
   }
 
-  return actions[event]();
+  return actions[event]()
 };
 
 /**
  * Open address edit form
  */
- (function initAdresses() {
-  if ($Qll('.address-js').length === 0) return;
-  const buttonEdit = $Qll('.address-js');
+(function initAdresses () {
+  if ($Qll('.address-js').length === 0) return
+  const buttonEdit = $Qll('.address-js')
   $Q('input[type=number]').addEventListener('input', forceNumeric)
 
   buttonEdit.forEach((button) => {
     button.addEventListener('click', (e) => {
-      clickFormAddresse(e);
-    });
-  });
-}());
+      clickFormAddresse(e)
+    })
+  })
+}())

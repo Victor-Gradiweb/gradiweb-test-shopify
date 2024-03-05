@@ -1,8 +1,6 @@
-/* eslint-disable max-len */
-import { addSwiperScript } from '../utils/add-script-tag';
-import { blackListSlider } from '../utils/blackListSlider';
-import { $Q, $Qll } from '../utils/query-selector';
-import { createInterception } from '../utils/script-defer';
+import { blackListSlider } from '../utils/blackListSlider'
+import { $Q, $Qll } from '../utils/query-selector'
+import { createInterception } from '../utils/script-defer'
 
 /**
  * Creates a slider using the Swiper library.
@@ -16,9 +14,9 @@ import { createInterception } from '../utils/script-defer';
  * @param {string} parent.spacing - The amount of space between slides, in pixels.
  */
 export const createSlider = (container) => {
-  const PAGE_ONE = 1;
+  const PAGE_ONE = 1
   const { slidesMobile, slides, pagination, navigation, auto, speed, spacing } =
-    container.dataset;
+    container.dataset
 
   let swiperParams = {
     slidesPerView: Number(slidesMobile),
@@ -27,96 +25,88 @@ export const createSlider = (container) => {
     ...(speed > 0 && {
       autoplay: {
         delay: Number(speed),
-        disableOnInteraction: false,
-      },
+        disableOnInteraction: false
+      }
     }),
     breakpoints: {
       640: {
         slidesPerView:
           Number(slides) === PAGE_ONE
             ? Number(slides)
-            : Number(slidesMobile) + 1,
+            : Number(slidesMobile) + 1
       },
       1024: {
-        slidesPerView: Number(slides),
-      },
-    },
-  };
+        slidesPerView: Number(slides)
+      }
+    }
+  }
 
   if (navigation === 'true') {
-    swiperParams = loadNavigation(container, swiperParams);
+    swiperParams = loadNavigation(container, swiperParams)
   }
 
   if (pagination === 'true') {
-    swiperParams = loadPagination(container, swiperParams);
+    swiperParams = loadPagination(container, swiperParams)
   }
 
-  Object.assign(container, swiperParams);
-  return container.initialize();
-};
-
-const loadPagination = (slider, params) => {
-  const paginationContainer = $Q('.swiper-pagination', slider.parentNode);
-  if (!paginationContainer || !params) return;
-
-  const mutationParams = Object.assign({}, params);
-
-  mutationParams['pagination'] = {
-    el: paginationContainer,
-  };
-
-  return mutationParams;
-};
-
-export const loadNavigation = (slider, params) => {
-  const parent = slider.parentNode;
-  if ($Qll('.swiper-button', parent).length < 2 || !params) return;
-  const mutationParams = Object.assign({}, params);
-
-  const buttonNext = $Q('.swiper-button-next', parent);
-  const buttonPrev = $Q('.swiper-button-prev', parent);
-
-  mutationParams['navigation'] = {
-    nextEl: buttonNext,
-    prevEl: buttonPrev,
-  };
-
-  return mutationParams;
-};
+  Object.assign(container, swiperParams)
+  return container.initialize()
+}
 
 /**
-A function that loads sliders on a page by
-creating an intersection observer for each slider container element.
-@returns {void}
-*/
+ * Mount pagination config
+ * @param {HTMLElement} slider - Slider element, swiper will initialized
+ * @param {Object} params - Swiper params - configuration to initialized slider
+ * @returns {Object} - New params with pagination
+ */
+export const loadPagination = (slider, params) => {
+  const paginationContainer = $Q('.swiper-pagination', slider.parentNode)
+  if (!paginationContainer || !params) return
+
+  const mutationParams = Object.assign({}, params)
+
+  mutationParams.pagination = {
+    el: paginationContainer
+  }
+
+  return mutationParams
+}
+
+/**
+ * Mount navigation config
+ * @param {HTMLElement} slider - Slider element, swiper will initialized
+ * @param {Object} params - Swiper params - configuration to initialized slider
+ * @returns {Object} - New params with navigation
+ */
+export const loadNavigation = (slider, params) => {
+  const parent = slider.parentNode
+  if ($Qll('.swiper-button', parent).length < 2 || !params) return
+  const mutationParams = Object.assign({}, params)
+
+  const buttonNext = $Q('.swiper-button-next', parent)
+  const buttonPrev = $Q('.swiper-button-prev', parent)
+
+  mutationParams.navigation = {
+    nextEl: buttonNext,
+    prevEl: buttonPrev
+  }
+
+  return mutationParams
+}
+
+/**
+ * A function that loads sliders on a page by
+ * creating an intersection observer for each slider container element.
+ * @returns {void}
+ */
 export const loadSlider = () => {
-  const dataSliders = $Qll('.slider-js');
-  let loadingScript = false;
+  const dataSliders = $Qll('.slider-js')
 
   dataSliders.forEach((slider) => {
-    if (blackListSlider(slider)) return;
+    if (blackListSlider(slider)) return
 
-    createInterception(slider, async () => {
-      if (!loadingScript) {
-        loadingScript = true;
-        await addSwiperScript();
-      }
-
-      return createSlider(slider);
-    });
-  });
-};
-
-/**
- * this script only select one slider predefine. example at doing click button
- * @param {Node} slider - node slider
- */
-export const loadSliderByEvent = (slider) => {
-  createInterception(slider, async () => {
-    const loadScript = await addSwiperScript();
-
-    if (loadScript) {
-      createSlider(slider);
-    }
-  });
-};
+    createInterception(slider,
+      () => createSlider(slider)
+    )
+  })
+}

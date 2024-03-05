@@ -1,6 +1,6 @@
-import { queryVariants, selectVariant } from "./component-card-product-variant.submodule";
-import { addProducts } from "../src/modules/cart";
-import { $Q } from "graditify-utils";
+import { queryVariants, selectVariant } from './component-card-product-variant.submodule'
+import { addProducts } from '../src/modules/cart'
+import { $Q } from 'graditify-utils'
 
 /**
  * web component for card product.
@@ -8,27 +8,27 @@ import { $Q } from "graditify-utils";
  * event delegation is used, this way we avoid having to reload the events once a reload is done by section rendering.
  */
 class CardProduct extends HTMLElement {
-  constructor() {
+  constructor () {
     super()
   }
 
-  connectedCallback() {
-    const form = $Q("form", this);
+  connectedCallback () {
+    const form = $Q('form', this)
 
-    this.addEventListener("change", (event) => {
-      if (event.target.classList.contains("js-option")) {
-        selectVariant(this);
-        queryVariants(event);
+    this.addEventListener('change', (event) => {
+      if (event.target.classList.contains('js-option')) {
+        selectVariant(this)
+        queryVariants(event)
       }
     })
-    
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      addProducts(event);
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault()
+      addProducts(event)
     })
   }
 }
 
-window.customElements.define("card-product", CardProduct);
+window.customElements.define('card-product', CardProduct)
 
-export default CardProduct;
+export default CardProduct

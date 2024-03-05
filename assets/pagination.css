@@ -1,2 +1,1 @@
-.infinity__scroll{align-items:center;display:flex;justify-content:center;margin:50px 0}.infinity__scroll--loading-container{align-items:center;display:flex;flex-direction:column}.infinity__scroll--loading-container #loading{border-top-color:#000}
-/*# sourceMappingURL=pagination.css.map*/
+.infinity-scroll{display:flex;align-items:center;justify-content:center;margin:50px 0}.infinity-scroll--loading-container{display:flex;flex-direction:column;align-items:center}.infinity-scroll--loading-container #loading{border-top-color:#000}

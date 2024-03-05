@@ -1,0 +1,172 @@
+name: open/edit/sync Pull Request
+on:
+  pull_request:
+    types: ["opened", "edited", "synchronize"]
+    branches: ["main"]
+
+jobs:
+  jslint:
+    name: ESlint with comments
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: reviewdog/action-eslint@v1
+        with:
+          reporter: github-pr-review
+          eslint_flags: "src/"
+          filter_mode: nofilter
+          fail_on_error: true
+  
+  stylelint:
+    name: Stylelint with comments
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: reviewdog/action-stylelint@v1
+        with:
+          reporter: github-pr-review
+          stylelint_input: "src/scss"
+          filter_mode: nofilter
+          fail_on_error: true
+  
+  preview:
+    name: Deploy preview theme
+    runs-on: ubuntu-latest
+    
+    needs: 
+      - jslint
+      - stylelint
+
+    if: needs.jslint.result == 'success' &&  needs.stylelint.result == 'success'
+    
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1
+          bundler: 'latest'
+
+      - name: Install Shopify CLI
+        run: npm install -g @shopify/cli @shopify/theme
+
+      - name: Deploy preview
+        env:
+          # Store URL, like your-store.myshopify.com
+          SHOPIFY_FLAG_STORE: '${{ secrets.SHOP_STORE }}'
+          # Password generated from Theme Access app
+          SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+          SHOPIFY_CLI_TTY: 0
+        run: shopify theme push --path ./ --theme ${{ secrets.THEME_ID_PREVIEW }}
+
+  cypress:
+    name: Cypress CI
+    runs-on: ubuntu-22.04
+
+    needs: 
+      - preview
+
+    if: needs.preview.result == 'success'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache cypress
+        id: cache-cypress
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/Cypress
+            node_modules
+          key: cypress-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - if: ${{ steps.cache-cypress.outputs.cache-hit != 'true' }}
+        name: Install Cypress
+        run: npm i cypress
+
+      # and run all Cypress tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          config: baseUrl=https://${{ secrets.SHOP_STORE }}
+          browser: chrome
+          install: false
+        env:
+          CYPRESS_preview_theme: preview_theme_id=${{ secrets.THEME_ID_PREVIEW }}
+          CYPRESS_collection_url: collection_url=${{ secrets.COLLECTION_URL }}
+          CYPRESS_password_store: password=${{ secrets.SHOP_PASSWORD }}
+
+  lhci:
+    name: Lighthouse CI
+    runs-on: ubuntu-latest
+    
+    needs: 
+      - cypress
+
+    if: needs.cypress.result == 'success'
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      
+      - uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+      - run: |
+          ${{ steps.setup-chrome.outputs.chrome-path }} --version
+
+      - name: run Lighthouse CI
+        run: |
+          npm install -g @lhci/cli
+          lhci autorun
+        env:
+          PUPPETEER_EXECUTABLE_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+          LHCI_SHOP_PASSWORD: ${{ secrets.SHOP_PASSWORD }}
+          HOST: https://${{ secrets.SHOP_STORE }}
+          THEME_ID_PREVIEW: ${{ secrets.THEME_ID_PREVIEW }}
+          COLLECTION_URL: ${{ secrets.COLLECTION_URL }}
+          PRODUCT_URL: ${{ secrets.PRODUCT_URL }}
+
+  build:
+    name: Prepare to publish
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    needs: 
+      - cypress
+      - lhci
+
+    if: needs.cypress.result == 'success' &&  needs.lhci.result == 'success'
+
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v4
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: |
+            ~/.npm
+            node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: node mode.js && node clean.js && webpack --config webpack.config.js --mode production --progress
+      - uses: stefanzweifel/git-auto-commit-action@v5

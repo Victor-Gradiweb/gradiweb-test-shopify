@@ -1,7 +1,7 @@
-import { $Q } from "graditify-utils";
-import { isLastPage, loadContentItems } from "./pagination.core";
+import { $Q } from 'graditify-utils'
+import { isLastPage, loadContentItems } from './pagination.core'
 
-let intersectionObserver;
+let intersectionObserver
 
 /**
  * Loads content into a web page from a list of elements and a container selector.
@@ -11,48 +11,45 @@ let intersectionObserver;
  * @param {number} [options.oldScroll] - The scroll position before the content is loaded.
  */
 const loadContent = ({ listItems, oldScroll, container }) => {
-
-  const thisLastPage = isLastPage();
+  const thisLastPage = isLastPage()
 
   // ! loading content
   listItems.forEach((item) => {
-    $Q(container).appendChild(item);
-    window.scroll(0, oldScroll);
-  });
+    $Q(container).appendChild(item)
+    window.scroll(0, oldScroll)
+  })
 
   // finish load content
   if (thisLastPage) {
-    $Q("#loading-items").classList.add("hidden");
-    $Q(".empty-items-js").classList.remove("hidden");
-    intersectionObserver.disconnect();
-    return;
+    $Q('#loading-items').classList.add('hidden')
+    $Q('.empty-items-js').classList.remove('hidden')
+    intersectionObserver.disconnect()
   }
 }
 
 /**
  * Initial event interceptor
  */
-export const infinityScroll =  () => {
+export const infinityScroll = () => {
+  const loadingClone = $Q('#loading').cloneNode(true)
 
-  const loadingClone = $Q("#loading").cloneNode(true);
-  
-  loadingClone.classList.remove("hidden");
-  const loadItems = $Q("#loading-items");
+  loadingClone.classList.remove('hidden')
+  const loadItems = $Q('#loading-items')
   intersectionObserver = new IntersectionObserver(async (entries) => {
-    if (entries[0].intersectionRatio <= 0) return;
+    if (entries[0].intersectionRatio <= 0) return
     // load more content;
-    $Q(".empty-items-js").classList.add("hidden");
-    loadItems.appendChild(loadingClone);
-    loadItems.classList.remove("hidden");
+    $Q('.empty-items-js').classList.add('hidden')
+    loadItems.appendChild(loadingClone)
+    loadItems.classList.remove('hidden')
 
-    const response = await loadContentItems();
+    const response = await loadContentItems()
 
-    loadContent(response);
-  });
+    loadContent(response)
+  })
 
   // start observing
-  intersectionObserver.observe($Q(".infinity__scroll"));
+  intersectionObserver.observe($Q('.infinity-scroll-js'))
 
   // ! check if it is the last page on first load
-  loadContent({ listItems:[] });
+  loadContent({ listItems: [] })
 }

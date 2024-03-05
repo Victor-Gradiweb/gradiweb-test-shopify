@@ -8,13 +8,12 @@
   border-top-color: variables.$color-gray;
   border-radius: 50%;
   animation: spin 0.7s ease-in-out infinite;
-  -webkit-animation: spin 0.7s ease-in-out infinite;
 }
 
 @keyframes spin {
-  to { -webkit-transform: rotate(360deg); }
+  to { transform: rotate(360deg); }
 }
 
-@-webkit-keyframes spin {
-  to { -webkit-transform: rotate(360deg); }
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }

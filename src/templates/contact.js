@@ -1,3 +1,3 @@
-import { validateFormContact } from "../components/form-contact";
+import { validateFormContact } from '../components/form-contact'
 
-validateFormContact();
+validateFormContact()

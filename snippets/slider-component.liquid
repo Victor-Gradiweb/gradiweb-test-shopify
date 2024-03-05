@@ -3,16 +3,17 @@
 
   Accepts:
   - section: {Object} **REQUIRED** Section object
-  - content: {Html} **REQUIRED** Internal sliders **init with for (iteration)
+  - content: {HTML} **REQUIRED** Internal sliders **init with for (iteration)
   - pagination: {Boolean} show default pagination
   - navigation: {Boolean} show default navigation
   - perpage: {Number} items per page
   - wrapper: {String} parent className - You specific your styles sheets
   - auto: {boolean} If auto move slider
   - mobile_grid: {boolean} If need a grid card on mobile
-  - perpage_mobile:
-  - space_between:
-  - speed:
+  - perpage_mobile: {Number} # slides per page on mobile
+  - space_between: {Number} Space(px) between slides
+  - speed: {Number} If prop auto is true. Speed of movement
+  - critical: {Boolean} CLS - Critical section - Render critical
 
   Use this structure in content prop:
   {% capture slider_content %}
@@ -44,19 +45,21 @@
 >
   <swiper-container
     init="false"
-    data-script="{{ 'swiper-element-bundle.min.js' | asset_url }}"
-    class="slider-js {{ id_slider }}"
+    class="{% unless critical %}slider-js{% endunless %} {{ id_slider }}"
     data-pagination={{ pagination | default: false }}
     data-navigation={{ navigation | default: false }}
     data-auto={{ auto | default: false }}
     data-speed={{ speed | default: false }}
     data-slides={{ perpage | default: 4 }}
     data-slides-mobile={{ perpage_mobile | default: 1 }}
-    data-spacing={{ space_between | default: 25 }}
+    data-slides-tablet={{ perpage_tablet | default: 2 }}
+    data-spacing={{ space_between | default: 20 }}
+    data-loop={{ loop | default: false }}
+    data-free-mode={{ free_mode | default: false }}
   >
     {{ content }}
   </swiper-container>
-
+    
   {% if pagination %}
     <div
       class="swiper-pagination swiper-pagination-bullets {{ id_slider }}"
@@ -68,16 +71,30 @@
     <button
       type="button"
       class="swiper-button swiper-button-prev {{ id_slider }}"
-      aria-label="Arrow slider{{ id_slider }} prev"
+      aria-label="Arrow prev"
     >
       {% render "button-arrow" %}
     </button>
     <button
       type="button"
       class="swiper-button swiper-button-next {{ id_slider }}"
-      aria-label="Arrow slider{{ id_slider }} next"
+      aria-label="Arrow next"
     >
       {% render "button-arrow", direction: "right" %}
     </button>
   {% endif %}
 </div>
+
+{% if critical %}
+  {% render 'critical-swiper-config',
+    id_slider: id_slider,
+    pagination: pagination,
+    navigation: navigation,
+    perpage: perpage,
+    auto: auto,
+    mobile_grid: mobile_grid,
+    perpage_mobile: perpage_mobile,
+    space_between: space_between
+    speed: speed
+  %}
+{% endif %}

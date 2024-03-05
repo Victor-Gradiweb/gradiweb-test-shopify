@@ -1,5 +1,5 @@
-import { $Qll } from "./query-selector";
-import { dataToggle } from "./toggle-dataset";
+import { $Qll } from './query-selector'
+import { dataToggle } from './toggle-dataset'
 
 /**
  * Loop to change all dataset active in button accordions
@@ -8,7 +8,7 @@ import { dataToggle } from "./toggle-dataset";
  * @param {HTMLElement} parent - Parent to valuate
  * @returns Action to change dataset active to 'false' at all buttons
  */
- export function closeAll(nodeAll, parent) {
+export function closeAll (nodeAll, parent) {
   return $Qll(nodeAll, parent)
     .forEach((node) => {
       // eslint-disable-next-line no-param-reassign
@@ -24,14 +24,13 @@ import { dataToggle } from "./toggle-dataset";
  * @param {HTMLElement} element - Button to change data active
  * @param {NodeListOf} accordions - All accordions in DOM
  */
- function accordionAction(element, accordions) {
-
-  const EXIST_CLASS = element.classList.contains('accordion-item__button');
+function accordionAction (element, accordions) {
+  const EXIST_CLASS = element.classList.contains('accordion-item__button')
   if (accordions.dataset.toggle === 'true' && EXIST_CLASS) {
-    closeAll('.accordion-item', accordions);
+    closeAll('.accordion-item', accordions)
   }
 
-  dataToggle(element);
+  dataToggle(element)
 }
 
 /**
@@ -39,7 +38,7 @@ import { dataToggle } from "./toggle-dataset";
  * This function valuate all nodes with the class
  * ".accordions" and add new event listener
  */
-export function openAccordion() {
+export function openAccordion () {
   $Qll('.accordions').forEach(
     (accordion) => {
       $Qll('.accordion-item__button', accordion)
@@ -48,9 +47,9 @@ export function openAccordion() {
             'click',
             () => {
               accordionAction(item, accordion)
-            },
+            }
           )
         })
-    },
+    }
   )
 }

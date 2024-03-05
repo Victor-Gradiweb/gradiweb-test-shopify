@@ -1,18 +1,18 @@
+/* stylelint-disable declaration-block-no-redundant-longhand-properties */
 .grid {
   display: grid;
   column-gap: var(--column-gap, 10px);
   grid-column-gap: var(--column-gap, 10px);
-  /* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
   grid-row-gap: var(--row-gap, 10px);
   grid-template-columns: var(--columns, repeat(3, 1fr));
   grid-template-rows: var(--rows, 1fr);
   row-gap: var(--row-gap, 10px);
 
-  @media screen and (max-width: 749px) {
+  @media screen and (width <= 749px) {
     grid-template-columns: var(--columns, repeat(2, 1fr));
   }
 
-  @media screen and (max-width: 430px) {
+  @media screen and (width <= 430px) {
     grid-template-columns: var(--columns, 1fr);
   }
 }

@@ -1,23 +1,23 @@
-import "../scss/collection.scss";
-import { defaultSortBy } from "../components/sort-by";
-import { toggleDataActive } from "../utils/toggle-dataset";
-import { rangeFilters } from "../components/filters-range";
+import '../scss/collection.scss'
+import { defaultSortBy } from '../components/sort-by'
+import { toggleDataActive } from '../utils/toggle-dataset'
+import { rangeFilters } from '../components/filters-range'
 
-defaultSortBy();
-rangeFilters();
+defaultSortBy()
+rangeFilters()
 
 toggleDataActive(
   '#filter-open',
   '#filter',
   {
-    overlay: true,
-  },
+    overlay: true
+  }
 )
 
 toggleDataActive(
   '.filter-form__name svg',
   '#filter',
   {
-    overlay: true,
-  },
+    overlay: true
+  }
 )

@@ -46,7 +46,7 @@
       white-space: nowrap;
     }
 
-    @media screen and (max-width: 750px) {
+    @media screen and (width <= 750px) {
       & > .form__textfield {
         width: 100%;
       }
@@ -66,42 +66,39 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+  }
 
-    .filter-option {
+  &__controls > * {
+    @media screen and (width <= 750px) {
+      width: calc(50% - 10px);
+    }
+  }
+
+  &__controls .filter-option {
+    display: flex;
+    align-items: center;
+
+    label {
+      position: relative;
+      inset: auto;
       display: flex;
+      overflow: hidden;
+      height: 100%;
+      box-sizing: border-box;
+      flex-direction: row;
       align-items: center;
-
-      label {
-        position: relative;
-        top: auto;
-        right: auto;
-        bottom: auto;
-        left: auto;
-        display: flex;
-        overflow: hidden;
-        height: 100%;
-        box-sizing: border-box;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        padding: 8px 16px;
-        margin-left: 16px;
-        background-color: #b1b1b1;
-        border-radius: 118px;
-        color: variables.$color-white;
-        cursor: pointer;
-        text-transform: uppercase;
-
-        &:last-of-type {
-          margin-right: 0;
-        }
-      }
+      justify-content: center;
+      padding: 8px 16px;
+      margin-left: 16px;
+      background-color: #b1b1b1;
+      border-radius: 118px;
+      color: variables.$color-white;
+      cursor: pointer;
+      text-transform: uppercase;
     }
 
-    & > * {
-      @media screen and (max-width: 750px) {
-        width: calc(50% - 10px);
-      }
+    label:last-of-type {
+      margin-right: 0;
     }
   }
 }

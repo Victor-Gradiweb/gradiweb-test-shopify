@@ -59,14 +59,14 @@ $max-width: 450px;
     cursor: pointer;
   }
 
-  &__header {    
+  &__header {
     cursor: pointer;
     height: 65px;
     padding: 21px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 12px rgb(0 0 0 / 12%);
 
     &--item > .window__button {
       padding-right: 23px;
@@ -80,7 +80,8 @@ $max-width: 450px;
   &__content {
     height: calc(100% - 65px);
     overflow-y: auto;
-    @include mixins.scrollCustom();
+
+    @include mixins.scroll-custom;
   }
 
   &__footer {
@@ -136,6 +137,7 @@ $max-width: 450px;
 
   .truncate-1-line {
     max-width: 80%;
+
     @include mixins.excerpt(1);
   }
 }

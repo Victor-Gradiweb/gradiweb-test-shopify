@@ -1,7 +1,7 @@
-/*============================================================================
+/* ============================================================================
   #Normalize
   Based on normalize.css v3.0.2 | MIT License | git.io/normalize
-==============================================================================*/
+============================================================================== */
 article,
 aside,
 details,
@@ -15,51 +15,59 @@ menu,
 nav,
 section,
 summary {
-  display: block; }
+  display: block;
+}
 
 input,
 textarea,
-select,
-.disclosure__toggle {
+select {
   -webkit-font-smoothing: antialiased;
-  -webkit-text-size-adjust: 100%; }
+  text-size-adjust: 100%;
+}
 
 a {
   background-color: transparent;
-  text-decoration: none; }
+  text-decoration: none;
+}
 
 b,
 strong {
-  font-weight: 600; }
+  font-weight: 600;
+}
 
 em {
-  font-style: italic; }
+  font-style: italic;
+}
 
 small {
-  font-size: 80%; }
+  font-size: 80%;
+}
 
 sub,
 sup {
   position: relative;
   font-size: 75%;
   line-height: 0;
-  vertical-align: baseline; }
+  vertical-align: baseline;
+}
 
 sup {
-  top: -0.5em; }
+  top: -0.5em;
+}
 
 sub {
-  bottom: -0.25em; }
+  bottom: -0.25em;
+}
 
 img {
   max-width: 100%;
-  border: 0; }
+  border: 0;
+}
 
 button,
 input,
 optgroup,
 select,
-.disclosure__toggle,
 textarea {
   margin: 0;
   color: inherit;
@@ -68,8 +76,6 @@ textarea {
 
 progress {
   border: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
   appearance: none;
 }
 
@@ -78,47 +84,121 @@ button::-moz-focus-inner,
 [type="reset"]::-moz-focus-inner,
 [type="submit"]::-moz-focus-inner {
   padding: 0;
-  border-style: none;}
+  border-style: none;
+}
 
 button:-moz-focusring,
 [type="button"]:-moz-focusring,
 [type="reset"]:-moz-focusring,
 [type="submit"]:-moz-focusring {
-  outline: 1px dotted ButtonText; }
+  outline: 1px dotted ButtonText;
+}
 
-input[type="search"], input[type="number"], input[type="email"], input[type="password"] {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;}
+input[type="search"],
+input[type="number"],
+input[type="email"],
+input[type="password"] {
+  appearance: none;
+}
 
 table {
   width: 100%;
   border-collapse: collapse;
-  border-spacing: 0; }
+  border-spacing: 0;
+}
 
 td,
 th {
-  padding: 0; }
+  padding: 0;
+}
 
 textarea {
   overflow: auto;
-  -webkit-appearance: none;
-  -moz-appearance: none; }
+  appearance: none;
+}
 
-/*================ RESET on the web ================*/
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
+/* ================ RESET on the web ================ */
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
   padding: 0;
   border: 0;
   margin: 0;
@@ -130,6 +210,5 @@ button,
 [type="button"],
 [type="reset"],
 [type="submit"] {
-  -webkit-appearance: none;
-  -moz-appearance: none;
+  appearance: none;
 }

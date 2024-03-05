@@ -1,12 +1,12 @@
 <link
   rel="preload"
-  href="{{ asset | asset_url }}"
+  href="{{ asset | append: ext | asset_url }}"
   as="style"
   onload="this.onload=null;this.rel='stylesheet'"
 />
 <noscript>
   <link
     rel="stylesheet"
-    href="{{ asset | asset_url }}"
+    href="{{ asset | append: ext | asset_url }}"
   >
 </noscript>

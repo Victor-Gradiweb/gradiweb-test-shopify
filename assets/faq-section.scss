@@ -1,33 +1,26 @@
 /* == Margins and Paddings == */
 $paddings-side: 5rem;
-$paddings-side--movil: 1rem;
-
 $margin-section: 50px;
 
 /* ====== Font ====== */
 
-$font-family--general: 'system', sans-serif;
-$font-size--general: 16px;
-
-$font-family--title: 'system', sans-serif;
-$font-size--h2: 25px;
-$font-size--h3: 22px;
+$font-family-general: "system", sans-serif;
+$font-size-general: 16px;
+$font-family-title: "system", sans-serif;
+$font-size-h2: 25px;
+$font-size-h3: 22px;
 
 /* ====== Colors ====== */
 
-$color-base: #000000;
-$color-oppositive: #FFFFFF;
+$color-base: #000;
+$color-oppositive: #fff;
 
 /* ====== complements ====== */
 
-@mixin font(
-  $ff: $font-family--general,
-  $fz: $font-size--general,
-  $lh: $font-size--general
-) {
+@mixin font($ff: $font-family-general, $fz: $font-size-general, $lh: $font-size-general) {
   font-family: $ff;
   font-size: $fz;
-  line-height:$lh;
+  line-height: $lh;
 }
 
 /* ====== INIT ====== */
@@ -35,204 +28,189 @@ $color-oppositive: #FFFFFF;
 .faq-category-section {
   --columns: 1fr;
   --column-gap: 35px;
+
   margin-bottom: $margin-section;
 
-  @media screen and (min-width: 768px) {
+  @media screen and (width >= 768px) {
     --columns: 2fr 5fr;
+
     margin-top: $margin-section;
   }
+}
 
-  .categories-menu {
+.faq-category-section .categories-menu {
+  @media screen and (width <= 767px) {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
 
-    @media screen and (max-width: 767px) {
-      display: flex;
-      width: 100%;
-      flex-wrap: wrap;
-      justify-content: flex-start;      
+  @media screen and (width <= 396px) {
+    justify-content: center;
+  }
+
+  &__item {
+    padding: 1rem 2rem;
+    border: 1px solid $color-base;
+    color: #8e8d97;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    transition: all ease 0.4s;
+    max-width: 320px;
+
+    @media screen and (width <= 767px) {
+      padding: 1rem;
+      width: calc(50% - 10px);
+      max-width: initial;
+      display: box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      box-sizing: border-box;
+      text-align: center;
+
+      &:not(:nth-child(2n)) {
+        margin-right: 20px;
+      }
     }
 
-    @media screen and (max-width: 396px) {
-      justify-content: center;
+    @media screen and (width <= 396px) {
+      width: 80%;
+
+      &:not(:nth-child(2n)) {
+        margin-right: 0;
+      }
+    }
+
+    &.clicked-js,
+    &:hover {
+      color: $color-oppositive;
+      background: $color-base;
+    }
+  }
+
+  &__name {
+    text-transform: uppercase;
+
+    @include font($font-family-general, $font-size-general, 20px);
+
+    @media screen and (width <= 767px) {
+      font-size: $font-size-general;
+    }
+  }
+}
+
+.faq-category-section .categories-content {
+  &__title {
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #c6cad6;
+
+    @include font($font-family-title, $font-size-h2, 60px);
+
+    &.desktop {
+      @media screen and (width <= 767px) {
+        display: none;
+      }
+    }
+
+    &.mobile {
+      text-align: center;
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+
+      @media screen and (width >=768px) {
+        display: none;
+      }
+    }
+  }
+
+  &__subtitle {
+    text-transform: uppercase;
+
+    @include font($font-family-title, $font-size-h3, 48px);
+
+    @media screen and (width <= 767px) {
+      text-align: center;
+    }
+  }
+}
+
+.faq-category-section .categories-container {
+  transition: opacity ease 0.6s;
+
+  &.hide {
+    display: none;
+    opacity: 0;
+    transition: opacity ease 0.6s;
+  }
+
+  &.show {
+    display: block;
+    opacity: 1;
+    transition: opacity ease 0.6s;
+  }
+
+  .block-container {
+    &::after {
+      display: table;
+      content: "";
+      clear: both;
     }
 
     &__item {
-      padding: 1rem 2rem;
-      border: 1px solid $color-base;
-      color: #8E8D97;
-      cursor: pointer;
-      margin-bottom: 1rem;
-      transition: all ease .4s;
-      max-width: 320px;
-    
-      @media screen and (max-width: 767px) {
-        padding: 1rem;
-        width: calc(50% - 10px);
-        max-width: initial;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        box-sizing: border-box;
-        text-align: center;
+      display: flex;
+      float: left;
+      width: 50%;
+      justify-content: flex-start;
+      margin-bottom: 2rem;
 
-        &:not(:nth-child(2n)) {
-          margin-right: 20px;
-        }
+      @media screen and (width <= 767px) {
+        width: 100%;
       }
 
-      @media screen and (max-width: 396px) {
-        width: 80%;
-
-        &:not(:nth-child(2n)) {
-          margin-right: 0;
-        }
-      }
-
-      &.isClicked,
-      &:hover {
-        color: $color-oppositive;
-        background: $color-base;
+      span {
+        width: 14px;
+        height: 14px;
       }
     }
 
-    &__name {
-      text-transform: uppercase;
-      @include font(
-        $font-family--general,
-        $font-size--general,
-        20px
-      );
-      @media screen and (max-width: 767px) {
-        font-size: $font-size--general;
+    &__content {
+      margin-left: 1rem;
+
+      p {
+        color: #606470;
+
+        @include font($font-family-general, 20px);
+      }
+
+      .show {
+        display: none;
+      }
+
+      .show-less {
+        display: inline;
       }
     }
-  }
-
-  .categories-content {
 
     &__title {
       text-transform: uppercase;
-      margin-bottom: 2rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid #C6CAD6;
-      @include font(
-        $font-family--title,
-        $font-size--h2,
-        60px
-      );
+      margin-bottom: 0.5rem;
 
-      &.desktop {
-        @media screen and (max-width: 767px) {
-          display: none;
-        }
-      }
-
-      &.mobile {
-        text-align: center;
-        border-bottom: none;
-        margin-bottom: 0;
-        padding-bottom: 0;
-        @media screen and (min-width:768px) {
-          display: none;
-        }
-      }
+      @include font($font-family-general, $font-size-general, 20px);
     }
 
-    &__subtitle {
-      text-transform: uppercase;
-      @include font(
-        $font-family--title,
-        $font-size--h3,
-        48px
-      );
-
-      @media screen and (max-width: 767px) {
-        text-align: center;
-      }
-    }
-  }
-
-  .categories-container {
-    transition: opacity ease .6s;
-    &.hide {
-      display: none;
-      opacity: 0;
-      transition: opacity ease .6s;
-    }
-    &.show {
-      display: block;
-      opacity: 1;
-      transition: opacity ease .6s;
-    }
-
-    .block-container {
-      &::after {
-        display: table;
-        content: "";
-        clear: both;
-      }
-
-      &__item {
-        display: flex;
-        float: left;
-        width: 50%;
-        justify-content: flex-start;
-        margin-bottom: 2rem;
-        @media screen and (max-width: 767px) {
-          width: 100%;
-        }
-
-        span {
-          width: 14px;
-          height: 14px;
-        }
-      }
-
-
-      &__content {
-        margin-left: 1rem;
-
-        p {
-          color: #606470;
-          @include font(
-            $font-family--general,
-            20px
-          );
-        }
-
-        .show {
-          display: none;
-          &-less {
-            display: inline;
-          }
-        }
-
-      }
-
-      &__title {
+    &__description {
+      .dots {
+        cursor: pointer;
         text-transform: uppercase;
-        margin-bottom: 0.5rem;
-        @include font(
-          $font-family--general,
-          $font-size--general,
-          20px
-        );
-      }
+        text-decoration: underline;
 
-      &__description {
-
-        .dots {
-          cursor: pointer;
-          text-transform: uppercase;
-          text-decoration: underline;
-          
-          @include font(
-            $font-family--general,
-            $font-size--general,
-            20px
-          );
-        }
+        @include font($font-family-general, $font-size-general, 20px);
       }
     }
   }

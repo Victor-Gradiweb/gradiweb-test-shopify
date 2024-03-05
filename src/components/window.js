@@ -1,5 +1,5 @@
-import { $Q, $Qll } from "../utils/query-selector";
-import { toggleDataActive } from "../utils/toggle-dataset";
+import { $Q, $Qll } from '../utils/query-selector'
+import { toggleDataActive } from '../utils/toggle-dataset'
 
 /**
  * Init resource windows
@@ -8,16 +8,16 @@ import { toggleDataActive } from "../utils/toggle-dataset";
  * @param {String} params.target - Reference of the modal window
  */
 const initWindows = ({ control, target }) => {
-  windowsToggle(target);
+  windowsToggle(target)
 
   toggleDataActive(
     control,
     target,
     {
       overlay: true,
-      closeSelector: '.window-close-js',
-    },
-  );
+      closeSelector: '.window-close-js'
+    }
+  )
 }
 
 /**
@@ -26,24 +26,24 @@ const initWindows = ({ control, target }) => {
  * @param {HTMLElement} scope - scope or parent target
  */
 const windowsToggle = (scope) => {
-  const parentNode = $Q(scope);
-  const itemToggle = $Qll('.window-item-js', parentNode);
+  const parentNode = $Q(scope)
+  const itemToggle = $Qll('.window-item-js', parentNode)
   const layerItems = $Qll('.window-layer-close-js', parentNode)
 
   itemToggle.forEach((item) => item.addEventListener('click',
     () => {
-      item.setAttribute('data-active', 'true');
-    },
+      item.setAttribute('data-active', 'true')
+    }
   ))
 
   layerItems.forEach((layeritem) => {
     layeritem.addEventListener('click', () => {
-      const layer = layeritem.closest('.window-layer-js');
-      if (!layer) return null;
-      const sibling = layer.previousElementSibling;
-      sibling.setAttribute('data-active', 'false');
-    });
+      const layer = layeritem.closest('.window-layer-js')
+      if (!layer) return null
+      const sibling = layer.previousElementSibling
+      sibling.setAttribute('data-active', 'false')
+    })
   })
 }
 
-export default initWindows;
+export default initWindows

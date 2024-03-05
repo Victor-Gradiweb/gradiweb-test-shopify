@@ -9,15 +9,15 @@
 const executeInterception = (
   entries,
   observer,
-  params,
+  params
 ) => entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      params.callback();
+  if (entry.isIntersecting) {
+    params.callback()
 
-      if (params.unobserve) {
-        observer.unobserve(entry.target);
-      }
+    if (params.unobserve) {
+      observer.unobserve(entry.target)
     }
+  }
 })
 
 /**
@@ -29,17 +29,17 @@ const executeInterception = (
 export const createInterception = (
   element,
   callback,
-  options = { root: null, rootMargin: "120px", unobserve: true },
+  options = { root: null, rootMargin: '120px', unobserve: true }
 ) => {
-  const optionsRoot = options;
-  const unobserve = options.unobserve || false;
+  const optionsRoot = options
+  const unobserve = options.unobserve || false
 
-  delete optionsRoot.unobserve;
+  delete optionsRoot.unobserve
 
   const intersectionObserver = new
-    IntersectionObserver(
-      (entries, observer) => executeInterception(
-        entries, observer, { callback, unobserve }), optionsRoot);
+  IntersectionObserver(
+    (entries, observer) => executeInterception(
+      entries, observer, { callback, unobserve }), optionsRoot)
 
-  intersectionObserver.observe(element);
+  intersectionObserver.observe(element)
 }

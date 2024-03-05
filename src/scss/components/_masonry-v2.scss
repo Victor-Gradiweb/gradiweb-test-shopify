@@ -9,7 +9,7 @@
     columns: var(--masonry-columns) auto;
     column-gap: .5rem;
 
-    @media screen and (max-width: 768px) {
+    @media screen and (width <= 768px) {
       columns: 2 auto;
     }
   

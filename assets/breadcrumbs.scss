@@ -2,32 +2,33 @@
 
 .breadcrumbs {
   margin: 50px 0;
-  
+
   &__list {
     @include mixins.excerpt(1);
+
     width: 95%;
     overflow: hidden;
   }
 
   &__item {
     display: inline-block;
+  }
 
-    &:not(:last-child):after {
-      content: "/";
-      display: inline-block;
-      margin: 0 7px;
-      position: relative;
-      width: 0.2em;
-    }
+  &__item:not(:last-child)::after {
+    content: "/";
+    display: inline-block;
+    margin: 0 7px;
+    position: relative;
+    width: 0.2em;
   }
 
   &__link {
-    color: black;
+    color: #000;
+  }
 
-    &[aria-current="page"] {
-      color: inherit;
-      font-weight: 400;
-      text-decoration: none;
-    }
+  &__link[aria-current="page"] {
+    color: inherit;
+    font-weight: 400;
+    text-decoration: none;
   }
 }

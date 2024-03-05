@@ -1,10 +1,10 @@
-import axios from 'axios';
+import axios from 'axios'
+const routes = window.routes
 
 /**
 * Client for the Shopify API
 */
 class API {
-
   /**
   * Add products to cart
   * @param {{
@@ -14,34 +14,33 @@ class API {
   * the quantity and section to update
   * @returns {object} Line items associated with the added items and sections
   */
-  async addToCart({ items, sections = undefined }) {
-
+  async addToCart ({ items, sections = undefined }) {
     const formData = {
-      items: items,
-    };
+      items
+    }
 
-    //Support bundled section rendering
+    // Support bundled section rendering
     if (sections) {
-      formData.sections = sections;
+      formData.sections = sections
     }
 
     try {
       const response = await axios({
-        method: "POST",
+        method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         url: `${routes.cart_add_url}.js`,
-        data: JSON.stringify(formData),
-      });
+        data: JSON.stringify(formData)
+      })
 
-      response.data.status = response.status;
-      return response.data;
+      response.data.status = response.status
+      return response.data
     } catch (error) {
       return {
         ...error.response,
-        sections: '',
-      };
+        sections: ''
+      }
     }
   }
 
@@ -55,39 +54,38 @@ class API {
   * the quantity and section to update
   * @returns {object} The JSON of the cart and HTML of the sections
   */
-  async updateCart({
+  async updateCart ({
     id,
     quantity,
-    sections = undefined,
+    sections = undefined
   }) {
-
     const formData = {
       updates: {
-        [id]: quantity,
-      },
-    };
+        [id]: quantity
+      }
+    }
 
-    //Support bundled section rendering
+    // Support bundled section rendering
     if (sections) {
-      formData.sections = sections;
+      formData.sections = sections
     }
 
     try {
       const response = await axios({
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json'
         },
         url: `${routes.cart_update_url}.js`,
-        data: JSON.stringify(formData),
-      });
-      response.data.status = response.status;
-      return response.data;
+        data: JSON.stringify(formData)
+      })
+      response.data.status = response.status
+      return response.data
     } catch (error) {
       return {
         ...error.response,
-        sections: '',
-      };
+        sections: ''
+      }
     }
   }
 
@@ -101,39 +99,38 @@ class API {
    * the quantity and section to update
    * @returns {object} The JSON of the cart and HTML of the sections
    */
-  async changeCart({
+  async changeCart ({
     line,
     quantity,
-    sections = undefined,
+    sections = undefined
   }) {
-
     const formData = {
-    'line': line,
-    'quantity': quantity,
-    };
+      line,
+      quantity
+    }
 
-    //Support bundled section rendering
+    // Support bundled section rendering
     if (sections) {
-      formData.sections = sections;
+      formData.sections = sections
     }
 
     try {
       const response = await axios({
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json'
         },
         url: `${routes.cart_change_url}.js`,
-        data: JSON.stringify(formData),
-      });
+        data: JSON.stringify(formData)
+      })
 
-      response.data.status = response.status;
-      return response.data;
+      response.data.status = response.status
+      return response.data
     } catch (error) {
       return {
         ...error.response,
-        sections: '',
-      };
+        sections: ''
+      }
     }
   }
 
@@ -143,38 +140,38 @@ class API {
   * @returns {object} Includes pairs for each section ID and its
   * corresponding rendered HTML
   */
-  async renderShopifySection(sections) {
+  async renderShopifySection (sections) {
     try {
       const {
-        data: html,
-      } = await axios.get(`?sections=${sections}`);
-      return html;
+        data: html
+      } = await axios.get(`?sections=${sections}`)
+      return html
     } catch (error) {
       // eslint-disable-next-line no-undef
-      console.error(`Error: ${error.message}`);
+      console.error(`Error: ${error.message}`)
     }
   }
 
-  async shopifySectionByUrl(base, section) {
+  async shopifySectionByUrl (base, section) {
     try {
       const {
-        data: html,
-      } = await axios.get(`${base}?section_id=${section}`);
-      return html;
+        data: html
+      } = await axios.get(`${base}?section_id=${section}`)
+      return html
     } catch (error) {
       // eslint-disable-next-line no-undef
-      console.error(`Error: ${error.message}`);
+      console.error(`Error: ${error.message}`)
     }
   }
 
-  async recommendationByApi(productId, sectionId) {
+  async recommendationByApi (productId, sectionId) {
     try {
       const {
-        data: html,
-      } = await axios.get(`${routes.recommendation}?product_id=${productId}&limit=4&section_id=${sectionId}`);
-      return html;
+        data: html
+      } = await axios.get(`${routes.recommendation}?product_id=${productId}&limit=4&section_id=${sectionId}`)
+      return html
     } catch (error) {
-      console.error(`Error: ${error.message}`);
+      console.error(`Error: ${error.message}`)
     }
   }
 
@@ -186,15 +183,15 @@ class API {
    *
    * @author Andres Briñez
    */
-   async shopifyVariantByUrl(base, variantID) {
+  async shopifyVariantByUrl (base, variantID) {
     try {
       const {
-        data: html,
-      } = await axios.get(`${base}?variant=${variantID}`);
-      return html;
+        data: html
+      } = await axios.get(`${base}?variant=${variantID}`)
+      return html
     } catch (error) {
       // eslint-disable-next-line no-undef
-      console.error(`Error: ${error.message}`);
+      console.error(`Error: ${error.message}`)
     }
   }
 
@@ -210,20 +207,20 @@ class API {
   * @returns {object} Array with the recommended products or, if the section ID
   * is supplied, HTML from a section rendered with product recommendations
   */
-  async getRecommendedProducts({ id, limit, sectionId = undefined }) {
+  async getRecommendedProducts ({ id, limit, sectionId = undefined }) {
     try {
-      let url;
+      let url
       if (sectionId) {
-        //Support section rendering
-        url = `/recommendations/products?section_id=${sectionId}&product_id=${id}&limit=${limit}`;
+        // Support section rendering
+        url = `/recommendations/products?section_id=${sectionId}&product_id=${id}&limit=${limit}`
       } else {
-        url = `/recommendations/products.json?product_id=${id}&limit=${limit}`;
+        url = `/recommendations/products.json?product_id=${id}&limit=${limit}`
       }
-      const { data } = await axios.get(url);
-      return data;
+      const { data } = await axios.get(url)
+      return data
     } catch (error) {
       // eslint-disable-next-line no-undef
-      console.error(`Error: ${error.message}`);
+      console.error(`Error: ${error.message}`)
     }
   }
 
@@ -232,15 +229,15 @@ class API {
   * @param {string} url – The path of the resource to obtain
   * @returns {object} Data from a resource
   */
-  async read(url) {
+  async read (url) {
     try {
-      const { data } = await axios.get(url);
-      return data;
+      const { data } = await axios.get(url)
+      return data
     } catch (error) {
       // eslint-disable-next-line no-undef
-      console.error(`Error: ${error.message}`);
+      console.error(`Error: ${error.message}`)
     }
   }
 }
 
-export default new API();
+export default new API()
