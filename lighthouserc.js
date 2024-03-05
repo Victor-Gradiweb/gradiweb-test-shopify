@@ -15,6 +15,7 @@ module.exports = {
         `${env.host}${env.collectionUrl}${env.queryString}`,
         `${env.host}${env.productUrl}${env.queryString}`
       ],
+      numberOfRuns: 1,
       chromePath: '/opt/hostedtoolcache/chromium/latest/x64/chrome',
       puppeteerScript: './setPreviewCookies.js',
       puppeteerLaunchOptions: {
