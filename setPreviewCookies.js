@@ -5,9 +5,10 @@ module.exports = async (browser, context) => {
   // launch browser for LHCI
   console.error('Getting a new page...')
   const page = await browser.newPage()
+  const passwordInput = await page.$('form[action*=password] input[type="password"]')
 
   // Get password cookie if password is set
-  if (options.shopPassword !== '' && counter === 1) {
+  if (options.shopPassword !== '' && counter === 1 && passwordInput !== null) {
     console.error('Getting password page cookie...')
     await page.goto(context.url)
     await page.waitForSelector('form[action*=password] input[type="password"]')

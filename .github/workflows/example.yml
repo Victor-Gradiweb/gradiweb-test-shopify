@@ -2,7 +2,7 @@ name: EXAMPLE PULL REQUEST OPEN
 on:
   pull_request:
     types: ["opened", "edited", "synchronize"]
-    branches: ["staging", "main"]
+    branches: ["development"]
 
 jobs:
   deploy:
