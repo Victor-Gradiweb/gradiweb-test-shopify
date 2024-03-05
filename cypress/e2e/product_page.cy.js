@@ -6,7 +6,7 @@ Cypress.on('uncaught:exception', () => { return false })
 const deviceDesktop = [{ viewport: [1440, 900], type: 'WXGA+' }]
 const urlPreview = `?${Cypress.env('preview_theme')}`
 const collectionUrl = `${Cypress.env('collection_url')}?${Cypress.env('preview_theme')}`
-const productTest = `products/${Cypress.env('product_url')}?${Cypress.env('preview_theme')}`
+const productTest = `${Cypress.env('product_url')}?${Cypress.env('preview_theme')}`
 
 describe('Product Page', () => {
   beforeEach(() => {
