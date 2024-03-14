@@ -42,7 +42,8 @@ describe('template spec', () => {
 
         it('should navigate to the previous upsell', () => {
           sideCart.openSideCart()
-          sideCart.navigateToPreviousUpsell()
+          sideCart.navigateToNextUpsell()
+          sideCart.navigateToPrevtUpsell()
         })
 
         it('should add a product to the cart', () => {
@@ -59,7 +60,8 @@ describe('template spec', () => {
         it('should decrease quantity of the added product', () => {
           sideCart.openSideCart()
           sideCart.addToCart()
-          sideCart.removeQuantity()
+          sideCart.plusQuantity()
+          sideCart.decrementQuantity()
         })
 
         it('should delete the first product from the cart', () => {
@@ -67,7 +69,6 @@ describe('template spec', () => {
           sideCart.addToCart()
           sideCart.deleteFirstProduct()
         })
-        // sideCart.goCheckout()
       })
     })
   })
