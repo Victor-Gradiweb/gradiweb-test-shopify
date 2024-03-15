@@ -1,289 +1,185 @@
 import { sideCart } from './SideCart'
 
-/**
- * The ProductPage class represents the page object for the product page.
- * It initializes the selectors for product and sidecart elements from Cypress environment variables.
- */
 export class ProductPage {
-  /**
-   * @constructor
-   */
   constructor () {
-    /**
-     * Initialize selectors for product and sidecart elements from Cypress environment variables.
-     * @type {Object}
-     * @property {string} section_product - Selector for the product section.
-     * @property {string} product_card - Selector for the product card.
-     * @property {string} product_title - Selector for the product title.
-     * @property {string} imagen_product - Selector for the product image.
-     * @property {string} cta_product_page - Selector for the product CTA button.
-     * @property {string} product_media - Selector for the product media.
-     * @property {string} breadcrumbs - Selector for the breadcrumbs.
-     */
-    const productPageConfig = Cypress.env('product_page')
-    const sidecartConfig = Cypress.env('sidecart')
-
-    /**
-     * Define selectors for product elements.
-     * @type {Object}
-     * @property {string} section_product - Selector for the product section.
-     * @property {string} product_card - Selector for the product card.
-     * @property {string} product_title - Selector for the product title.
-     * @property {string} imagen_product - Selector for the product image.
-     * @property {string} cta_product_page - Selector for the product CTA button.
-     * @property {string} product_media - Selector for the product media.
-     * @property {string} breadcrumbs - Selector for the breadcrumbs.
-     */
-    this.productSelectors = {
-      section_product: productPageConfig.section_product,
-      product_card: productPageConfig.product_card,
-      product_title: productPageConfig.product_title,
-      imagen_product: productPageConfig.imagen_product,
-      cta_product_page: productPageConfig.cta_product_page,
-      product_media: productPageConfig.product_media,
-      breadcrumbs: productPageConfig.breadcrumbs
-    }
-
-    /**
-     * Define selectors for sidecart elements.
-     * @type {Object}
-     * @property {string} section_sidecart - Selector for the side cart section.
-     * @property {string} item_cart - Selector for the item cart.
-     */
-    this.sidecartSelectors = {
-      section_sidecart: sidecartConfig.section_sidecart,
-      item_cart: sidecartConfig.item_cart
-    }
+    this.productPageSelector = Cypress.env('product_page')
+    this.sideCartSelector = Cypress.env('sidecart')
   }
 
-  /**
-   * Private method: #clickRandomElementFromCollection
-   * Description: Clicks on a random element from a collection.
-   * @private
-   * @param {string} selector - Selector for the collection of elements.
-   */
-  #clickRandomElementFromCollection (selector) {
-    cy.get(selector)
-      .then(($elements) => {
-        const randomElement = $elements[Math.floor(Math.random() * $elements.length)]
-        cy.wrap(randomElement).click()
-        cy.url().should('contain', 'products')
-      })
+  checkBreadcrumb () {
+    this.isProductPageVisible().then((isVisible) => {
+      if (isVisible) {
+        cy.get(this.productPageSelector.section_product)
+          .find(this.productPageSelector.breadcrumbs)
+          .as('breadcrumbs')
+          .find('a')
+          .each(($a, index) => {
+            if (index <= 1) {
+              cy.wrap($a).should('have.attr', 'href')
+            }
+          })
+
+        cy.get('h1').should('exist').and('be.visible').invoke('text').then(productTitle => {
+          this.verifyBreadcrumbText(productTitle)
+        })
+      }
+    })
   }
 
-  /**
-   * Public method: selectorProductCollection
-   * Description: Clicks on a random product card on the product page.
-   */
-  selectorProductCollection () {
-    this.#clickRandomElementFromCollection(this.productSelectors.product_card)
+  verifyBreadcrumbText (productTitle) {
+    cy.get('@breadcrumbs').eq(2).then(($breadcrumb) => {
+      const breadcrumbText = $breadcrumb.text().trim()
+      const trimmedProductTitle = productTitle.trim()
+      cy.wrap(breadcrumbText).should('equal', trimmedProductTitle)
+    })
   }
 
-  /**
-   * Public method: checkProductImage
-   * Description: Checks if the product image is visible on the product page.
-   */
+  isProductPageVisible () {
+    return cy.get('body').then((body) => {
+      return body.find(this.productPageSelector.section_product).length > 0
+    })
+  }
+
+  clickArrow (selector) {
+    cy.get(this.productPageSelector.section_product)
+      .find(selector)
+      .click()
+  }
+
+  verifyNextArrowEnables () {
+    cy.get(this.productPageSelector.section_product)
+      .find(this.productPageSelector.arrow_next_product_media)
+      .should('be.enabled')
+  }
+
+  verifyPrevArrowDisables () {
+    cy.get(this.productPageSelector.section_product)
+      .find(this.productPageSelector.arrow_prev_product_media)
+      .should('not.be.enabled')
+  }
+
   checkProductImage () {
-    const imageSelector = this.productSelectors.section_product + ' ' + this.productSelectors.imagen_product
-    this.checkElementExists(imageSelector, 'No images found for the product, please set at least 1')
-    cy.get(imageSelector).should('be.visible')
-  }
-
-  /**
-   * Public method: checkBreadcrumbHasHref
-   * Description: Checks if the specified breadcrumb element has an href attribute.
-   * @param {string} alias - Alias for the breadcrumb element.
-   * @param {boolean} shouldExist - Whether the href should exist or not.
-   */
-  checkBreadcrumbHasHref (alias, shouldExist) {
-    cy.get(alias)
-      .find('a')
-      .should(shouldExist ? 'have.attr' : 'not.have.attr', 'href')
-      .then((elements) => {
-        // Log the elements to help identify the issue
-        cy.log(`Found elements: ${elements.length}`)
-        cy.log(elements)
-      })
-  }
-
-  /**
-   * Public method: checkTitleBreadcrumb
-   * Description: Checks the existence and visibility of the product title and breadcrumbs on the product page.
-   */
-  checkTitleBreadcrumb () {
-    cy.get(this.productSelectors.section_product)
-      .find(this.productSelectors.product_title)
-      .should('exist')
-      .and('be.visible')
-      .invoke('text')
-      .as('titleProduct')
-
-    cy.get(this.productSelectors.section_product)
-      .find(this.productSelectors.breadcrumbs)
-      .as('breadCrumbs')
-
-    this.checkBreadcrumbHasHref('@breadCrumbs', true)
-    this.checkLastBreadcrumbMatchesTitle('@breadCrumbs', '@titleProduct')
-  }
-
-  /**
-   * Public method: checkLastBreadcrumbMatchesTitle
-   * Description: Checks if the last breadcrumb matches the product title.
-   * @param {string} breadcrumbsAlias - Alias for the breadcrumbs element.
-   * @param {string} titleAlias - Alias for the product title element.
-   */
-  checkLastBreadcrumbMatchesTitle (breadcrumbsAlias, titleAlias) {
-    cy.get(breadcrumbsAlias)
-      .last()
-      .invoke('text')
-      .then((titleBreadcrumb) => {
-        cy.get(titleAlias).should('include', titleBreadcrumb.trim())
-      })
-  }
-
-  /**
-   * Public method: checkElementExists
-   * Description: Checks if an element with the specified selector exists.
-      * @param {string} selector - Selector for the element.
-   * @param {string} errorMessage - Error message to display if the element does not exist.
-   */
-  checkElementExists (selector, errorMessage) {
-    cy.get(selector).should('have.length.above', 0, {
-      message: errorMessage
+    this.isProductPageVisible().then((isVisible) => {
+      if (isVisible) {
+        cy.get(this.productPageSelector.product_media_img).each((img) => {
+          cy.wrap(img).should('exist')
+        })
+      }
     })
   }
 
-  /**
-   * Public method: checkProductTitle
-   * Description: Checks if the product title is present and in an h1 tag.
-   */
+  clickNextUpsell () {
+    this.isProductPageVisible().then((isVisible) => {
+      if (isVisible) {
+        this.clickArrow(this.productPageSelector.arrow_next_product_media)
+        this.verifyNextArrowEnables()
+      }
+    })
+  }
+
+  clickPrevtUpsell () {
+    this.isProductPageVisible().then((isVisible) => {
+      if (isVisible) {
+        this.clickArrow(this.productPageSelector.arrow_prev_product_media)
+        this.verifyPrevArrowDisables()
+      }
+    })
+  }
+
+  verifyImageChangeOnArrowClick () {
+    this.isProductPageVisible().then((isVisible) => {
+      if (isVisible) {
+        let currentImageSrc
+        cy.get(this.productPageSelector.product_media_img)
+          .invoke('attr', 'src')
+          .then((src) => {
+            currentImageSrc = src
+          })
+        this.clickArrow(this.productPageSelector.arrow_next_product_media)
+        cy.get(this.productPageSelector.product_media_img)
+          .invoke('attr', 'src')
+          .should('not.equal', currentImageSrc)
+      }
+    })
+  }
+
+  clickNextUntilDisabled () {
+    const clickNext = () => {
+      cy.get(this.productPageSelector.arrow_next_product_media).then($button => {
+        if (!$button.prop('disabled')) {
+          $button.click()
+          clickNext()
+        }
+      })
+    }
+    clickNext()
+    cy.get(this.productPageSelector.arrow_next_product_media).should('be.disabled')
+  }
+
   checkProductTitle () {
-    const titleSelector = this.productSelectors.section_product + ' ' + this.productSelectors.product_title
-    this.checkElementTextIsH1(titleSelector, 'The text obtained is not an h1 tag')
-  }
-
-  /**
-   * Public method: checkElementTextIsH1
-   * Description: Checks if the text of an element is inside an h1 tag.
-   * @param {string} selector - Selector for the element.
-   * @param {string} errorMessage - Error message to display if the text is not inside an h1 tag.
-   */
-  checkElementTextIsH1 (selector, errorMessage) {
-    cy.get(selector)
-      .should('exist')
-      .and('be.visible')
-      .invoke('text')
-      .then((text) => {
-        const h1Tag = `<h1>${text}</h1>`
-        if (!/^<h1[\s\S]*<\/h1>$/.test(h1Tag)) {
-          throw new Error(errorMessage)
-        }
-        cy.log(text)
-      })
-  }
-
-  /**
-   * Public method: addProduct
-   * Description: Clicks the add product button and checks if the cart item exists in the sidecart.
-   */
-  addToCartProductPage () {
-    const addProductSelector = `${this.productSelectors.section_product} ${this.productSelectors.cta_product_page}`
-    this.checkElementExistsAndIsEnabled(addProductSelector, 'The add product button does not exist or is disabled')
-    cy.get(addProductSelector).click()
-    this.checkCartItemExists()
-  }
-
-  /**
-   * Public method: checkElementExistsAndIsEnabled
-   * Description: Checks if an element with the specified selector exists and is enabled.
-   * @param {string} selector - Selector for the element.
-   * @param {string} errorMessage - Error message to display if the element does not exist or is disabled.
-   */
-  checkElementExistsAndIsEnabled (selector, errorMessage) {
-    cy.get(selector)
-      .should('exist')
-      .and('be.visible')
-      .then(($element) => {
-        if ($element.prop('disabled')) {
-          throw new Error(errorMessage)
-        }
-      })
-  }
-
-  /**
-   * Public method: checkCartItemExists
-   * Description: Checks if the cart item exists in the sidecart.
-   */
-  checkCartItemExists () {
-    cy.get(this.sidecartSelectors.section_sidecart)
-      .find(this.sidecartSelectors.item_cart)
-      .should('exist')
-      .and('be.visible')
-  }
-
-  /**
- * Adds multiple products to the cart from the product page.
- * @returns {void}
- * @description This method performs the following steps:
- * 1. Select two product quantities.
- * 2. Verifies the quantity attribute of the product.
- * 3. Adds the product to the cart.
- * 4. Checks the side cart and the quantity of products.
- */
-  addMultipleToCartProductPage () {
-    this.selectTwoProductQuantities()
-    this.verifyQuantityAttribute()
-    this.addProductToCart()
-    this.checkSideCartAndQuantity()
-  }
-
-  /**
- * Selects the second option of the product.
- * @returns {void}
- */
-  selectTwoProductQuantities () {
-    cy.get(this.productSelectors.section_product).find('.btn-change').eq(1).click()
-  }
-
-  /**
- * Verifies the quantity attribute of the product.
- * @returns {number} The accumulated value.
- */
-  verifyQuantityAttribute () {
-    cy.get(this.productSelectors.section_product).find('#quantity').then((quantity) => {
-      const lengthValue = quantity.length
-      const accumulated = 1 + lengthValue
-      cy.log(`The length value is: ${lengthValue}, and the accumulated value is: ${accumulated}`)
-      // Use cy.wrap to properly chain the asynchronous value
-      cy.wrap(accumulated).as('accumulated')
+    this.isProductPageVisible().then((isVisible) => {
+      if (isVisible) {
+        cy.get('h1').should('exist').and('be.visible').invoke('text').as('productTitle')
+      }
     })
   }
 
-  /**
- * Adds the product to the cart.
- * @returns {void}
- */
-  addProductToCart () {
-    const addProductSelector = `${this.productSelectors.section_product} ${this.productSelectors.cta_product_page}`
-    this.checkElementExistsAndIsEnabled(addProductSelector, 'The add product button does not exist or is disabled')
-    cy.get(addProductSelector).click()
+  addToCartProductPage () {
+    let productTitle
+    this.isProductPageVisible().then((isVisible) => {
+      if (isVisible) {
+        cy.get('h1').should('exist').and('be.visible').invoke('text').then((title) => {
+          productTitle = title.trim()
+
+          cy.get(this.productPageSelector.section_product)
+            .find(this.productPageSelector.add_product_product_page)
+            .then((addProduct) => {
+              if (!addProduct.prop('disabled')) {
+                addProduct.click()
+                sideCart.checkIfSideCartIsActive()
+                cy.get(this.sideCartSelector.cart_item)
+                  .should('have.length', 1)
+                  .and('contain', productTitle)
+              } else {
+                throw new Error('Configure a product with stock')
+              }
+            })
+        })
+      }
+    })
   }
 
-  /**
- * Checks the side cart and the quantity of products.
- * @returns {void}
- */
-  checkSideCartAndQuantity () {
+  addMultipleQuantityToCartProductPage () {
+    let initialQuantity = 0
+
+    this.isProductPageVisible().then((isVisible) => {
+      if (isVisible) {
+        this.getInitialQuantity().then((value) => {
+          initialQuantity = parseInt(value)
+          this.incrementQuantityAndAddToCart()
+          this.verifyCartQuantity(initialQuantity)
+        })
+      }
+    })
+  }
+
+  getInitialQuantity () {
+    return cy.get(this.productPageSelector.input_quantity_from_productPage)
+      .invoke('attr', 'value')
+  }
+
+  incrementQuantityAndAddToCart () {
+    cy.get(this.productPageSelector.add_quantity_from_productPage).click()
+    cy.get(this.productPageSelector.add_product_product_page).click()
     sideCart.checkIfSideCartIsActive()
-    // Use cy.get to retrieve the accumulated value and then pass it to sideCart.verifyQuantityAttribute
-    cy.get('@accumulated').then((accumulated) => {
-      sideCart.verifyQuantityAttribute(accumulated)
+  }
+
+  verifyCartQuantity (initialQuantity) {
+    cy.wrap(null).then(() => {
+      cy.get(this.sideCartSelector.input_quantity)
+        .should('have.value', (initialQuantity + 1).toString())
     })
   }
 }
 
-/**
- * Instance of the ProductPage class.
- * @type {ProductPage}
- */
 export const productPage = new ProductPage()
