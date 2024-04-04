@@ -12,8 +12,6 @@ The theme is divided into two versions: city and survivor. Here is the list of f
 
 ## [survivor 🏝️](https://admin.shopify.com/store/gradi-theme-base/themes/135179665588/editor)
 
-🕹️ **Demo:** https://www.loom.com/share/c032c28db6104b6088328ba0f34a7a45
-
 - Design system simple → [Link](https://www.notion.so/414bda8cc7154d64ab0e777c9cdc13be?pvs=21)
 - Product variant selector in product page radio button options → [Link](https://www.notion.so/e3bd9c5b9b63419fad01d2030fb27a30?pvs=21)
 - Product variant selector + CTA in product card → [Link](https://www.notion.so/24787096effb4f54aeaff118991a8fb6?pvs=21)
@@ -36,9 +34,7 @@ The theme is divided into two versions: city and survivor. Here is the list of f
 
 ## [city 🏙️](https://admin.shopify.com/store/gradi-theme-base/themes/135179698356/editor)
 
-All features mentioned for the survivor pack are included in the city pack.
-
-🕹️ **Demo:** https://www.loom.com/share/cfb501bc18a240fdb2a653c7754947d1
+All features mentioned for the survivor are included in the city.
 
 - Product media dynamic colors → [Link](https://www.notion.so/fad74cad44a34f30b90506ffb0ad7366?pvs=21)
 - Videos in product media → [Link](https://www.notion.so/f42c44c477c040aaad1753406a12ab15?pvs=21)
