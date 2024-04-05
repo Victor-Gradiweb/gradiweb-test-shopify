@@ -16,7 +16,6 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: PUSH
-      if: github.event_name == 'push'
       run: |
         git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
         git config --global user.email "cristianvelasco1529@gmail.com"
