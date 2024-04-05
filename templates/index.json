@@ -3,7 +3,7 @@
     "hero": {
       "type": "hero-simple",
       "settings": {
-        "hero_title": "Survivor 🏝️",
+        "hero_title": "Survivor TEST... 🏝️",
         "hero_description": "<p>Welcome to the survivor pack, enjoy the functionalities it offers you</p>",
         "title_CTA": "CTA",
         "link_CTA": "",
