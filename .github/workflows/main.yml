@@ -2,7 +2,7 @@ name: open/edit/sync Pull Request
 on:
   pull_request:
     types: ["opened", "edited", "synchronize"]
-    branches: ["survivor"]
+    branches: ["main"]
 
 jobs:
   preview:

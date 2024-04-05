@@ -1,0 +1,23 @@
+name: open/edit/sync Pull Request
+on:
+  pull_request:
+    types: ["opened", "edited", "synchronize"]
+    branches: ["survivor"]
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    env: 
+      CI_COMMIT_MESSAGE: Continuous Integration Build Artifacts
+      CI_COMMIT_AUTHOR: Continuous Integration
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: PUSH
+      if: github.event_name == 'push'
+      run: |
+        git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
+        git config --global user.email "cristianvelasco1529@gmail.com"
+        git push origin dev --force
