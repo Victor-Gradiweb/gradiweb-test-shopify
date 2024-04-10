@@ -1,10 +1,9 @@
-const { defineConfig } = require('cypress')
+const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
   e2e: {
-    baseUrl: 'https://gradi-theme-base.myshopify.com',
-    screenshotsFolder: false
+    screenshotsFolder: false,
     /* excludeSpecPattern: 'cypress/e2e/side_cart.cy.js' */
   },
-  retries: 1
-})
+  retries: 1,
+});
