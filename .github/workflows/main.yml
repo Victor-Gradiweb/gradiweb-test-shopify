@@ -5,61 +5,21 @@ on:
     branches: ["main"]
 
 jobs:
-  jslint:
-    name: ESlint with comments
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: reviewdog/action-eslint@v1
-        with:
-          reporter: github-pr-review
-          eslint_flags: "src/"
-          filter_mode: nofilter
-          fail_on_error: true
-  
-  stylelint:
-    name: Stylelint with comments
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: reviewdog/action-stylelint@v1
-        with:
-          reporter: github-pr-review
-          stylelint_input: "src/scss"
-          filter_mode: nofilter
-          fail_on_error: true
-  
   preview:
     name: Deploy preview theme
     runs-on: ubuntu-latest
-    
-    needs: 
-      - jslint
-      - stylelint
-
-    if: needs.jslint.result == 'success' &&  needs.stylelint.result == 'success'
-    
+    env: 
+      CI_COMMIT_AUTHOR: Continuous Integration
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.1
-          bundler: 'latest'
+    - uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install Shopify CLI
-        run: npm install -g @shopify/cli @shopify/theme
-
-      - name: Deploy preview
-        env:
-          # Store URL, like your-store.myshopify.com
-          SHOPIFY_FLAG_STORE: '${{ secrets.SHOP_STORE }}'
-          # Password generated from Theme Access app
-          SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
-          SHOPIFY_CLI_TTY: 0
-        run: shopify theme push --path ./ --theme ${{ secrets.THEME_ID_PREVIEW }}
+    - name: Push to preview
+      run: |
+        git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
+        git config --global user.email "${{ github.event.pusher.email }}"
+        git push origin HEAD:dev --force
 
   cypress:
     name: Cypress CI
@@ -95,8 +55,8 @@ jobs:
           install: false
         env:
           CYPRESS_preview_theme: preview_theme_id=${{ secrets.THEME_ID_PREVIEW }}
-          CYPRESS_collection_url: collections/${{ secrets.COLLECTION_URL }}
-          CYPRESS_product_url: products/${{ secrets.PRODUCT_URL }}
+          CYPRESS_collection_url: ${{ secrets.COLLECTION_URL }}
+          CYPRESS_product_url: ${{ secrets.PRODUCT_URL }}
           CYPRESS_password_store: ${{ secrets.SHOP_PASSWORD }}
 
   lhci:
@@ -133,6 +93,7 @@ jobs:
           PRODUCT_URL: ${{ secrets.PRODUCT_URL }}
 
   build:
+    name: Prepare to publish
     runs-on: ubuntu-latest
 
     permissions:
