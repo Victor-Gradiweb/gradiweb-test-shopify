@@ -65,6 +65,10 @@
 }
 
 .filter-group-display__list-item {
+  .label-check {
+    position: relative;
+  }
+
   label {
     display: flex;
     flex-direction: row;

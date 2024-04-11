@@ -8,7 +8,6 @@ import { $Q, $Qll } from '../utils/query-selector'
  *
  */
 export function rangeFilters () {
-  console.log('run')
   const rangeIn = $Qll('.range-in input')
   const priceIn = $Qll('.price-in input')
   const progress = $Q('.slider-filter .pro')

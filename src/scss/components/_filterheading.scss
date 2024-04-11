@@ -1,0 +1,52 @@
+@use "../abstracts/variables";
+
+.filter-heading {
+  margin-bottom: 16px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+
+  @media screen and (width >= variables.$break-point-filter) {
+    justify-content: flex-end;
+  }
+
+  &__btn-modal {
+    min-width: 250px;
+    display: none;
+    padding: 12px;
+
+    @media screen and (width <= variables.$break-point-filter) {
+      width: auto;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
+
+.filter-results {
+  display: flex;
+  margin-bottom: 16px;
+}
+
+.filter-count {
+  width: 300px;
+  margin-right: 30px;
+  display: block;
+}
+
+.filter-actives {
+  display: flex;
+  flex-wrap: wrap;
+
+  & > * {
+    margin: 0 15px 15px 0;
+    background: variables.$color-black;
+    color: variables.$color-white;
+    padding: 5px;
+  }
+
+  a {
+    color: variables.$color-white;
+  }
+}

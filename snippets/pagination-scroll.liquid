@@ -1,5 +1,6 @@
 {% comment %}
   infinitu scroll
+  
   Accepts:
   - type_paginate: {String} - type pagination loading more
   - container: {Elemnt} - class or id element '.container'
@@ -7,26 +8,23 @@
   - section_render: {String} - name section rendering
   - current_url: {Object} - url current page actualy
   - paginate: {object} - pagination liquid object
+  
   Usage:
-    {% render 'infinity-scroll'
-      type_paginate: "buttonLoadMore || infinityScroll || default"
-      container: ".item-list",
-      item: ".product-card",
-      section_render: "collection-products",
-      current_url: collection.url,
-      paginate: paginate
-    %}
+  {% render 'infinity-scroll'
+    type_paginate: "buttonLoadMore || infinityScroll || default"
+    container: "#item-list-js",
+    item: ".product-card",
+    section_render: "main-collection",
+    current_url: collection.url,
+    paginate: paginate
+  %}
 {% endcomment %}
 
 {% assign content_btn = 'general.pagination.load_more' | t %}
 {% assign empty_item = 'general.pagination.empty_item' | t %}
 
-<link
-  rel="preload"
-  href="{{ 'pagination.css' | asset_url }}"
-  as="style"
-  onload="this.onload=null;this.rel='stylesheet'"
-/>
+{{ 'pagination.css' | asset_url | stylesheet_tag: preload: true }}
+
 <noscript>
   <link
     rel="stylesheet"

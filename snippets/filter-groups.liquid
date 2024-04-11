@@ -1,204 +1,192 @@
 {% comment %}
-  Render filtering in collections
+  Render filter groups
 
   Usage:
-  {% render 'filtering-store' %}
+  {% render 'filtering-groups' %}
 {% endcomment %}
 
+{% capture filter_groups %}
+  {% for filter in collection.filters %}
+    
+    {% capture items_filter %}
+      {%- case filter.type -%}
+      {%- when 'boolean' or 'list' -%}
+        <ul
+          class="filter-group-display__list
+          {% if filter.param_name == 'filter.v.option.color' %}
+            color
+          {% endif %}"
+        >
+          {%- for filter_value in filter.values -%}
+            <li class="filter-group-display__list-item">
+              <label
+                class="label-check"
+                for="Filter-{{ filter.param_name }}-{{ forloop.index }}"
+                {% if filter_value.count == 0 and filter_value.active == false -%}
+                  disabled
+                  data-disable="true"
+                {%- endif %}
+              >
+                <input
+                  type="checkbox"
+                  name="{{ filter_value.param_name }}"
+                  value="{{ filter_value.value }}"
+                  id="Filter-{{ filter.param_name }}-{{ forloop.index }}",
+                  class="input-check{% if filter.param_name != 'filter.v.option.color' %}
+                    checkbox__input
+                  {% endif %}"
+                  {% if filter_value.active -%}
+                    checked
+                  {%- endif %}
+                  {% if filter_value.count == 0 and filter_value.active == false -%}
+                    disabled
+                  {%- endif %}
+                  test="{{ filter_value.active }}"
+                  test2="{{ filter_value.count }}"
+                />
+                
+                {% if filter.param_name != 'filter.v.option.color' %}
+                  <span class="checkbox__custom"></span>
+                {% endif %}
+
+                <span
+                  {% if filter.param_name == 'filter.v.option.color' %}
+                  style="background-color: {{ filter_value.label }};"
+                  {% endif %}
+                >
+                  {{ filter_value.label }}
+                </span>
+              </label>
+            </li>
+          {%- endfor -%}
+        </ul>
+
+      {%- when 'price_range' -%}
+        <div class="ranges">
+          <span class="range1 flex">
+            <div>
+              {% if filter.min_value.value %}
+                {{ filter.min_value.value
+                  | money_without_currency
+                  | remove: ',00'
+                }}
+              {% else %}
+                {{ 0
+                  | money_without_currency
+                  | remove: ',00'
+                }}
+              {% endif %}
+            </div>
+            <span>{{ cart.currency.symbol }}</span>
+          </span>
+          <span class="range2 flex">
+            <div>
+              {% if filter.max_value.value %}
+                {{ filter.max_value.value
+                  | money_without_currency
+                  | remove: ',00'
+                }}
+              {% else %}
+                {{ filter.range_max
+                  | money_without_currency
+                  | remove: ',00'
+                }}
+              {% endif %}
+            </div>
+            <span>{{ cart.currency.symbol }}</span>
+          </span>
+        </div>
+        
+        <div class="input-ranges">
+          <div class="slider-filter">
+            <div class="pro"></div>
+          </div>
+
+          <div class="range-in">
+            {% render 'filter-field-range'
+              type_input: "range",
+              class: "range-min",
+              range_max: filter.range_max,
+              value_min_max: filter.min_value.value,
+              value_default: "0"
+            %}
+
+            {% render 'filter-field-range'
+              type_input: "range",
+              class: "range-max",
+              range_max: filter.range_max,
+              value_min_max: filter.max_value.value,
+              value_default: filter.range_max
+            %}
+
+          </div>
+
+          <div class="price-in">
+            <div class="field">
+              <span>{{ cart.currency.symbol }}</span>
+              {% render 'filter-field-range'
+                type_input: "number",
+                class: "in-min",
+                name_input: filter.min_value.param_name,
+                range_max: filter.range_max,
+                value_min_max: filter.min_value.value,
+                value_default: "0,00",
+                paceh_input: "0.00"
+              %}
+            </div>
+            <span class="separator">-</span>
+            <div class="field">
+              <span>{{ cart.currency.symbol }}</span>
+              {% render 'filter-field-range'
+                type_input: "number",
+                class: "in-max",
+                name_input: filter.max_value.param_name,
+                range_max: filter.range_max,
+                value_min_max: filter.max_value.value,
+                value_default: filter.range_max,
+                paceh_input: filter.range_max
+              %}
+            </div>
+          </div>
+        </div>
+
+      {%- endcase -%}
+      
+      <a href="{{ filter.url_to_remove }}">
+        {{ 'products.facets.clear_all' | t }}
+      </a>
+    {% endcapture %}
+
+    {% render 'accordion-item',
+      title: filter.label,
+      content: items_filter,
+      active: active
+    %}
+  {% endfor %}
+{% endcapture %}
+
 <div
-  class="filter"
+  class="side-filter"
   data-active="false"
   id="filter"
 >
+  <div class="side-filter__head">
+    <span>{{ 'products.facets.filter_by_label' | t }}</span>
+    {% render 'icon-close' %}
+  </div>
 
-  <form class="filter-form">
-
-    <div class="filter-form__name">
-      <span>{{ 'products.facets.filter_by_label' | t }}</span>
-      {% render 'icon-close' %}
-    </div>
-
-    {% capture accordions %}
-      {% for filter in collection.filters %}
-        {% capture items_filter %}
-          {% comment %}
-            Determine the filter type, list, boolean, anymore
-          {% endcomment %}
-          {%- case filter.type -%}
-
-            {%- when 'boolean' or 'list' -%}
-              <ul
-                class="filter-group-display__list
-                {% if filter.param_name == 'filter.v.option.color' %}
-                  color
-                {% endif %}"
-              >
-                {%- for filter_value in filter.values -%}
-                  <li class="filter-group-display__list-item">
-                    <!-- eslint-disable max-len -->
-                    <label
-                      class="label-check"
-                      for="Filter-{{ filter.param_name }}-{{ forloop.index }}"
-                      {% if filter_value.count == 0 and filter_value.active == false -%}
-                        disabled
-                        data-disable="true"
-                      {%- endif %}
-                    >
-                      <!-- eslint-disable max-len -->
-                      <!-- eslint-disable @html-eslint/no-extra-spacing-attrs -->
-                      <input
-                        type="checkbox"
-                        name="{{ filter_value.param_name }}"
-                        value="{{ filter_value.value }}"
-                        id="Filter-{{ filter.param_name }}-{{ forloop.index }}",
-                        class="input-check{% if filter.param_name != 'filter.v.option.color' %}
-                          checkbox__input
-                        {% endif %}"
-                        {% if filter_value.active -%}
-                          checked
-                        {%- endif %}
-                        {% if filter_value.count == 0 and filter_value.active == false -%}
-                          disabled
-                        {%- endif %}
-                        test="{{ filter_value.active }}"
-                        test2="{{ filter_value.count }}"
-                      />
-                      <!-- eslint-enable max-len -->
-                      <!-- eslint-enable @html-eslint/no-extra-spacing-attrs -->
-                      {% if filter.param_name != 'filter.v.option.color' %}
-                        <span class="checkbox__custom"></span>
-                      {% endif %}
-
-                    
-                        <!-- eslint-disable @html-eslint/no-inline-styles -->
-                        <span
-                          {% if filter.param_name == 'filter.v.option.color' %}
-                          style="background-color: {{ filter_value.label }};"
-                          {% endif %}
-                        >
-                          {{ filter_value.label }}
-                        </span>
-                    </label>
-                  </li>
-                {%- endfor -%}
-              </ul>
-
-            {% comment %} Determine the filter type price{% endcomment %}
-            {%- when 'price_range' -%}
-              <div class="ranges">
-                <span class="range1 flex">
-                  <div>
-                    {% if filter.min_value.value %}
-                      {{ filter.min_value.value
-                        | money_without_currency
-                        | remove: ',00'
-                      }}
-                    {% else %}
-                      {{ 0
-                        | money_without_currency
-                        | remove: ',00'
-                      }}
-                    {% endif %}
-                  </div>
-                  <span>{{ cart.currency.symbol }}</span>
-                </span>
-                <span class="range2 flex">
-                  <div>
-                    {% if filter.max_value.value %}
-                      {{ filter.max_value.value
-                        | money_without_currency
-                        | remove: ',00'
-                      }}
-                    {% else %}
-                      {{ filter.range_max
-                        | money_without_currency
-                        | remove: ',00'
-                      }}
-                    {% endif %}
-                  </div>
-                  <span>{{ cart.currency.symbol }}</span>
-                </span>
-              </div>
-                <div class="wrapper-filter">
-                  <div class="slider-filter">
-                    <div class="pro"></div>
-                  </div>
-                  <div class="range-in">
-                    {% render 'filter-field-range'
-                      type_input: "range",
-                      class: "range-min",
-                      range_max: filter.range_max,
-                      value_min_max: filter.min_value.value,
-                      value_default: "0"
-                    %}
-
-                    {% render 'filter-field-range'
-                      type_input: "range",
-                      class: "range-max",
-                      range_max: filter.range_max,
-                      value_min_max: filter.max_value.value,
-                      value_default: filter.range_max
-                    %}
-
-                  </div>
-
-                  <div class="price-in">
-                    <div class="field">
-                      <span>{{ cart.currency.symbol }}</span>
-                      {% render 'filter-field-range'
-                        type_input: "number",
-                        class: "in-min",
-                        name_input: filter.min_value.param_name,
-                        range_max: filter.range_max,
-                        value_min_max: filter.min_value.value,
-                        value_default: "0,00",
-                        paceh_input: "0.00"
-                      %}
-                    </div>
-                    <span class="separator">-</span>
-                    <div class="field">
-                      <span>{{ cart.currency.symbol }}</span>
-                      {% render 'filter-field-range'
-                        type_input: "number",
-                        class: "in-max",
-                        name_input: filter.max_value.param_name,
-                        range_max: filter.range_max,
-                        value_min_max: filter.max_value.value,
-                        value_default: filter.range_max,
-                        paceh_input: filter.range_max
-                      %}
-                    </div>
-                  </div>
-              </div>
-            {%- endcase -%}
-
-          <a href="{{ filter.url_to_remove }}">
-            {{ 'products.facets.clear_all' | t }}
-          </a>
-        {% endcapture %}
-
-        {% render 'accordion-item',
-          title: filter.label,
-          content: items_filter,
-          active: active
-        %}
-      {% endfor %}
-    {% endcapture %}
-
+  <form>
     {% render 'accordions',
-      accordions: accordions,
-      toggle: true,
+      accordions: filter_groups,
+      toggle: false,
       class: 'filter-group'
     %}
 
-    <div class="filter-form__submit">
-      <button
-        type="submit"
-        class="btn-2 btn_w-100"
-      >
-        {{ 'products.facets.apply' | t }}
-      </button>
-    </div>
-
+    <button
+      type="submit"
+      class="btn-2"
+    >
+      {{ 'products.facets.apply' | t }}
+    </button>
   </form>
 </div>
