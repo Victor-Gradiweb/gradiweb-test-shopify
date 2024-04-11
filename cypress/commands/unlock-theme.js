@@ -5,7 +5,7 @@ export function breakPassword() {
   cy.get(unlockStoreEnvironment.INPUT_PASSWORD).then((inputPassword) => {
     if (inputPassword.length > 0) {
       cy.get(inputPassword).type(
-        unlockStoreEnvironment.PASSWORD_STORE + '{enter}',
+        Cypress.env('PASSWORD_STORE')+ '{enter}',
       )
     }
   })

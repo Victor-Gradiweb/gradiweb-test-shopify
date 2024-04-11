@@ -1,6 +1,5 @@
 import sideCartEnvironment from '../.env/env.side_cart.json'
-import globalEnvironment from '../.env/env.global.json'
-import productPageEnvironment from '../.env/env.product_page.json'
+import { verifyProductAdditionToSideCart } from "./product-page";
 
 export function toggleSidecartActive() {
   cy.get(sideCartEnvironment.GLOBAL.OPEN_SIDECART)
@@ -28,11 +27,8 @@ Cypress.Commands.add('toggleSidecartActive', toggleSidecartActive) //commands â¬
 Cypress.Commands.add('toggleSidecartInactive', toggleSidecartInactive)
 
 export function navigateToUpsell(direction) {
-  const arrowSelector =
-    direction === 'next'
-      ? sideCartEnvironment.UPSELL.ARROW_NEXT_UPSELL
-      : sideCartEnvironment.UPSELL.ARROW_PREV_UPSELL
-  const ariaDisabledValue = direction === 'next' ? 'true' : 'true'
+  const arrowSelector = getArrowSelector(direction)
+  const ariaDisabledValue = getAriaDisabledValue(direction)
 
   cy.get(sideCartEnvironment.GLOBAL.PARENT)
     .find(arrowSelector)
@@ -47,8 +43,7 @@ export function navigateToUpsell(direction) {
       cy.get(arrowSelector).should(
         'not.have.attr',
         'aria-disabled',
-        ariaDisabledValue,
-      )
+        ariaDisabledValue,)
     }
   })
 }
@@ -60,7 +55,17 @@ export function validateUpsellInCart() {
     .then((cards) => cards.length)
 }
 
-Cypress.Commands.add('navigateToNextUpsell', () => navigateToUpsell('next')) //commands â¬†
+export function getArrowSelector(direction) {
+  return direction === 'next'
+    ? sideCartEnvironment.UPSELL.ARROW_NEXT_UPSELL
+    : sideCartEnvironment.UPSELL.ARROW_PREV_UPSELL
+}
+
+export function getAriaDisabledValue(direction) {
+  return direction === 'next' ? 'true' : 'true'
+}
+
+Cypress.Commands.add('navigateToNextUpsell', () => navigateToUpsell('next'))
 Cypress.Commands.add('navigateToPrevUpsell', () => navigateToUpsell('prev'))
 
 export function addProductToUpsell() {
@@ -69,15 +74,10 @@ export function addProductToUpsell() {
       cy.get(sideCartEnvironment.UPSELL.CARD_UPSELL).find('button').first().click()
       verifyProductAddedToSideCart()
     } else {
-      cy.visit(`${globalEnvironment.BASE_URL}/products/${globalEnvironment.HANDLE_PRODUCT}?preview_theme_id=${globalEnvironment.PREVIEW_THEME}`)
-      addProductToProductPage()
+      cy.visit(`${Cypress.env('BASE_URL')}/products/${Cypress.env('HANDLE_PRODUCT')}?preview_theme_id=${Cypress.env('PREVIEW_THEME')}`)
+      verifyProductAdditionToSideCart()
     }
   })
-}
-
-export function addProductToProductPage (){
-  cy.get(productPageEnvironment.PARENT).find(productPageEnvironment.ADD_PRODUCT).click()
-  verifyProductAddedToSideCart()
 }
 
 export function verifyProductAddedToSideCart(){

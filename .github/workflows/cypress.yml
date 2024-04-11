@@ -2,7 +2,7 @@ name: open/edit/sync Pull Request
 on:
   pull_request:
     types: ["opened", "edited", "synchronize"]
-    branches: ["feat/survivor-pack"]
+    branches: ["survivor"]
 
 jobs:
   cypress:
@@ -29,11 +29,11 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          config: baseUrl=https://${{ secrets.SHOP_STORE }}
           browser: chrome
           install: false
         env:
-          CYPRESS_preview_theme: preview_theme_id=${{ secrets.THEME_ID_PREVIEW }}
-          CYPRESS_collection_url: ${{ secrets.COLLECTION_URL }}
-          CYPRESS_product_url: ${{ secrets.PRODUCT_URL }}
-          CYPRESS_password_store: ${{ secrets.SHOP_PASSWORD }}
+          CYPRESS_BASE_URL: https://${{ secrets.SHOP_STORE }}
+          CYPRESS_PREVIEW_THEME: preview_theme_id=${{ secrets.THEME_ID_PREVIEW }}
+          CYPRESS_PASSWORD_STORE: ${{ secrets.SHOP_PASSWORD }}
+          CYPRESS_PATH_COLLECTION: ${{ secrets.COLLECTION_URL }}
+          CYPRESS_HANDLE_PRODUCT: ${{ secrets.PRODUCT_URL }}
