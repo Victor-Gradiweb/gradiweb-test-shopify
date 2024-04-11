@@ -22,37 +22,37 @@ jobs:
         git push origin HEAD:dev --force
 
     cypress:
-    name: Cypress CI
-    runs-on: ubuntu-22.04
+      name: Cypress CI
+      runs-on: ubuntu-22.04
 
-    steps:
-      - uses: actions/checkout@v4
+      steps:
+        - uses: actions/checkout@v4
 
-      - name: Cache cypress
-        id: cache-cypress
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cache/Cypress
-            node_modules
-          key: cypress-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+        - name: Cache cypress
+          id: cache-cypress
+          uses: actions/cache@v4
+          with:
+            path: |
+              ~/.cache/Cypress
+              node_modules
+            key: cypress-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
-      - if: ${{ steps.cache-cypress.outputs.cache-hit != 'true' }}
-        name: Install Cypress
-        run: npm i cypress
+        - if: ${{ steps.cache-cypress.outputs.cache-hit != 'true' }}
+          name: Install Cypress
+          run: npm i cypress
 
-      # and run all Cypress tests
-      - name: Cypress run
-        uses: cypress-io/github-action@v6
-        with:
-          config: baseUrl=https://${{ secrets.SHOP_STORE }}
-          browser: chrome
-          install: false
-        env:
-          CYPRESS_PREVIEW_THEME: ${{ secrets.THEME_ID_PREVIEW }}
-          CYPRESS_PASSWORD_STORE: ${{ secrets.SHOP_PASSWORD }}
-          CYPRESS_PATH_COLLECTION: ${{ secrets.COLLECTION_URL }}
-          CYPRESS_HANDLE_PRODUCT: ${{ secrets.PRODUCT_URL }}
+        # and run all Cypress tests
+        - name: Cypress run
+          uses: cypress-io/github-action@v6
+          with:
+            config: baseUrl=https://${{ secrets.SHOP_STORE }}
+            browser: chrome
+            install: false
+          env:
+            CYPRESS_PREVIEW_THEME: ${{ secrets.THEME_ID_PREVIEW }}
+            CYPRESS_PASSWORD_STORE: ${{ secrets.SHOP_PASSWORD }}
+            CYPRESS_PATH_COLLECTION: ${{ secrets.COLLECTION_URL }}
+            CYPRESS_HANDLE_PRODUCT: ${{ secrets.PRODUCT_URL }}
 
   lhci:
     name: Lighthouse CI
