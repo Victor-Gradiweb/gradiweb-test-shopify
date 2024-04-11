@@ -67,37 +67,5 @@
     <span>{{ "products.facets.filter_button" | t }}</span>
   </button>
 
-  <div class="collection-filters__sort-by">
-    <label for="sort-by">
-      {{ "products.facets.sort_by_label" | t }}
-    </label>
-    <div 
-      class="form__textfield form__textfield--select"
-    >
-      <select id="sort-by">
-        <!-- eslint-disable-next-line max-len -->
-        {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
-        {% for option in collection.sort_options %}
-          <!-- eslint-disable @html-eslint/no-extra-spacing-attrs -->
-          <option
-            value="{{ option.value }}"
-            {% if option.value == sort_by %} selected="selected"{% endif %}
-          >
-            {{ option.name }}
-          </option>
-          <!-- eslint-enable @html-eslint/no-extra-spacing-attrs -->
-        {% endfor %}
-      </select>
-    </div>
-  </div>
+  {% render 'filter-sort-by' %}
 </div>
-
-{% render 'filter-groups' %}
-
-{% schema %}
-{
-  "name": "filters",
-  "tag": "section",
-  "class": "collection-filters wrapper"
-}
-{% endschema %}
