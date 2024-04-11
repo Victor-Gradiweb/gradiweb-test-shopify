@@ -74,7 +74,7 @@ export function addProductToUpsell() {
       cy.get(sideCartEnvironment.UPSELL.CARD_UPSELL).find('button').first().click()
       verifyProductAddedToSideCart()
     } else {
-      cy.visit(`${Cypress.env('BASE_URL')}/products/${Cypress.env('HANDLE_PRODUCT')}?preview_theme_id=${Cypress.env('PREVIEW_THEME')}`)
+      cy.visit(`/products/${Cypress.env('HANDLE_PRODUCT')}?preview_theme_id=${Cypress.env('PREVIEW_THEME')}`)
       verifyProductAdditionToSideCart()
     }
   })
