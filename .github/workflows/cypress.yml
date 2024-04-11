@@ -32,8 +32,8 @@ jobs:
           browser: chrome
           install: false
         env:
-          CYPRESS_BASE_URL: https://${{ secrets.SHOP_STORE }}
-          CYPRESS_PREVIEW_THEME: preview_theme_id=${{ secrets.THEME_ID_PREVIEW }}
+          CYPRESS_BASE_URL: ${{ secrets.SHOP_STORE }}
+          CYPRESS_PREVIEW_THEME: ${{ secrets.THEME_ID_PREVIEW }}
           CYPRESS_PASSWORD_STORE: ${{ secrets.SHOP_PASSWORD }}
           CYPRESS_PATH_COLLECTION: ${{ secrets.COLLECTION_URL }}
           CYPRESS_HANDLE_PRODUCT: ${{ secrets.PRODUCT_URL }}

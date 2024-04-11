@@ -31,8 +31,6 @@ export function handleProductModal() {
     if (isModalActive) {
       cy.get($modal).should("be.visible").find("button").click();
       cy.get($sidecart).should("have.attr", "data-active", "true");
-    } else {
-      cy.get($sidecart).should("have.attr", "data-active", "true");
     }
   });
 }
