@@ -2,7 +2,7 @@ name: open/edit/sync Pull Request
 on:
   pull_request:
     types: ["opened", "edited", "synchronize"]
-    branches: ["main"]
+    branches: ["survivor"]
 
 jobs:
   preview:
@@ -21,14 +21,9 @@ jobs:
         git config --global user.email "${{ github.event.pusher.email }}"
         git push origin HEAD:dev --force
 
-  cypress:
+    cypress:
     name: Cypress CI
     runs-on: ubuntu-22.04
-
-    needs: 
-      - preview
-
-    if: needs.preview.result == 'success'
 
     steps:
       - uses: actions/checkout@v4
@@ -54,10 +49,10 @@ jobs:
           browser: chrome
           install: false
         env:
-          CYPRESS_preview_theme: preview_theme_id=${{ secrets.THEME_ID_PREVIEW }}
-          CYPRESS_collection_url: ${{ secrets.COLLECTION_URL }}
-          CYPRESS_product_url: ${{ secrets.PRODUCT_URL }}
-          CYPRESS_password_store: ${{ secrets.SHOP_PASSWORD }}
+          CYPRESS_PREVIEW_THEME: ${{ secrets.THEME_ID_PREVIEW }}
+          CYPRESS_PASSWORD_STORE: ${{ secrets.SHOP_PASSWORD }}
+          CYPRESS_PATH_COLLECTION: ${{ secrets.COLLECTION_URL }}
+          CYPRESS_HANDLE_PRODUCT: ${{ secrets.PRODUCT_URL }}
 
   lhci:
     name: Lighthouse CI
