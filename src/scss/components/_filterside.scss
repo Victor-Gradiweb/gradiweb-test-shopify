@@ -36,8 +36,9 @@
   }
 
   &__head {
-    @extend %flex-center-between;
     padding: 15px 0;
+
+    @extend %flex-center-between;
 
     @media screen and (width >= variables.$break-point-filter) {
       display: none;
@@ -78,10 +79,8 @@
     }
   }
 
-  .accordion-item__button[data-active="true"] {
-    & + .accordion-item__content {
-      margin: 0 0 15px;
-    }
+  .accordion-item__button[data-active="true"] + .accordion-item__content {
+    margin: 0 0 15px;
   }
 
   .accordion-item__content {
