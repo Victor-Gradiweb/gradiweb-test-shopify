@@ -31,9 +31,8 @@ export function rangeFilters () {
         }
       } else {
         priceIn[0].value = cents(minVal, true)
-        $Q('.range1 div').textContent = cents(minVal, true)
         priceIn[1].value = cents(maxVal, true)
-        $Q('.range2 div').textContent = cents(maxVal, true)
+
         progress.style.left = `${(minVal / rangeIn[0].max) * 100}%`
         progress.style.right = `${100 - (maxVal / rangeIn[1].max) * 100}%`
       }

@@ -7,17 +7,10 @@ defaultSortBy()
 rangeFilters()
 
 toggleDataActive(
-  '#filter-open',
+  '#filter-open-js',
   '#filter',
   {
-    overlay: true
-  }
-)
-
-toggleDataActive(
-  '.filter-form__name svg',
-  '#filter',
-  {
-    overlay: true
+    overlay: true,
+    closeSelector: '.filter-close-js'
   }
 )

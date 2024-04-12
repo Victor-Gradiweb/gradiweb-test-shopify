@@ -1,38 +1,45 @@
+@use "../abstracts/variables";
+
 .price-in {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   margin-top: 45px;
-}
+  margin-bottom: 15px;
 
-.price-in .field {
-  display: flex;
-  width: 50%;
-  height: 45px;
-  align-items: center;
-  justify-content: center;
-}
+  .field {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 2px solid variables.$color-gray;
+  }
 
-.field input {
-  width: 42%;
-  height: 82%;
-  padding-left: 10px;
-  border: 1px solid gray;
-  margin-left: 12px;
-  background: white;
-  outline: none;
-}
+  .separator {
+    display: block;
+    margin: 0 20px;
+  }
 
-.field input[type="number"]::-webkit-inner-spin-button,
-.field input[type="number"]::-webkit-outer-spin-button {
-  appearance: none;
+  .field input[type="number"] {
+    border: none;
+    margin-left: 12px;
+    outline: none;
+    appearance: none;
+    pointer-events: none;
+  }
+
+  .field input[type="number"]::-webkit-inner-spin-button,
+  .field input[type="number"]::-webkit-outer-spin-button {
+    appearance: none;
+  }
 }
 
 .slider-filter {
   position: relative;
   top: 15px;
   height: 5px;
-  background: gray;
+  background: variables.$color-white;
+  border: 1px solid;
   border-radius: 5px;
 }
 
@@ -67,13 +74,6 @@
   background: #000;
   border-radius: 50px;
   pointer-events: auto;
-}
-
-.ranges {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  color: #777;
 }
 
 input[type="range"]::-webkit-slider-thumb {

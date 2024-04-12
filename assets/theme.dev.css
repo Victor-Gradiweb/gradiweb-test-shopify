@@ -699,7 +699,7 @@ div.product.price > .regular {
   width: 10px;
   height: 10px;
   border: 2px solid #000;
-  border-top-color: #c4c4c4;
+  border-top-color: #e5e5e5;
   border-radius: 50%;
   animation: spin 0.7s ease-in-out infinite;
 }
@@ -1618,7 +1618,7 @@ div.product.price > .regular {
   border-radius: 10px;
 }
 .window__content::-webkit-scrollbar-thumb {
-  background-color: #c4c4c4;
+  background-color: #e5e5e5;
   border-radius: 10px;
 }
 .window__footer {

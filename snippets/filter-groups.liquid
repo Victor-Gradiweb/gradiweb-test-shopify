@@ -62,41 +62,6 @@
         </ul>
 
       {%- when 'price_range' -%}
-        <div class="ranges">
-          <span class="range1 flex">
-            <div>
-              {% if filter.min_value.value %}
-                {{ filter.min_value.value
-                  | money_without_currency
-                  | remove: ',00'
-                }}
-              {% else %}
-                {{ 0
-                  | money_without_currency
-                  | remove: ',00'
-                }}
-              {% endif %}
-            </div>
-            <span>{{ cart.currency.symbol }}</span>
-          </span>
-          <span class="range2 flex">
-            <div>
-              {% if filter.max_value.value %}
-                {{ filter.max_value.value
-                  | money_without_currency
-                  | remove: ',00'
-                }}
-              {% else %}
-                {{ filter.range_max
-                  | money_without_currency
-                  | remove: ',00'
-                }}
-              {% endif %}
-            </div>
-            <span>{{ cart.currency.symbol }}</span>
-          </span>
-        </div>
-        
         <div class="input-ranges">
           <div class="slider-filter">
             <div class="pro"></div>
@@ -172,7 +137,7 @@
 >
   <div class="side-filter__head">
     <span>{{ 'products.facets.filter_by_label' | t }}</span>
-    {% render 'icon-close' %}
+    <span class="filter-close-js">{% render 'icon-close' %}</span>
   </div>
 
   <form>

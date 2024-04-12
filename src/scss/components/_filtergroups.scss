@@ -24,14 +24,14 @@
   }
 
   .checkbox__custom {
-    width: 14px;
-    height: 14px;
-    margin-right: 0.5rem;
+    width: 16px;
+    height: 16px;
+    margin-right: 15px;
     background-color: variables.$color-white;
     border-radius: 2px;
     content: "";
     cursor: pointer;
-    outline: 1px solid #ddd;
+    border: 2px solid #ddd;
   }
 
   .checkbox__input {
@@ -39,12 +39,11 @@
     display: block;
     width: 1px;
     height: 1px;
-    margin-right: 0.5rem;
     opacity: 0;
 
     &:checked + .checkbox__custom {
-      background-color: #009ae2;
-      outline: 1px solid variables.$color-black;
+      background-color: variables.$color-black;
+      border: 2px solid variables.$color-black;
 
       &::after {
         display: flex;
@@ -52,9 +51,14 @@
         justify-content: center;
         color: variables.$color-white;
         content: "L";
-        font-size: 12px;
-        transform: rotateZ(45deg) rotateY(180deg) translate(1px, -1.5px);
+        font-size: 13px;
+        transform: rotateZ(45deg) rotateY(180deg) translate(0px, -1px);
       }
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: no-drop;
     }
   }
 
@@ -103,7 +107,7 @@
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      border: 1px solid rgb(0 0 0 / 30%);
+      border: 2px solid rgb(0 0 0 / 30%);
       border-radius: 100%;
       cursor: pointer;
       font-size: 0;
@@ -117,12 +121,11 @@
     }
 
     &[value="White"] + span > span {
-      border: 1px solid variables.$color-black;
+      border: 2px solid variables.$color-black;
     }
 
     &:checked + span {
-      border: 1px solid variables.$color-black;
-      box-shadow: 0 2px 5px rgb(0 0 0 / 30%);
+      border: 2px solid variables.$color-black;
     }
   }
 }
