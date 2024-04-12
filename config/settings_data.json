@@ -52,7 +52,7 @@
       "side-cart": {
         "type": "side-cart",
         "settings": {
-          "upsell_collection": "",
+          "upsell_collection": "all",
           "progressbar_title": "Plus que [value] pour avoir la réduction de livraison gratuite",
           "free_shipping": "Livraison gratuite",
           "limit_price": 100,

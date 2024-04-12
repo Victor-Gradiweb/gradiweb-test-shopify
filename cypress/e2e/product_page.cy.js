@@ -1,70 +1,29 @@
-import { productPage } from '../class/ProductPage'
-import { unlockTheme } from '../class/UnlockTheme'
-
 Cypress.on('uncaught:exception', () => { return false })
 
-const deviceDesktop = [{ viewport: [1440, 900], type: 'WXGA+' }]
-const urlPreview = `?${Cypress.env('preview_theme')}`
-const collectionUrl = `${Cypress.env('collection_url')}?${Cypress.env('preview_theme')}`
-const productTest = `${Cypress.env('product_url')}?${Cypress.env('preview_theme')}`
-
-describe('Product Page', () => {
-  beforeEach(() => {
-    cy.session('break store password', () => {
-      cy.visit(urlPreview)
-      unlockTheme.break_password()
+describe('E-commerce Testing: Product Page', () => {
+  beforeEach('visit website', () => {
+    cy.session('break password', () => {
+      cy.visit(`?preview_theme_id=${Cypress.env('PREVIEW_THEME')}`)
+      cy.breakPassword()
     })
-    cy.visit(urlPreview)
-  })
-  afterEach(() => {
-    cy.wait(500)
+    cy.visit(`/products/${Cypress.env('HANDLE_PRODUCT')}?preview_theme_id=${Cypress.env('PREVIEW_THEME')}`)
   })
 
-  context('Product page test within a collection', () => {
-    deviceDesktop.forEach((device) => {
-      context(`Test for ${device.type}`, () => {
-        beforeEach(() => {
-          const [width, height] = device.viewport
-          cy.viewport(width, height)
-          cy.visit(collectionUrl)
-        })
-        it('product ramdon collection', () => {
-          productPage.selectorProductCollection()
-          productPage.addToCartProductPage()
-        })
-      })
-    })
+  it('Should verify the addition of the product to the side cart', () => { 
+    cy.verifyProductAdditionToSideCart()
+  })
+  it('should check the redirection: The first two elements of the breadcrumbs', () => { 
+    cy.checkBreadcrumbRedirection()
+  })
+  it('Should be checked for consistency: Product title and last item of breadcrumbs', () => { 
+    cy.verifyTitleAndBreadcrumbConsistency()
+  })
+  it('Product image navigation test: Navigation arrows next', () => { 
+    cy.nextImageMedia()
+  })
+  it('Product image navigation test: Navigation arrows prev', () => { 
+    cy.nextImageMedia().then(()=>cy.prevImageMedia())
+    
   })
 
-  context('Product page testing for a specific product', () => {
-    deviceDesktop.forEach((device) => {
-      context(`Test for ${device.type}`, () => {
-        beforeEach(() => {
-          const [width, height] = device.viewport
-          cy.viewport(width, height)
-        })
-
-        context('Producto Type 1', () => {
-          beforeEach(() => {
-            cy.visit(productTest)
-          })
-          it('Breadcrumb title checker', () => {
-            productPage.checkTitleBreadcrumb()
-          })
-          it('product image checker', () => {
-            productPage.checkProductImage()
-          })
-          it('product title checker', () => {
-            productPage.checkProductTitle()
-          })
-          it('Add product', () => {
-            productPage.addToCartProductPage()
-          })
-          it('Should add two quantities of the product and compare them in the shopping cart', () => {
-            productPage.addMultipleToCartProductPage()
-          })
-        })
-      })
-    })
-  })
 })

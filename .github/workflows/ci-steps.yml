@@ -87,8 +87,8 @@ jobs:
           install: false
         env:
           CYPRESS_preview_theme: preview_theme_id=${{ secrets.THEME_ID_PREVIEW }}
-          CYPRESS_collection_url: ${{ secrets.COLLECTION_URL }}
-          CYPRESS_product_url: ${{ secrets.PRODUCT_URL }}
+          CYPRESS_collection_url: collections/${{ secrets.COLLECTION_URL }}
+          CYPRESS_product_url: products/${{ secrets.PRODUCT_URL }}
           CYPRESS_password_store: ${{ secrets.SHOP_PASSWORD }}
 
   lhci:
@@ -125,7 +125,6 @@ jobs:
           PRODUCT_URL: ${{ secrets.PRODUCT_URL }}
 
   build:
-    name: Prepare to publish
     runs-on: ubuntu-latest
 
     permissions:
