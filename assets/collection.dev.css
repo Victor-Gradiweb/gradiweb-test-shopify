@@ -76,6 +76,11 @@
     justify-content: center;
   }
 }
+@media screen and (width <= 550px) {
+  .filter-heading__btn-modal {
+    width: 50%;
+  }
+}
 
 .filter-results {
   display: flex;
@@ -165,7 +170,7 @@
   color: #fff;
   content: "L";
   font-size: 13px;
-  transform: rotateZ(45deg) rotateY(180deg) translate(0px, -1px);
+  transform: rotateZ(45deg) rotateY(180deg) translate(0, -1px);
 }
 .filter-group-display__list li .checkbox__input:disabled {
   opacity: 0.4;
@@ -394,6 +399,7 @@
 .price-in .field input[type=number]::-webkit-inner-spin-button,
 .price-in .field input[type=number]::-webkit-outer-spin-button {
   appearance: none;
+  -moz-appearance: textfield;
 }
 
 .slider-filter {

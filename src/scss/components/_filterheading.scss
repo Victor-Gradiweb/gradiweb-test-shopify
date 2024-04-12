@@ -21,6 +21,10 @@
       display: flex;
       justify-content: center;
     }
+
+    @media screen and (width <= 550px) {
+      width: 50%;
+    }
   }
 }
 

@@ -23,8 +23,15 @@
   
       <div id="item-list-js" class="items-list">
         {% for product in collection.products %}
+          {% assign lcp_url = false %}
+
+          {% if forloop.index < 3 %}
+            {% assign lcp_url = true %}
+          {% endif %}
+
           {% render 'product-card'
-            product: product
+            product: product,
+            lcp_image: lcp_url
           %}
         {% endfor %}
       </div>
