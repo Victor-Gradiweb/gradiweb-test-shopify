@@ -1,35 +1,50 @@
+@use "../abstracts/variables";
+
 .main-collection {
-  margin: 40px auto;
+  margin: variables.$margin-section auto;
+
+  .wrapper {
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
 }
 
-.collection {
-  &__count {
-    margin-bottom: 20px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-
-    .breadcrumbs {
-      margin: 0;
-    }
+.collection-hero {
+  .breadcrumbs {
+    margin: 0 0 15px;
   }
 
-  .list-products {
-    &--empty {
-      text-align: center;
-      margin-bottom: 40px;
-    }
+  .h1 {
+    margin-bottom: 10px;
+  }
+}
+
+.list-products {
+  @media screen and (width >= variables.$break-point-filter) {
+    width: calc(100% - 330px);
   }
 
-  .grid.item-list {
-    --columns: repeat(4, 1fr);
+  &--empty {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+}
+
+.collection-product-list {
+  display: flex;
+
+  .items-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
 
     @media screen and (width <= 1100px) {
-      --columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, 1fr);
     }
 
     @media screen and (width <= 550px) {
-      --columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 }

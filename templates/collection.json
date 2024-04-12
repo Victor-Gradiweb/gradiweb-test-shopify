@@ -2,17 +2,9 @@
   "sections": {
     "main": {
       "type": "main-collection"
-    },
-    "filter": {
-      "type": "filters"
-    },
-    "products": {
-      "type": "collection-products"
     }
   },
   "order": [
-    "main",
-    "filter",
-    "products"
+    "main"
   ]
 }

@@ -1,8 +1,52 @@
-{% render 'heading'
-  heading: 1,
-  class: "h1",
-  content: collection.title
-%}
+<span class="collection-hero">
+  {% render 'breadcrumbs' %}
+  
+  {% render 'heading'
+    heading: 1,
+    class: "h1",
+    content: collection.title
+  %}
+</span>
+
+{% render 'filter-heading' %}
+
+<div class="collection-product-list">
+  {% render 'filter-groups' %}
+  
+  {% paginate collection.products by section.settings.pagination %}
+    <div id="list-products" class="list-products">
+      {% if collection.products.size == 0 %}
+        <div class="list-products--empty">
+          {{ 'sections.collection_template.empty' | t }}
+        </div>
+      {% endif %}
+  
+      <div id="item-list-js" class="items-list">
+        {% for product in collection.products %}
+          {% assign lcp_url = false %}
+
+          {% if forloop.index < 3 %}
+            {% assign lcp_url = true %}
+          {% endif %}
+
+          {% render 'product-card'
+            product: product,
+            lcp_image: lcp_url
+          %}
+        {% endfor %}
+      </div>
+  
+      {% render 'pagination-scroll'
+        type_paginate: "infinityScroll"
+        container: "#item-list-js",
+        item: ".product-card",
+        section_render: "main-collection",
+        current_url: collection.url,
+        paginate: paginate
+      %}
+    </div>
+  {% endpaginate %}
+</div>
 
 {% schema %}
 {
@@ -10,7 +54,16 @@
   "tag": "section",
   "class": "main-collection wrapper",
   "settings": [
-
+    {
+      "type": "range",
+      "id": "pagination",
+      "label": "Products by page",
+      "unit": "Pr",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "default": 6
+    }
   ]
 }
 {% endschema %}
