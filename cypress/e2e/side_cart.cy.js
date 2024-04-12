@@ -1,74 +1,54 @@
-import { sideCart } from '../class/SideCart'
-import { unlockTheme } from '../class/UnlockTheme'
-
 Cypress.on('uncaught:exception', () => { return false })
 
-const deviceDesktop = [{ viewport: [1440, 900], type: 'WXGA+' }]
-const urlPreview = `?${Cypress.env('preview_theme')}`
-
-describe('template spec', () => {
-  beforeEach(() => {
-    cy.session('break store password', () => {
-      cy.visit(urlPreview)
-      unlockTheme.break_password()
+describe('E-commerce Testing: Side Cart Interaction', () => {
+  beforeEach('visit website', () => {
+    cy.session('break password', () => {
+      cy.visit(`?preview_theme_id=${Cypress.env('PREVIEW_THEME')}`)
+      cy.breakPassword()
     })
-    cy.visit(urlPreview)
-  })
-  afterEach(() => {
-    cy.wait(500)
+    cy.visit(`?preview_theme_id=${Cypress.env('PREVIEW_THEME')}`)
   })
 
-  context('Desktop Side Cart', () => {
-    deviceDesktop.forEach((device) => {
-      context(`Test for ${device.type}`, () => {
-        beforeEach(() => {
-          const [width, height] = device.viewport
-          cy.viewport(width, height)
-        })
+  it('Should open the side cart', () => {
+    cy.toggleSidecartActive()
+  })
 
-        it('should open the side cart', () => {
-          sideCart.openSideCart()
-        })
+  it('Should close the side cart', () => {
+    cy.toggleSidecartActive().then(() => cy.toggleSidecartInactive())
+  })
 
-        it('should close the side cart', () => {
-          sideCart.openSideCart()
-          sideCart.closeSideCart()
-        })
+  it('Should navigate to the next upsell card', () => {
+    cy.toggleSidecartActive()
+    cy.navigateToNextUpsell()
+  })
 
-        it('should navigate to the next upsell', () => {
-          sideCart.openSideCart()
-          sideCart.navigateToNextUpsell()
-        })
+  it('Should navigate to the next upsell card', () => {
+    cy.toggleSidecartActive()
+    cy.navigateToNextUpsell().then(() => cy.navigateToPrevUpsell())
+  })
 
-        it('should navigate to the previous upsell', () => {
-          sideCart.openSideCart()
-          sideCart.navigateToPreviousUpsell()
-        })
+  it('Should add product', () => {
+    cy.toggleSidecartActive()
+    cy.addProductToUpsell()
+    
+  })
 
-        it('should add a product to the cart', () => {
-          sideCart.openSideCart()
-          sideCart.addToCart()
-        })
+  it('Should increase quantity of the added product', () => {
+    cy.toggleSidecartActive()
+    cy.addProductToUpsell()
+    cy.plusQuantity()
+  })
 
-        it('should increase quantity of the added product', () => {
-          sideCart.openSideCart()
-          sideCart.addToCart()
-          sideCart.plusQuantity()
-        })
-
-        it('should decrease quantity of the added product', () => {
-          sideCart.openSideCart()
-          sideCart.addToCart()
-          sideCart.removeQuantity()
-        })
-
-        it('should delete the first product from the cart', () => {
-          sideCart.openSideCart()
-          sideCart.addToCart()
-          sideCart.deleteFirstProduct()
-        })
-        // sideCart.goCheckout()
-      })
-    })
+  it('Should decrease quantity of the added product', () => {
+    cy.toggleSidecartActive()
+    cy.addProductToUpsell()
+    cy.plusQuantity()
+    cy.removeQuantity()
+  })
+  
+  it('Should decrease quantity of the added product', () => {
+    cy.toggleSidecartActive()
+    cy.addProductToUpsell()
+    cy.deleteProduct()
   })
 })
