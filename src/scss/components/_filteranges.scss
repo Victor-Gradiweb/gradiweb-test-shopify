@@ -31,6 +31,7 @@
   .field input[type="number"]::-webkit-inner-spin-button,
   .field input[type="number"]::-webkit-outer-spin-button {
     appearance: none;
+    -moz-appearance: textfield;
   }
 }
 

@@ -4,6 +4,7 @@
     "max-nesting-depth": 3,
     "no-descending-specificity": null,
     "selector-class-pattern": null,
+    "property-no-vendor-prefix": null,
     "media-feature-name-no-unknown": [
       true,
       {
