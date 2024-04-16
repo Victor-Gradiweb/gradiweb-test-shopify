@@ -8,7 +8,10 @@ jobs:
   cypress:
     name: Cypress CI
     runs-on: ubuntu-22.04
-
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2, 3]
     steps:
       - uses: actions/checkout@v4
 
@@ -33,8 +36,10 @@ jobs:
           browser: chrome
           install: false
           record: true
+          parallel: true
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CYPRESS_PREVIEW_THEME: ${{ secrets.THEME_ID_PREVIEW }}
           CYPRESS_PASSWORD_STORE: ${{ secrets.SHOP_PASSWORD }}
           CYPRESS_PATH_COLLECTION: ${{ secrets.COLLECTION_URL }}

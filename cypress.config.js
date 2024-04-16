@@ -3,11 +3,10 @@ const { defineConfig } = require('cypress')
 module.exports = defineConfig({
   projectId: "6obxhn",
   env:{
-    // "BASE_URL": "https://gradi-theme-base.myshopify.com/",
-    PREVIEW_THEME: '',
-    PASSWORD_STORE: '',
-    PATH_COLLECTION: '',
-    HANDLE_PRODUCT: ''
+    PREVIEW_THEME: '135179665588',
+    PASSWORD_STORE: 'gradiweb',
+    PATH_COLLECTION: 'all',
+    HANDLE_PRODUCT: 'ricoh-theta-sc2'
   },
   e2e: {
     baseUrl: 'https://gradi-theme-base.myshopify.com',
