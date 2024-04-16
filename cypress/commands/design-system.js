@@ -2,11 +2,12 @@
 import dsEnvironment from '../.env/env.ds.json';
 
 /**
- * Retrieves and checks the styling of headings within a section.
+ * Retrieves and checks the font styles of headings within a specified parent element.
+ * @param {string} parent - The selector for the parent element containing headings.
  * @returns {void}
  */
-export function headings() {
-  cy.get(dsEnvironment.PARENT).then(($section) => {
+export function headings(parent) {
+  cy.get(parent).then(($section) => {
     const headings = $section.find('h1, h2, h3, h4, h5, h6');
 
     if (headings.length === 0) {
@@ -25,16 +26,15 @@ export function headings() {
     }
   });
 }
-
-// Adding the 'headings' command to Cypress
-Cypress.Commands.add('headings', headings);
+Cypress.Commands.add('headings', (parent) => headings(parent));
 
 /**
- * Retrieves and checks the styling of body text elements within a section.
+ * Retrieves and checks the font styles of non-heading elements within a specified parent element.
+ * @param {string} parent - The selector for the parent element containing body text.
  * @returns {void}
  */
-export function body() {
-  cy.get(dsEnvironment.PARENT)
+export function body(parent) {
+  cy.get(parent)
     .find(':not(h1, h2, h3, h4, h5, h6)')
     .filter(function () {
       return this.textContent.trim().length > 0 && Cypress.$(this).parents('div').length <= 4
@@ -48,19 +48,57 @@ export function body() {
       }
     })
 }
-
-// Adding the 'body' command to Cypress
-Cypress.Commands.add('body', body);
+Cypress.Commands.add('body', (parent) => body(parent));
 
 /**
- * Retrieves and checks the styling of specified buttons within a section.
+ * Applies specified button styles to found buttons within a section.
+ * @param {Object} $button - The jQuery object representing the button element.
+ * @param {Object} buttonStyles - The styles to be applied to the button.
  * @returns {void}
  */
-export function buttons() {
-  const buttons = [
-    dsEnvironment.BUTTONS.BTN1,
-    dsEnvironment.BUTTONS.BTN2
-  ];
+function applyButtonStyles($button, buttonStyles) {
+  Object.entries(buttonStyles).forEach(([styleProperty, expectedValue]) => {
+    cy.wrap($button).should('have.css', styleProperty, expectedValue);
+  });
+}
+
+/**
+ * Finds buttons specified in the dsEnvironment within a given section.
+ * @param {Object} $section - The jQuery object representing the section element.
+ * @param {Array} buttons - The array of button selectors from dsEnvironment.
+ * @returns {Array} - An array of jQuery objects representing the found buttons.
+ */
+function findButtonsInSection($section, buttons) {
+  return buttons.map(button => $section.find(button));
+}
+
+/**
+ * Checks the styles of found buttons against specified button styles.
+ * @param {Array} foundButtons - Array of jQuery objects representing found buttons.
+ * @param {Object} buttonStyles - The styles to be checked against.
+ * @returns {void}
+ */
+function checkButtonStyles(foundButtons, buttonStyles) {
+  foundButtons.forEach($button => {
+    applyButtonStyles($button, buttonStyles);
+  });
+}
+
+/**
+ * Handles the case where no buttons are found within a section.
+ * @returns {void}
+ */
+function handleNoButtonsFound() {
+  cy.log('The section does not have any of the specified buttons');
+}
+
+/**
+ * Retrieves and checks the styles of specified buttons within a section.
+ * @param {string} parent - The selector for the parent element containing the section.
+ * @returns {void}
+ */
+export function buttons(parent) {
+  const buttons = Object.values(dsEnvironment.BUTTONS);
 
   const buttonStyles = {
     'font-size': `${dsEnvironment.BUTTONS.STYLES.FONT_SIZE}px`,
@@ -69,22 +107,17 @@ export function buttons() {
     'padding-right': `${dsEnvironment.BUTTONS.STYLES.PADDING_SIDES}px`,
   };
 
-  cy.get(dsEnvironment.PARENT).then(($section) => {
-    const $buttons = buttons.map(button => $section.find(button));
+  cy.get(parent).then(($section) => {
+    const $buttons = findButtonsInSection($section, buttons);
 
     const foundButtons = $buttons.filter($button => $button.length > 0);
 
     if (foundButtons.length > 0) {
-      foundButtons.forEach($button => {
-        Object.entries(buttonStyles).forEach(([styleProperty, expectedValue]) => {
-          cy.wrap($button).should('have.css', styleProperty, expectedValue);
-        });
-      });
+      checkButtonStyles(foundButtons, buttonStyles);
     } else {
-      cy.log('The section does not have any of the specified buttons');
+      handleNoButtonsFound();
     }
   });
 }
 
-// Adding the 'buttons' command to Cypress
-Cypress.Commands.add('buttons', buttons);
+Cypress.Commands.add('buttons', (parent) => buttons(parent));

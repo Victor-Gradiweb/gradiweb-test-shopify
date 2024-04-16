@@ -1,6 +1,4 @@
-import globalEnvironment from '../.env/env.global.json';
-// Cypress.on('uncaught:exception', () => { return false })
-
+import dsEnvironment from '../.env/env.ds.json';
 describe('E-commerce Testing: System Design Review', () => {
     beforeEach('visit website', () => {
         cy.session('break password', () => {
@@ -11,12 +9,12 @@ describe('E-commerce Testing: System Design Review', () => {
     })
 
     it('Headings', () => {
-        cy.headings()
+        cy.headings(dsEnvironment.PARENT.CTA)
     })
     it('body text', () => {
-        cy.body()
+        cy.body(dsEnvironment.PARENT.CTA)
     })
     it('buttons', () => {
-        cy.buttons()
+        cy.buttons(dsEnvironment.PARENT.DUAL)
     })  
 })
