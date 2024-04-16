@@ -13,5 +13,5 @@ module.exports = defineConfig({
     screenshotsFolder: false,
     /* excludeSpecPattern: 'cypress/e2e/side_cart.cy.js' */
   },
-  retries: 1,
+  // retries: 1,
 });

@@ -1,5 +1,5 @@
 import globalEnvironment from '../.env/env.global.json';
-Cypress.on('uncaught:exception', () => { return false })
+// Cypress.on('uncaught:exception', () => { return false })
 
 describe('E-commerce Testing: System Design Review', () => {
     beforeEach('visit website', () => {
@@ -13,5 +13,10 @@ describe('E-commerce Testing: System Design Review', () => {
     it('Headings', () => {
         cy.headings()
     })
-    
+    it('body text', () => {
+        cy.body()
+    })
+    it('buttons', () => {
+        cy.buttons()
+    })  
 })

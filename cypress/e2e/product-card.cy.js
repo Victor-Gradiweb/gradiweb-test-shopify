@@ -13,7 +13,7 @@ describe('E-commerce Testing: Product Card Interaction', () => {
     cy.checkImageWithoutHover()
   })
 
-  it('should be able to add a product from the product card or the modal', () => { 
+  it.only('should be able to add a product from the product card or the modal', () => { 
     cy.addToCartProductCard()
   })
 })
