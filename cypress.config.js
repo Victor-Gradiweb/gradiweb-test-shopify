@@ -1,6 +1,7 @@
 const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
+  projectId: "6obxhn",
   env:{
     // "BASE_URL": "https://gradi-theme-base.myshopify.com/",
     "PREVIEW_THEME": "135179665588",
