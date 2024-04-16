@@ -3,6 +3,19 @@
   "rules": {
     "max-nesting-depth": 3,
     "no-descending-specificity": null,
-    "selector-class-pattern": null
+    "selector-class-pattern": null,
+    "property-no-vendor-prefix": null,
+    "media-feature-name-no-unknown": [
+      true,
+      {
+        "ignoreMediaFeatureNames": ["variables"]
+      }
+    ],
+    "declaration-block-no-redundant-longhand-properties": [
+      true,
+      {
+        "ignoreShorthands": ["grid-gap"]
+      }
+    ]
   }
 }

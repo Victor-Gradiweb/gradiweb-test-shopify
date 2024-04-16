@@ -1,0 +1,23 @@
+<div class="sort-by">
+  <label for="sort-by-js">
+    {{ "products.facets.sort_by_label" | t }}
+  </label>
+  <div 
+    class="form__textfield form__textfield--select"
+  >
+    <select id="sort-by-js">
+      {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+      
+      {% for option in collection.sort_options %}
+        <option
+          value="{{ option.value }}"
+          {% if option.value == sort_by %}
+            selected="selected"
+          {% endif %}
+        >
+          {{ option.name }}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
+</div>

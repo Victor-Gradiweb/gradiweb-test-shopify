@@ -38,19 +38,6 @@
   <!-- eslint-enable max-len -->
 </div>
 
-{% if section.settings.background_image != blank %}
-  {% assign default_background_color = 'transparent' %}
-{% else %}
-  {% assign default_background_color = section.settings.background_color %}
-{% endif %}
-
-{% style %}
-  :root {
-    --color-background-cta: {{ default_background_color | default: "#f5f5f5" }};
-    --color-font: {{ section.settings.color_title | default: "#000000" }};
-  }
-{% endstyle %}
-
 {% schema %}
 {
   "name": "Call To Action",
@@ -78,18 +65,6 @@
       "id": "title",
       "label": "Title",
       "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    },
-    {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background Color",
-      "default": "#f5f5f5"
-    },
-    {
-      "type": "color",
-      "id": "color_title",
-      "label": "Font Color",
-      "default": "#000000"
     },
     {
       "type": "image_picker",

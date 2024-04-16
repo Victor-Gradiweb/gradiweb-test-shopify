@@ -1,0 +1,20 @@
+<div class="filter-heading">
+  <button
+    id="filter-open-js"
+    class="filter-heading__btn-modal btn-1"
+  >
+    <span>{{ "products.facets.filter_button" | t }}</span>
+  </button>
+
+  {% render 'filter-sort-by' %}
+</div>
+
+<div class="filter-results">
+  <span class="filter-count">
+    {{ 'sections.collection_template.count_products'
+      | t: count: collection.products_count
+    }}
+  </span>
+  
+  {% render 'filter-actives' %}
+</div>

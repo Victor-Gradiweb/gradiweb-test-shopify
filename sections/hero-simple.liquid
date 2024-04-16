@@ -14,9 +14,9 @@
 {% if section.settings.background != blank %}
 <div class="hero__image">
   <picture>
-    {% assign img_src = section.settings.background | image_url: width: 1440 %}
+    {% assign img_src = section.settings.background %}
     <img
-      src="{{ img_src }}"
+      src="{{ img_src | image_url: width: 1440 }}"
       height="100"
       width="100"
       title="{{ section.settings.hero_title | default: 'hero' }}"
@@ -39,8 +39,6 @@
   %}
 </div>
 
-<!-- eslint-disable @html-eslint/element-newline -->
-<!-- eslint-disable max-len -->
 {% schema %}
 {
   "name": "Hero Simple",
