@@ -29,14 +29,13 @@ jobs:
         run: npm i cypress
 
       # and run all Cypress tests
-      - name: Cypress run
+      - name: Cypress run --record
         uses: cypress-io/github-action@v6
         with:
           config: baseUrl=https://${{ secrets.SHOP_STORE }}
           browser: chrome
           install: false
           record: true
-          key: ${RECORD_KEY}
           parallel: true
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.RECORD_KEY }}
