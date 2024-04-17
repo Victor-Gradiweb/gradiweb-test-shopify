@@ -36,6 +36,7 @@ jobs:
           browser: chrome
           install: false
           record: true
+          key: ${RECORD_KEY}
           parallel: true
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.RECORD_KEY }}
