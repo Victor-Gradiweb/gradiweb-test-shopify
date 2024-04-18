@@ -2,16 +2,16 @@ name: open/edit/sync Pull Request
 on:
   pull_request:
     types: ["opened", "edited", "synchronize"]
-    branches: ["dev","survivor"]
+    branches: ["dev"]
 
 jobs:
   cypress:
     name: Cypress CI
     runs-on: ubuntu-22.04
-    strategy:
-      fail-fast: false
-      matrix:
-        containers: [1, 2, 3]
+    #strategy:
+    #  fail-fast: false
+    #  matrix:
+    #    containers: [1, 2, 3]
     steps:
       - uses: actions/checkout@v4
 
@@ -35,11 +35,11 @@ jobs:
           config: baseUrl=https://${{ secrets.SHOP_STORE }}
           browser: chrome
           install: false
-          record: false
-          parallel: true
+          #record: false
+          #parallel: true
         env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          #CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CYPRESS_PREVIEW_THEME: ${{ secrets.THEME_ID_PREVIEW }}
           CYPRESS_PASSWORD_STORE: ${{ secrets.SHOP_PASSWORD }}
           CYPRESS_PATH_COLLECTION: ${{ secrets.COLLECTION_URL }}
