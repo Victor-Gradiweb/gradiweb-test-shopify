@@ -10,7 +10,12 @@ module.exports = defineConfig({
   },
   e2e: {
     baseUrl: 'https://gradi-theme-base.myshopify.com',
-    screenshotsFolder: false
+    screenshotsFolder: false,
+    setupNodeEvents(on, config) {
+      require('cypress-terminal-report/src/installLogsPrinter')(on, {
+        defaultTrimLength: 1000,
+      });
+    }
     /* excludeSpecPattern: 'cypress/e2e/side_cart.cy.js' */
   },
   // retries: 1,
