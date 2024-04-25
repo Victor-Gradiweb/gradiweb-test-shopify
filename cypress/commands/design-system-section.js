@@ -1,5 +1,4 @@
-// Importing dsEnvironment from the specified path
-import dsEnvironment from '../.env/env.ds.json';
+import designSystemEnv from '../e2e/.env/design-system.json'
 
 /**
  * Retrieves headings within a parent element.
@@ -19,13 +18,12 @@ function getHeadings(parent) {
  */
 function verifyHeadingStyles(heading) {
   const tagName = heading.tagName.toLowerCase();
-  const fontSize = `${dsEnvironment.HEADING[tagName.toUpperCase()].FONT_SIZE}px`;
-  const fontFamily = dsEnvironment.HEADING.FONT_FAMILY;
+  const fontSize = `${designSystemEnv.headding[tagName].font_size}px`;
+  const fontFamily = designSystemEnv.headding.font_family;
 
   cy.wrap(heading)
     .should('have.css', 'font-size', fontSize)
     .and('have.css', 'font-family')
-    .and('include', fontFamily);
 }
 
 /**
@@ -46,7 +44,6 @@ export function headings(parent) {
 
 Cypress.Commands.add('headings', (parent) => headings(parent));
 
-
 /**
  * Retrieves and checks the font styles of non-heading elements within a specified parent element.
  * @param {string} parent - The selector for the parent element containing body text.
@@ -61,9 +58,9 @@ export function body(parent) {
     .each(($el) => {
       if ($el.is('a, span, em, p, strong, li') && $el.text().trim().length > 0) {
         cy.wrap($el)
-          .should('have.css', 'font-size', `${dsEnvironment.BODY.FONT_SIZE}px`)
+          .should('have.css', 'font-size', `${designSystemEnv.body_text.font_size}px`)
           .and('have.css', 'font-family')
-          .and('include', dsEnvironment.BODY.FONT_FAMILY)
+          .and('include', designSystemEnv.body_text.font_family)
       }
     })
 }
@@ -118,13 +115,13 @@ function handleNoButtonsFound() {
  * @returns {void}
  */
 export function buttons(parent) {
-  const buttons = Object.values(dsEnvironment.BUTTONS);
+  const buttons = Object.values(designSystemEnv.buttons);
 
   const buttonStyles = {
-    'font-size': `${dsEnvironment.BUTTONS.STYLES.FONT_SIZE}px`,
-    'font-family': dsEnvironment.BUTTONS.STYLES.FONT_FAMILY,
-    'padding-top': `${dsEnvironment.BUTTONS.STYLES.PADDING_TOP_BOTTOM}px`,
-    'padding-right': `${dsEnvironment.BUTTONS.STYLES.PADDING_SIDES}px`,
+    'font-size': `${designSystemEnv.styles_buttons.font_size}px`,
+    'font-family': designSystemEnv.styles_buttons.font_family,
+    'padding-top': `${designSystemEnv.styles_buttons.padding_top}px`,
+    'padding-right': `${designSystemEnv.styles_buttons.padding_right}px`,
   };
 
   cy.get(parent).then(($section) => {

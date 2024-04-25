@@ -1,12 +1,9 @@
+import { visitAndBreakPassword } from "../commands/visit-web-site"
 Cypress.on('uncaught:exception', () => { return false })
 
 describe('E-commerce Testing: Side Cart Interaction', () => {
-  beforeEach('visit website', () => {
-    cy.session('break password', () => {
-      cy.visit(`?preview_theme_id=${Cypress.env('PREVIEW_THEME')}`)
-      cy.breakPassword()
-    })
-    cy.visit(`?preview_theme_id=${Cypress.env('PREVIEW_THEME')}`)
+  beforeEach(() => {
+    visitAndBreakPassword()
   })
 
   it('Should open the side cart', () => {

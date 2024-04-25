@@ -7,7 +7,7 @@
   "scripts": {
     "clean": "node clean.js",
     "dev": "node mode.js development && webpack --config webpack.config.js --mode development --progress",
-    "cypress-cloud": ""
+    "cy:open": "cypress open"
   },
   "devDependencies": {
     "babel-loader": "^9.1.3",
