@@ -19,5 +19,5 @@ module.exports = defineConfig({
       });
     }
   },
-  retries: {"runMode": 2, "openMode":0},
+  retries: {"runMode": 1, "openMode":0},
 });

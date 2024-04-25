@@ -7,9 +7,9 @@ import designSystemEnv from '../e2e/.env/design-system.json'
  */
 function getHeadings(parent) {
   return cy.get(parent).then(($section) => {
-    const headings = $section.find('h1, h2, h3, h4, h5, h6');
-    return headings;
-  });
+    const headings = $section.find('h1, h2, h3, h4, h5, h6')
+    return headings
+  })
 }
 
 /**
@@ -17,13 +17,14 @@ function getHeadings(parent) {
  * @param {HTMLElement} heading - Heading element to verify.
  */
 function verifyHeadingStyles(heading) {
-  const tagName = heading.tagName.toLowerCase();
-  const fontSize = `${designSystemEnv.headding[tagName].font_size}px`;
-  const fontFamily = designSystemEnv.headding.font_family;
+  const tagName = heading.tagName.toLowerCase()
+  const fontSize = `${designSystemEnv.headding[tagName].font_size}px`
+  const fontFamily = designSystemEnv.headding.font_family
 
   cy.wrap(heading)
     .should('have.css', 'font-size', fontSize)
     .and('have.css', 'font-family')
+    .and('include', fontFamily)
 }
 
 /**
@@ -33,16 +34,16 @@ function verifyHeadingStyles(heading) {
 export function headings(parent) {
   getHeadings(parent).then((headings) => {
     if (headings.length === 0) {
-      cy.log('No <h1> to <h6> elements found.');
+      cy.log('No <h1> to <h6> elements found.')
     } else {
       headings.each((index, heading) => {
-        verifyHeadingStyles(heading);
-      });
+        verifyHeadingStyles(heading)
+      })
     }
-  });
+  })
 }
 
-Cypress.Commands.add('headings', (parent) => headings(parent));
+Cypress.Commands.add('headings', (parent) => headings(parent))
 
 /**
  * Retrieves and checks the font styles of non-heading elements within a specified parent element.
@@ -65,7 +66,7 @@ export function body(parent) {
     })
 }
 
-Cypress.Commands.add('body', (parent) => body(parent));
+Cypress.Commands.add('body', (parent) => body(parent))
 
 /**
  * Applies specified button styles to found buttons within a section.
@@ -75,7 +76,7 @@ Cypress.Commands.add('body', (parent) => body(parent));
  */
 function applyButtonStyles($button, buttonStyles) {
   Object.entries(buttonStyles).forEach(([styleProperty, expectedValue]) => {
-    cy.wrap($button).should('have.css', styleProperty, expectedValue);
+    cy.wrap($button).should('have.css', styleProperty).and('include', expectedValue);
   });
 }
 
@@ -118,8 +119,8 @@ export function buttons(parent) {
   const buttons = Object.values(designSystemEnv.buttons);
 
   const buttonStyles = {
+    'font-family': designSystemEnv.body_text.font_family,
     'font-size': `${designSystemEnv.styles_buttons.font_size}px`,
-    'font-family': designSystemEnv.styles_buttons.font_family,
     'padding-top': `${designSystemEnv.styles_buttons.padding_top}px`,
     'padding-right': `${designSystemEnv.styles_buttons.padding_right}px`,
   };

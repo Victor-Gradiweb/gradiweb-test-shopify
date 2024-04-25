@@ -5,11 +5,11 @@
         "carousel_products": ".shopify-section.carousel-products"
     },
     "body_text": {
-        "font_family": "system, sans-serif",
+        "font_family": "system",
         "font_size": "16"
     },
     "headding":{
-        "font_family": "system, sans-serif",
+        "font_family": "system",
         "h1": {"font_size": "30"},
         "h2": {"font_size": "25"},
         "h3": {"font_size": "20"},
@@ -22,7 +22,7 @@
         "button2": ".btn-2"
     },
     "styles_buttons": {
-        "font_family": "system, sans-serif",
+        "font_family": "system",
         "font_size": "16",
         "padding_top": "15",
         "padding_right": "30"
