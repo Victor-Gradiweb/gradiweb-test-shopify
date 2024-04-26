@@ -1,0 +1,28 @@
+@use "../abstracts/variables";
+
+.marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 16px 0;
+  font-weight: 600;
+  font-size: 30px;
+  background-color: variables.$color-gray;
+
+  &__scroll {
+    animation: marquee 20s linear infinite;
+    display: inline-block;
+  }
+}
+
+.marquee-break {
+  padding: 0 30px;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
