@@ -4,6 +4,10 @@
         "dual_section": ".shopify-section.dual--section",
         "carousel_products": ".shopify-section.carousel-products"
     },
+    "wrapper":{
+        "padding": "80",
+        "margen": "152.5"
+    },
     "body_text": {
         "font_family": "system",
         "font_size": "16"

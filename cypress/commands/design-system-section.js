@@ -139,3 +139,32 @@ export function buttons(parent) {
 }
 
 Cypress.Commands.add('buttons', (parent) => buttons(parent));
+
+/**
+ * Adds a wrapper to the specified element with the appropriate view dimensions and margins.
+ * @param {string} parent - The selector of the element to which the wrapper will be added.
+ * @param {number} width - The width of the view.
+ * @param {number} height - The height of the view.
+ * @returns {void}
+ * @description This function configures the view with the specified dimensions and adds a wrapper to the given element 
+ * with appropriate margins depending on the view width.
+ */
+
+function wrapperWithViewport(parent, width, height) {
+  cy.viewport(width, height);
+  const margen = width === 1920 ? designSystemEnv.wrapper.margen : 0;
+  
+  cy.get(parent)
+    .should('have.css', 'padding-left', `${designSystemEnv.wrapper.padding}px`)
+    .and('have.css', 'padding-right', `${designSystemEnv.wrapper.padding}px`)
+    .and('have.css', 'margin-left', `${margen}px`)
+    .and('have.css', 'margin-right', `${margen}px`);
+}
+
+Cypress.Commands.add('wrapperHD', (parent) => {
+  wrapperWithViewport(parent, 1440, 900);
+});
+
+Cypress.Commands.add('wrapperFullHD', (parent) => {
+  wrapperWithViewport(parent, 1920, 1080);
+});
