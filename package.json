@@ -6,7 +6,8 @@
   "author": "Cristian Velasco",
   "scripts": {
     "clean": "node clean.js",
-    "dev": "node mode.js development && webpack --config webpack.config.js --mode development --progress"
+    "dev": "node mode.js development && webpack --config webpack.config.js --mode development --progress",
+    "build": "node mode.js && node clean.js && webpack --config webpack.config.js --mode production --progress"
   },
   "devDependencies": {
     "babel-loader": "^9.1.3",

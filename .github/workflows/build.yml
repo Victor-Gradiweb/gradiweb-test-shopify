@@ -3,7 +3,7 @@ name: MERGING...
 on:
   push:
     branches:
-      - survivor
+      - main
 
 jobs:
   build:
