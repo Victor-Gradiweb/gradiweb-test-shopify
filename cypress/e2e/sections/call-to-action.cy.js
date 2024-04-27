@@ -81,6 +81,8 @@ describe('E-commerce Testing: call to action', () => {
 
     it('Verify styles titles', () => { cy.headings(designSystemEnv.sections.call_to_action) })
 
+    it('Verify styles button, with an object', () => { cy.buttons(designSystemEnv.sections.call_to_action, { size: '16', family: 'system', pdTop: 15, pdRight: 30, }) })
     it('Verify styles button', () => { cy.buttons(designSystemEnv.sections.call_to_action) })
+
 
 })

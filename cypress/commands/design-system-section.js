@@ -67,6 +67,26 @@ export function body(parent) {
 }
 
 Cypress.Commands.add('body', (parent) => body(parent))
+/**
+ * Generates the button styles based on the provided configuration.
+ * @param {Object} config - The configuration object.
+ * @param {string} [config.size] - The size of the buttons (e.g., 'small', 'medium', 'large').
+ * @param {string} [config.family] - The font family of the buttons.
+ * @param {number} [config.pdTop] - The top padding of the buttons.
+ * @param {number} [config.pdRight] - The right padding of the buttons.
+ * @returns {Object} - The button styles object.
+ */
+function getButtonStyles(config = {}) {
+  const buttonSizes = ['small', 'medium', 'large'];
+  const isValidSize = buttonSizes.includes(config.size);
+
+  return {
+    'font-family': config.family || designSystemEnv.body_text.font_family,
+    'font-size': `${isValidSize ? designSystemEnv[`styles_buttons_${config.size}`].font_size : designSystemEnv.styles_buttons.font_size}px`,
+    'padding-top': `${config.pdTop !== undefined ? config.pdTop : designSystemEnv.styles_buttons.padding_top}px`,
+    'padding-right': `${config.pdRight !== undefined ? config.pdRight : designSystemEnv.styles_buttons.padding_right}px`,
+  };
+}
 
 /**
  * Applies specified button styles to found buttons within a section.
@@ -76,7 +96,11 @@ Cypress.Commands.add('body', (parent) => body(parent))
  */
 function applyButtonStyles($button, buttonStyles) {
   Object.entries(buttonStyles).forEach(([styleProperty, expectedValue]) => {
-    cy.wrap($button).should('have.css', styleProperty).and('include', expectedValue);
+    if (styleProperty === 'padding-top' || styleProperty === 'padding-right') {
+      cy.wrap($button).should('have.css', styleProperty, expectedValue);
+    } else {
+      cy.wrap($button).should('have.css', styleProperty).and('include', expectedValue);
+    }
   });
 }
 
@@ -113,17 +137,22 @@ function handleNoButtonsFound() {
 /**
  * Retrieves and checks the styles of specified buttons within a section.
  * @param {string} parent - The selector for the parent element containing the section.
+ * @param {Object} [config] - The optional configuration object.
+ * @param {string} [config.size] - The size of the buttons (e.g., 'small', 'medium', 'large').
+ * @param {string} [config.family] - The font family of the buttons.
+ * @param {number} [config.pdTop] - The top padding of the buttons.
+ * @param {number} [config.pdRight] - The right padding of the buttons.
  * @returns {void}
  */
-export function buttons(parent) {
+export function buttons(parent, config = {}) {
+  // Validate that config is an object
+  if (typeof config !== 'object' || config === null) {
+    config = {};
+  }
+
   const buttons = Object.values(designSystemEnv.buttons);
 
-  const buttonStyles = {
-    'font-family': designSystemEnv.body_text.font_family,
-    'font-size': `${designSystemEnv.styles_buttons.font_size}px`,
-    'padding-top': `${designSystemEnv.styles_buttons.padding_top}px`,
-    'padding-right': `${designSystemEnv.styles_buttons.padding_right}px`,
-  };
+  const buttonStyles = getButtonStyles(config);
 
   cy.get(parent).then(($section) => {
     const $buttons = findButtonsInSection($section, buttons);
@@ -138,8 +167,7 @@ export function buttons(parent) {
   });
 }
 
-Cypress.Commands.add('buttons', (parent) => buttons(parent));
-
+Cypress.Commands.add('buttons', (parent, config) => buttons(parent, config));
 /**
  * Adds a wrapper to the specified element with the appropriate view dimensions and margins.
  * @param {string} parent - The selector of the element to which the wrapper will be added.

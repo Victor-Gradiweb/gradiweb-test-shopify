@@ -6,7 +6,7 @@
     },
     "wrapper":{
         "padding": "80",
-        "margen": "152.5"
+        "margen": "160"
     },
     "body_text": {
         "font_family": "system",
