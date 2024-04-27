@@ -181,18 +181,18 @@ Cypress.Commands.add('buttons', (parent, config) => buttons(parent, config));
 function wrapperWithViewport(parent, width, height) {
   cy.viewport(width, height);
   const margen = width === 1920 ? designSystemEnv.wrapper.margen : 0;
-  
+
   cy.get(parent)
-    .should('have.css', 'padding-left', `${designSystemEnv.wrapper.padding}px`)
-    .and('have.css', 'padding-right', `${designSystemEnv.wrapper.padding}px`)
-    .and('have.css', 'margin-left', `${margen}px`)
-    .and('have.css', 'margin-right', `${margen}px`);
+    .should('have.css', {
+      'padding': `0 ${designSystemEnv.wrapper.padding}px`,
+      'margin': `${margen}px`
+    });
 }
 
-Cypress.Commands.add('wrapperHD', (parent) => {
-  wrapperWithViewport(parent, 1440, 900);
+Cypress.Commands.add('wrapperHD', (parent, width = 1440) => {
+  wrapperWithViewport(parent, width, 900);
 });
 
-Cypress.Commands.add('wrapperFullHD', (parent) => {
-  wrapperWithViewport(parent, 1920, 1080);
+Cypress.Commands.add('wrapperFullHD', (parent, width = 1920) => {
+  wrapperWithViewport(parent, width, 1080);
 });
