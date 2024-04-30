@@ -1,198 +1,147 @@
-import designSystemEnv from '../e2e/.env/design-system.json'
+import designSystem from '../e2e/.env/design-system.json'
 
 /**
- * Retrieves headings within a parent element.
- * @param {string} parent - Selector of the parent element.
- * @returns {Cypress.Chainable<JQuery<HTMLElement>>} - Headings found within the parent element.
+ * Calculates the expected font size for a heading element based on the heading level and optionally provided size parameter.
+ * @param {jQuery} $heading - The jQuery object representing the heading element.
+ * @param {string} headingLevel - The level of the heading (e.g., "h1", "h2", etc.).
+ * @param {number} size - Optional parameter specifying the font size. If not provided, it defaults to the size defined in the system design.
+ * @returns {number} The expected font size for the heading.
  */
-function getHeadings(parent) {
-  return cy.get(parent).then(($section) => {
-    const headings = $section.find('h1, h2, h3, h4, h5, h6')
-    return headings
-  })
+function getExpectedFontSize($heading, headingLevel, size) {
+  let expectedFontSize = size
+  // If no specific font size is provided, use the one in the system design.
+  if (!expectedFontSize) {
+    expectedFontSize = designSystem.headdings[`headdingH${headingLevel.charAt(1)}`]
+  }
+  return expectedFontSize
 }
 
 /**
- * Verifies the styles of a heading.
- * @param {HTMLElement} heading - Heading element to verify.
+ * Verifies that the font size of a heading matches the expected font size.
+ * @param {jQuery} $heading - The jQuery object representing the heading element.
+ * @param {number} expectedFontSize - The expected font size for the heading.
  */
-function verifyHeadingStyles(heading) {
-  const tagName = heading.tagName.toLowerCase()
-  const fontSize = `${designSystemEnv.headding[tagName].font_size}px`
-  const fontFamily = designSystemEnv.headding.font_family
-
-  cy.wrap(heading)
-    .should('have.css', 'font-size', fontSize)
+function verifyHeadingFontSize($heading, expectedFontSize) {
+  cy.wrap($heading)
+    .should('have.css', 'font-size', `${expectedFontSize}px`)
     .and('have.css', 'font-family')
-    .and('include', fontFamily)
+    .and('include', designSystem.headdings.font_family)
 }
 
 /**
- * Exports headings within a parent element and verifies their styles.
- * @param {string} parent - Selector of the parent element.
+ * Iterates over all heading elements within a specified section and verifies their font size and font family.
+ * @param {string} sectionSelector - The selector for the section containing the headings.
+ * @param {string} headingSelector - The selector for the heading elements within the section.
+ * @param {Object} [options={}] - An object containing additional options.
+ * @param {number} [options.size] - Optional parameter specifying the font size to override the system design font size.
  */
-export function headings(parent) {
-  getHeadings(parent).then((headings) => {
-    if (headings.length === 0) {
-      cy.log('No <h1> to <h6> elements found.')
-    } else {
-      headings.each((index, heading) => {
-        verifyHeadingStyles(heading)
-      })
-    }
-  })
-}
+function verifyHeadings(sectionSelector, headingSelector, options = {}) {
+  const { size } = options
 
-Cypress.Commands.add('headings', (parent) => headings(parent))
-
-/**
- * Retrieves and checks the font styles of non-heading elements within a specified parent element.
- * @param {string} parent - The selector for the parent element containing body text.
- * @returns {void}
- */
-export function body(parent) {
-  cy.get(parent)
-    .find(':not(h1, h2, h3, h4, h5, h6)')
-    .filter(function () {
-      return this.textContent.trim().length > 0 && Cypress.$(this).parents('div').length <= 4
+  cy.get(sectionSelector)
+    .find(headingSelector)
+    .each(($heading) => {
+      const headingLevel = $heading.prop('tagName').toLowerCase()
+      const expectedFontSize = getExpectedFontSize($heading, headingLevel, size)
+      verifyHeadingFontSize($heading, expectedFontSize)
     })
-    .each(($el) => {
-      if ($el.is('a, span, em, p, strong, li') && $el.text().trim().length > 0) {
-        cy.wrap($el)
-          .should('have.css', 'font-size', `${designSystemEnv.body_text.font_size}px`)
-          .and('have.css', 'font-family')
-          .and('include', designSystemEnv.body_text.font_family)
+}
+
+/**
+ * Custom Cypress command to verify the font size and font family of headings on a web page.
+ * @param {string} sectionSelector - The selector for the section containing the headings.
+ * @param {string} headingSelector - The selector for the heading elements within the section.
+ * @param {Object} [options={}] - An object containing additional options.
+ * @param {number} [options.size] - Optional parameter specifying the font size to override the system design font size.
+ */
+Cypress.Commands.add('verifyHeadings', { prevSubject: false }, verifyHeadings)
+
+/**
+ * Finds the class name of a button element based on the design system.
+ * @param {jQuery} $button - jQuery object representing the button element.
+ * @returns {string|null} - The class name of the button without the 'button_' prefix, or null if not found.
+ */
+function findButtonClass($button) {
+  const buttonClasses = Object.keys(designSystem.buttons).filter(key => key.startsWith('button_'))
+  const foundClass = buttonClasses.find(cls => $button.hasClass(designSystem.buttons[cls].class.substring(1)))
+  return foundClass ? foundClass.replace('button_', '') : null
+}
+
+/**
+ * Verifies the styles of a button element.
+ * @param {jQuery} $button - jQuery object representing the button element.
+ * @param {Object} buttonSize - Object containing button size properties.
+ * @param {number} buttonSize.font_size - Font size of the button.
+ * @param {number} buttonSize.pd_right - Padding right of the button.
+ * @param {number} buttonSize.pd_top - Padding top of the button.
+ */
+function verifyButtonStyles($button, buttonSize) {
+  cy.wrap($button).should('have.css', 'font-family').and('include', designSystem.buttons.font_family)
+  cy.wrap($button).should('have.css', 'font-size', `${buttonSize.font_size}px`)
+  cy.wrap($button).should('have.css', 'padding-right', `${buttonSize.pd_right}px`)
+  cy.wrap($button).should('have.css', 'padding-top', `${buttonSize.pd_top}px`)
+}
+
+/**
+ * Verifies the styles of all buttons of a specified type within a given section.
+ * @param {string} section - CSS selector for the section containing the buttons.
+ * @param {string} buttonType - Type of button to verify.
+ * @throws {Error} - Throws an error if no buttons of the specified type are found.
+ */
+function verifyButtons(section, buttonType) {
+  let buttonFound = false
+
+  cy.get(section)
+    .find('a')
+    .each(($button) => {
+      const buttonClass = findButtonClass($button)
+      if (buttonClass && buttonClass === buttonType) {
+        const buttonSize = designSystem.buttons[`button_${buttonClass}`]
+        verifyButtonStyles($button, buttonSize)
+        buttonFound = true
+      }
+    })
+    .then(() => {
+      if (!buttonFound) {
+        throw new Error('No buttons of the specified type were found in the section provided.')
       }
     })
 }
 
-Cypress.Commands.add('body', (parent) => body(parent))
 /**
- * Generates the button styles based on the provided configuration.
- * @param {Object} config - The configuration object.
- * @param {string} [config.size] - The size of the buttons (e.g., 'small', 'medium', 'large').
- * @param {string} [config.family] - The font family of the buttons.
- * @param {number} [config.pdTop] - The top padding of the buttons.
- * @param {number} [config.pdRight] - The right padding of the buttons.
- * @returns {Object} - The button styles object.
+ * Adds a custom Cypress command to verify the styles of buttons within a specified section.
+ * @param {string} section - CSS selector for the section containing the buttons.
+ * @param {string} buttonType - Type of button to verify.
+ * @throws {Error} - Throws an error if no buttons of the specified type are found.
  */
-function getButtonStyles(config = {}) {
-  const buttonSizes = ['small', 'medium', 'large'];
-  const isValidSize = buttonSizes.includes(config.size);
-
-  return {
-    'font-family': config.family || designSystemEnv.body_text.font_family,
-    'font-size': `${isValidSize ? designSystemEnv[`styles_buttons_${config.size}`].font_size : designSystemEnv.styles_buttons.font_size}px`,
-    'padding-top': `${config.pdTop !== undefined ? config.pdTop : designSystemEnv.styles_buttons.padding_top}px`,
-    'padding-right': `${config.pdRight !== undefined ? config.pdRight : designSystemEnv.styles_buttons.padding_right}px`,
-  };
-}
-
+Cypress.Commands.add('verifyButtons', verifyButtons)
 /**
- * Applies specified button styles to found buttons within a section.
- * @param {Object} $button - The jQuery object representing the button element.
- * @param {Object} buttonStyles - The styles to be applied to the button.
+ * Iterates through paragraphs and spans within the specified section and asserts their font properties.
+ * @param {string} sectionSelector - The CSS selector for the section to search within.
+ * @param {Object} [options={}] - Additional options.
+ * @param {Object} [options.fontSize] - Font size options.
+ * @param {number} [options.fontSize.p] - Font size for paragraphs.
+ * @param {number} [options.fontSize.span] - Font size for spans.
  * @returns {void}
  */
-function applyButtonStyles($button, buttonStyles) {
-  Object.entries(buttonStyles).forEach(([styleProperty, expectedValue]) => {
-    if (styleProperty === 'padding-top' || styleProperty === 'padding-right') {
-      cy.wrap($button).should('have.css', styleProperty, expectedValue);
-    } else {
-      cy.wrap($button).should('have.css', styleProperty).and('include', expectedValue);
-    }
-  });
-}
-
-/**
- * Finds buttons specified in the dsEnvironment within a given section.
- * @param {Object} $section - The jQuery object representing the section element.
- * @param {Array} buttons - The array of button selectors from dsEnvironment.
- * @returns {Array} - An array of jQuery objects representing the found buttons.
- */
-function findButtonsInSection($section, buttons) {
-  return buttons.map(button => $section.find(button));
-}
-
-/**
- * Checks the styles of found buttons against specified button styles.
- * @param {Array} foundButtons - Array of jQuery objects representing found buttons.
- * @param {Object} buttonStyles - The styles to be checked against.
- * @returns {void}
- */
-function checkButtonStyles(foundButtons, buttonStyles) {
-  foundButtons.forEach($button => {
-    applyButtonStyles($button, buttonStyles);
-  });
-}
-
-/**
- * Handles the case where no buttons are found within a section.
- * @returns {void}
- */
-function handleNoButtonsFound() {
-  cy.log('The section does not have any of the specified buttons');
-}
-
-/**
- * Retrieves and checks the styles of specified buttons within a section.
- * @param {string} parent - The selector for the parent element containing the section.
- * @param {Object} [config] - The optional configuration object.
- * @param {string} [config.size] - The size of the buttons (e.g., 'small', 'medium', 'large').
- * @param {string} [config.family] - The font family of the buttons.
- * @param {number} [config.pdTop] - The top padding of the buttons.
- * @param {number} [config.pdRight] - The right padding of the buttons.
- * @returns {void}
- */
-export function buttons(parent, config = {}) {
-  // Validate that config is an object
-  if (typeof config !== 'object' || config === null) {
-    config = {};
-  }
-
-  const buttons = Object.values(designSystemEnv.buttons);
-
-  const buttonStyles = getButtonStyles(config);
-
-  cy.get(parent).then(($section) => {
-    const $buttons = findButtonsInSection($section, buttons);
-
-    const foundButtons = $buttons.filter($button => $button.length > 0);
-
-    if (foundButtons.length > 0) {
-      checkButtonStyles(foundButtons, buttonStyles);
-    } else {
-      handleNoButtonsFound();
-    }
-  });
-}
-
-Cypress.Commands.add('buttons', (parent, config) => buttons(parent, config));
-/**
- * Adds a wrapper to the specified element with the appropriate view dimensions and margins.
- * @param {string} parent - The selector of the element to which the wrapper will be added.
- * @param {number} width - The width of the view.
- * @param {number} height - The height of the view.
- * @returns {void}
- * @description This function configures the view with the specified dimensions and adds a wrapper to the given element 
- * with appropriate margins depending on the view width.
- */
-
-function wrapperWithViewport(parent, width, height) {
-  cy.viewport(width, height);
-  const margen = width === 1920 ? designSystemEnv.wrapper.margen : 0;
-
-  cy.get(parent)
-    .should('have.css', {
-      'padding': `0 ${designSystemEnv.wrapper.padding}px`,
-      'margin': `${margen}px`
+function body(sectionSelector, options = {}) {
+  const { fontSize } = options;
+  cy.get(sectionSelector)
+    .find('p, span')
+    .each(($el) => {
+      if ($el.text().length > 30) {
+        let expectedFontSize;
+        if ($el.is('span')) {
+          expectedFontSize = fontSize?.span || designSystem.paragraph.body.span;
+        } else if ($el.is('p')) {
+          expectedFontSize = fontSize?.p || designSystem.paragraph.body.p;
+        } else {
+          return;
+        }
+        cy.wrap($el).should('have.css', 'font-family').and('include', designSystem.paragraph.font_family);
+        cy.wrap($el).should('have.css', 'font-size', `${expectedFontSize}px`);
+      }
     });
 }
 
-Cypress.Commands.add('wrapperHD', (parent, width = 1440) => {
-  wrapperWithViewport(parent, width, 900);
-});
-
-Cypress.Commands.add('wrapperFullHD', (parent, width = 1920) => {
-  wrapperWithViewport(parent, width, 1080);
-});
+Cypress.Commands.add('paragraphText', (sectionSelector, options) => { body(sectionSelector, options); });
