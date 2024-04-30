@@ -8,7 +8,6 @@ module.exports = defineConfig({
     HANDLE_PRODUCT: ''
   },
   e2e: {
-    baseUrl: '',
     screenshotsFolder: false,
     video: false,
     viewportWidth: 1440,
