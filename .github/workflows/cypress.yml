@@ -32,14 +32,11 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          config: baseUrl=https://${{ secrets.SHOP_STORE }}
+          config: baseUrl=$CYPRESS_BASE_URL
           browser: chrome
           install: false
-          #record: false
-          #parallel: true
         env:
-          #CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CYPRESS_BASE_URL: ${{ secrets.SHOP_STORE }}
           CYPRESS_PREVIEW_THEME: ${{ secrets.THEME_ID_PREVIEW }}
           CYPRESS_PASSWORD_STORE: ${{ secrets.SHOP_PASSWORD }}
           CYPRESS_PATH_COLLECTION: ${{ secrets.COLLECTION_URL }}
