@@ -24,8 +24,7 @@ jobs:
   cypress:
     name: Cypress CI
     runs-on: ubuntu-22.04
-
-    needs: 
+    needs:
       - preview
 
     if: needs.preview.result == 'success'
@@ -44,7 +43,7 @@ jobs:
 
       - if: ${{ steps.cache-cypress.outputs.cache-hit != 'true' }}
         name: Install Cypress
-        run: npm i cypress
+        run: npm i cypress cypress-terminal-report
 
       # and run all Cypress tests
       - name: Cypress run
@@ -53,6 +52,7 @@ jobs:
           config: baseUrl=https://${{ secrets.SHOP_STORE }}
           browser: chrome
           install: false
+
         env:
           CYPRESS_PREVIEW_THEME: ${{ secrets.THEME_ID_PREVIEW }}
           CYPRESS_PASSWORD_STORE: ${{ secrets.SHOP_PASSWORD }}

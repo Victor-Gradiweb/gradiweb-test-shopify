@@ -1,17 +1,22 @@
 const { defineConfig } = require('cypress')
 
 module.exports = defineConfig({
-  env: {
-    // "BASE_URL": "https://gradi-theme-base.myshopify.com/",
+  env:{
     PREVIEW_THEME: '',
     PASSWORD_STORE: '',
     PATH_COLLECTION: '',
     HANDLE_PRODUCT: ''
   },
   e2e: {
-    baseUrl: 'https://gradi-theme-base.myshopify.com',
-    screenshotsFolder: false
-    /* excludeSpecPattern: 'cypress/e2e/side_cart.cy.js' */
+    screenshotsFolder: false,
+    video: false,
+    viewportWidth: 1440,
+    setupNodeEvents(on, config) {
+      require('cypress-terminal-report/src/installLogsPrinter')(on, {
+        defaultTrimLength: 1000,
+      });
+    }
   },
-  retries: 1
-})
+  retries: {"runMode": 1, "openMode":0},
+});
+

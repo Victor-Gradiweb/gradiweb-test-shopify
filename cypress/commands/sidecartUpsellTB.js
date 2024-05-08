@@ -1,4 +1,4 @@
-import sideCartEnvironment from '../.env/env.side_cart.json'
+import sideCartEnvironment from '../e2e/.env/env.side_cart.json'
 import { verifyProductAdditionToSideCart } from "./product-page";
 
 export function toggleSidecartActive() {

@@ -1,5 +1,5 @@
-import productPageEnvironment from '../.env/env.product_page.json'
-import sideCartEnvironment from '../.env/env.side_cart.json'
+import productPageEnvironment from '../e2e/.env/env.product_page.json'
+import sideCartEnvironment from '../e2e/.env/env.side_cart.json'
 import { verifyProductAddedToSideCart} from './sidecartUpsellTB'
 
 export function verifyProductAdditionToSideCart() {
