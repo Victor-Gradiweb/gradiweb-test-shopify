@@ -1,0 +1,31 @@
+{
+  "sidecart":{
+    "sidecart_section": "div[class='shopify-section side-cart']",
+    "icon_open": "span[class='button-cart-js']",
+    "icon_close": "span[class='side-cart__close cart-close-js']",
+    "item_cart": "item-cart[class='cart-item']",
+
+    "product_management":{
+      "input_quantity": "input[class='input-quantity item-cart-js']",
+      "increase_units": "span[class='btn-change button'][data-action='plus']",
+      "decrease_units": "span[class='btn-change button'][data-action='subtr']",
+      "delete_product": "span[class='item-delete']",
+      "item_price": "div[class='item-price']"
+    },
+
+    "upsell_sidecart": {
+      "upsell_section": "div[class='cart-upsell side-cart__margins']",
+      "arrow_next": "button[class='swiper-button swiper-button-next swiperElsidecart']",
+      "arrow_prev": "button[class='swiper-button swiper-button-prev swiperElsidecart']",
+      "button_add_product": "button[class='btn-1 upsell-btn btn-add-to-cart btn-cart-js']"
+    },
+
+    "progress_bar":{
+      "progress_bar_data": "input[id='progress-bar-data']",
+      "residuary": "span[class='total-residuary']",
+      "text": "span[class='progress-text-js']",
+      "bar": "div[class='bar-progress']"
+    }
+  }
+}
+

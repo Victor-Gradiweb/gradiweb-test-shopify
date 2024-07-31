@@ -1,0 +1,8 @@
+{
+  "main_section": "section[class='shopify-section main-product wrapper product-js']",
+  "button_add_product": "button[class='btn-2 btn-add-to-cart btn-cart-js']",
+
+  "breadcrumbs":{
+    "section": "nav[class='breadcrumbs']"
+  }
+}

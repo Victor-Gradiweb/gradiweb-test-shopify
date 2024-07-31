@@ -1,0 +1,9 @@
+{
+  "login":{
+    "email_input": "input[id='CustomerEmail']",
+    "password_input": "input[id='CustomerPassword']",
+    "email": "michael.rojas@gradiweb.com",
+    "password": "Gradiweb!"
+  }
+  
+}
