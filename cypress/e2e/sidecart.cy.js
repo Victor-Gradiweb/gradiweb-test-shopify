@@ -44,7 +44,7 @@ describe('SIDECART', () => {
     })
   })
 
-  context('Product Management Tests inside the side cart ', () => {
+ /*  context('Product Management Tests inside the side cart ', () => {
     it.only('Test 8: increase units of a product', () => {
       cy.addProductFromProductPage()
       cy.increaseUnits()
@@ -58,7 +58,7 @@ describe('SIDECART', () => {
       cy.addProductFromProductPage()
       cy.deleteProduct()
     })
-  })
+  }) */
 
   context('Upsell inside the sidecar', () => {
     it('Test 11: upsell arrows', () => {

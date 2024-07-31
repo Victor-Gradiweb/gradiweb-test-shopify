@@ -13,7 +13,7 @@ describe('Product page', () => {
     cy.wait(500)
   })
 
-  context.only('Breadcrumbs', () => {
+  context('Breadcrumbs', () => {
     it('Test 1: should ensure there are 2 to 3 breadcrumb links', () => {
       cy.validateBreadcrumbLinksCount()
     })

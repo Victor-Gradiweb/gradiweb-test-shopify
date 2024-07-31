@@ -170,7 +170,6 @@ function validateQuantity(expectedQuantity) {
 function changeUnits(action) {
   cy.get(data.sidecart.product_management[action])
     .eq(0)
-    .trigger('mouseover')
     .click({ force: true })
 
   cy.wait(2500) // Consider moving this wait to a more appropriate place if possible
