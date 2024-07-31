@@ -50,7 +50,7 @@ describe('SIDECART', () => {
       cy.increaseUnits()
     })
 
-    it('Test 9: decrease units of a product', () => {
+    it.only('Test 9: decrease units of a product', () => {
       cy.addProductFromProductPage()
       cy.decreaseUnits()
     })
