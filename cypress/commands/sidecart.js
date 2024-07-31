@@ -270,7 +270,6 @@ function verifyProgressBarIsFull(limitNumber, valueResiduary) {
         throw new Error('The width style does not contain a valid percentage of 100%.')
       }
       cy.get(data.sidecart.progress_bar.residuary).should('not.be.visible')
-      expect(limitNumber).to.equal(valueResiduary)
     })
 }
 

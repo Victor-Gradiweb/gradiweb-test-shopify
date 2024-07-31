@@ -52,8 +52,8 @@ jobs:
           config: baseUrl=https://${{ secrets.SHOP_STORE }}
           browser: chrome
           install: false
-          spec: |
-            cypress/e2e/sidecart.cy.js
+          # spec: |
+          #   cypress/e2e/sidecart.cy.js
 
         env:
           CYPRESS_PREVIEW_THEME: ${{ secrets.THEME_ID_PREVIEW }}
