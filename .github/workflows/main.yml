@@ -2,7 +2,7 @@ name: open/edit/sync Pull Request
 on:
   pull_request:
     types: ["opened", "edited", "synchronize"]
-    branches: ["main"]
+    branches: ["main", "survivor"]
 
 jobs:
   preview:
@@ -52,8 +52,7 @@ jobs:
           config: baseUrl=https://${{ secrets.SHOP_STORE }}
           browser: chrome
           install: false
-          spec: | 
-            cypress/e2e/specs/sprint4/*.cy.js
+          # spec:
 
         env:
           CYPRESS_PREVIEW_THEME: ${{ secrets.THEME_ID_PREVIEW }}
