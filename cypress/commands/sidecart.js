@@ -40,9 +40,9 @@ Cypress.Commands.add('verifyCartIcon', verifyCartIcon)
  */
 function sidecartOpen(isOpen) {
   if (isOpen) {
-    cy.get(data.sidecart.icon_open).trigger("click")
+    cy.get(data.sidecart.icon_open).click()
   } else {
-    cy.get(data.sidecart.icon_close).trigger("click")
+    cy.get(data.sidecart.icon_close).click()
   }
   cy.checkSidecartState(isOpen)
 }
@@ -53,7 +53,7 @@ Cypress.Commands.add('sidecartOpen', sidecartOpen)
  * Ensures the sidecart state is checked to be closed.
  */
 function closeSidecartOutside() {
-  cy.get('.overlay').trigger("click")
+  cy.get('.overlay').click()
   cy.checkSidecartState(false)
 }
 Cypress.Commands.add('closeSidecartOutside', closeSidecartOutside)
@@ -104,7 +104,7 @@ function arrowsNext() {
     .first()
     .then(firstSlide => {
       cy.get(data.sidecart.upsell_sidecart.arrow_next)
-        .trigger("click")
+        .click({ force: true })
         .then(() => {
           cy.wrap(firstSlide)
             .should('not.have.class', 'swiper-slide-active')
@@ -120,7 +120,7 @@ function arrowsNext() {
  * @function arrowsPrev
  */
 function arrowsPrev() {
-  cy.get(data.sidecart.upsell_sidecart.arrow_prev).trigger("click")
+  cy.get(data.sidecart.upsell_sidecart.arrow_prev).click({ force: true })
     .then(() => {
       cy.get(data.sidecart.upsell_sidecart.upsell_section)
         .find('swiper-slide')
@@ -142,7 +142,7 @@ function arrowsPrev() {
 function addProductFromUpsellInsideSidecar() {
   cy.get(data.sidecart.sidecart_section)
     .find(data.sidecart.upsell_sidecart.button_add_product)
-    .first().trigger("click")
+    .first().click()
     .wait(2500)
   cy.get(data.sidecart.item_cart).should('have.length', 1)
 
@@ -170,7 +170,8 @@ function validateQuantity(expectedQuantity) {
 function changeUnits(action) {
   cy.get(data.sidecart.product_management[action])
     .eq(0)
-    .trigger("click")
+    .trigger('mouseover')
+    .click({ force: true })
 
   cy.wait(2500) // Consider moving this wait to a more appropriate place if possible
 
@@ -211,7 +212,7 @@ Cypress.Commands.add('decreaseUnits', decreaseUnits)
  * @function deleteProduct
  */
 function deleteProduct() {
-  cy.get(data.sidecart.product_management.delete_product).trigger("click")
+  cy.get(data.sidecart.product_management.delete_product).click({ force: true })
   cy.get(data.sidecart.item_cart).should('not.exist')
 }
 Cypress.Commands.add('deleteProduct', deleteProduct)

@@ -45,12 +45,12 @@ describe('SIDECART', () => {
   })
 
   context('Product Management Tests inside the side cart ', () => {
-    it('Test 8: increase units of a product', () => {
+    it.only('Test 8: increase units of a product', () => {
       cy.addProductFromProductPage()
       cy.increaseUnits()
     })
 
-    it.only('Test 9: decrease units of a product', () => {
+    it('Test 9: decrease units of a product', () => {
       cy.addProductFromProductPage()
       cy.decreaseUnits()
     })
