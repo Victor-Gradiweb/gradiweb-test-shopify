@@ -14,10 +14,10 @@ module.exports = defineConfig({
    * @property {string} HANDLE_PRODUCT - Product to handle.
    */
   env: {
-    PREVIEW_THEME: '',
-    PASSWORD_STORE: '',
+    PREVIEW_THEME: '135179665588',
+    PASSWORD_STORE: 'gradiweb',
     HANDLE_COLLECTION: '',
-    HANDLE_PRODUCT: ''
+    HANDLE_PRODUCT: 'ricoh-theta-sc2'
   },
   
   /**
@@ -29,7 +29,7 @@ module.exports = defineConfig({
    * @type {string}
    */
   e2e: {
-    // baseUrl: 'https://gradi-theme-base.myshopify.com',
+    baseUrl: 'https://gradi-theme-base.myshopify.com',
     screenshotsFolder: false,
     video: false,
     viewportWidth: 1440,

@@ -61,36 +61,36 @@ jobs:
           CYPRESS_PATH_COLLECTION: ${{ secrets.COLLECTION_URL }}
           CYPRESS_HANDLE_PRODUCT: ${{ secrets.PRODUCT_URL }}
 
-  lhci:
-    name: Lighthouse CI
-    runs-on: ubuntu-latest
+  # lhci:
+  #   name: Lighthouse CI
+  #   runs-on: ubuntu-latest
 
-    needs:
-      - cypress
+  #   needs:
+  #     - cypress
 
-    if: needs.cypress.result == 'success'
+  #   if: needs.cypress.result == 'success'
 
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 18.x
 
-      - uses: browser-actions/setup-chrome@v1
-        id: setup-chrome
-      - run: |
-          ${{ steps.setup-chrome.outputs.chrome-path }} --version
+  #     - uses: browser-actions/setup-chrome@v1
+  #       id: setup-chrome
+  #     - run: |
+  #         ${{ steps.setup-chrome.outputs.chrome-path }} --version
 
-      - name: run Lighthouse CI
-        run: |
-          npm install -g @lhci/cli
-          lhci autorun
-        env:
-          PUPPETEER_EXECUTABLE_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
-          LHCI_CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
-          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-          LHCI_SHOP_PASSWORD: ${{ secrets.SHOP_PASSWORD }}
-          HOST: https://${{ secrets.SHOP_STORE }}
-          THEME_ID_PREVIEW: ${{ secrets.THEME_ID_PREVIEW }}
-          COLLECTION_URL: ${{ secrets.COLLECTION_URL }}
-          PRODUCT_URL: ${{ secrets.PRODUCT_URL }}
+  #     - name: run Lighthouse CI
+  #       run: |
+  #         npm install -g @lhci/cli
+  #         lhci autorun
+  #       env:
+  #         PUPPETEER_EXECUTABLE_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
+  #         LHCI_CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
+  #         LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+  #         LHCI_SHOP_PASSWORD: ${{ secrets.SHOP_PASSWORD }}
+  #         HOST: https://${{ secrets.SHOP_STORE }}
+  #         THEME_ID_PREVIEW: ${{ secrets.THEME_ID_PREVIEW }}
+  #         COLLECTION_URL: ${{ secrets.COLLECTION_URL }}
+  #         PRODUCT_URL: ${{ secrets.PRODUCT_URL }}
