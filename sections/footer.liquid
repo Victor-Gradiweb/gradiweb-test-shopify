@@ -136,7 +136,7 @@
 
   {% if section.settings.sub_footer != blank %}
   <span>
-    {{ section.settings.sub_footer }}
+    © {{ 'now' | date: '%Y' }}, {{ section.settings.sub_footer }}
   </span>
   {% endif %}
 </div>
