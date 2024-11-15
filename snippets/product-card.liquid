@@ -20,18 +20,28 @@
   assign image_feature = product.featured_image | image_url: width: 400
   assign image_second = product.images[1] | image_url: width: 400
   assign image_first = product.images[1]
-  if current_variant.compare_at_price == current_variant.price
-    assign hide_price = 'hidden'
+
+  assign collection_class_name = ''
+  if product.metafields.custom.iscollection.value
+    assign collection_class_name = 'product-card__collection'
   endif
+
 %}
 
-<card-product class="product-card product-js">
+<card-product class="product-card product-js {{ collection_class_name }}"
+
+  {% if product.metafields.custom.bg_img.value != blank %}
+    style="background: red"
+  {% endif %}
+>
+
+
   <a
     title="{{ product.title }}"
     class="product-card__head"
     href="{{ product.url }}"
   >
-    <div class="product-card__head-images">
+    <div class="product-card__head-images">,
       {% unless product.images[1] %}
         {% assign image_first = product.featured_image %}
         {% assign image_second = image_feature %}
@@ -81,22 +91,4 @@
       %}
     </div>
   </a>
-  <form
-    class="product-card__form add-product-cart"
-    action="/cart/add"
-  >
-    <div class="product-card__form-variants">
-      {% render 'variants-form'
-        product: product
-        option_radio: 'Color',
-        show_variant: 'Color'
-      %}
-    </div>
-
-    {% render 'button-add-cart'
-      btn_type: 'btn-2',
-      class: 'btn-add-to-cart',
-      available: product.selected_or_first_available_variant.available
-    %}
-  </form>
 </card-product>
