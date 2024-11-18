@@ -29,13 +29,13 @@
 
 %}
 
-<card-product class="product-card product-js {{ collection_class_name }}"
+{% if product.metafields.custom.bg_img.value != blank %}
+  <section class="{{ collection_class_name }}" 
+    style="background-image: url('https://escape.cafe/cdn/shop/files/warm-1.jpg?v=1664291472&width=1024')">
+    <div class="{{ collection_class_name }}--cont-prod">
+{% endif %}
 
-  {% if product.metafields.custom.bg_img.value != blank %}
-    style="background-image: url('{{ product.metafields.custom.bg_img.value | file_url }}');"
-  {% endif %}
-
->
+<card-product class="product-card product-js {{ collection_class_name }}">
 
   <a
     title="{{ product.title }}"
@@ -121,3 +121,7 @@
     </div>
   </a>
 </card-product>
+{% if product.metafields.custom.bg_img.value != blank %}
+    </div>
+  </section>
+{% endif %}

@@ -555,6 +555,18 @@ section,
 .product-card__collection {
   grid-column: span 2;
   grid-row: span 2;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-bottom: 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+}
+.product-card__collection--cont-prod {
+  width: 50%;
+  height: 50%;
+  margin-top: 25%;
 }
 .product-card__head {
   display: flex;
@@ -583,9 +595,9 @@ section,
   position: absolute;
   bottom: 0;
 }
-.product-card__cont-hover p meta {
+.product-card__cont-hover--description {
   line-height: 1;
-  font-size: min(3.125vw, 5.5555555556vh);
+  font-size: 2rem;
 }
 .product-card__head-images {
   position: relative;
