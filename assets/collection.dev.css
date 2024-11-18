@@ -29,6 +29,12 @@
   margin-bottom: 40px;
 }
 
+.products-title {
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: 3rem;
+}
+
 .collection-product-list {
   display: flex;
 }

@@ -1,0 +1,44 @@
+<!-- eslint-disable @html-eslint/require-closing-tags -->
+  {% comment %}
+  Renders a render images
+
+  Accepts:
+  - description: {String} className in img tag (optional)
+  - type: {String} to render url image
+  - origin: {String} to render url image
+  - process: {String} alt in image
+  - title: {String} title image
+
+  Usage:
+    {% render "product-card-hover"
+      description: description,
+      type: type,
+      origin: origin,
+      process: process,
+    %}
+{% endcomment %}
+ 
+<!-- eslint-enable @html-eslint/require-closing-tags -->
+
+<section class="product-card__cont-hover">
+    <div class="product-card__cont-hover--box">
+        {{ description }}
+        <table class="product-table">
+        <tbody>
+            <tr>
+            <td>Type:</td>
+            <td class="__bold">{{ type }}</td>
+            </tr>
+            <tr>
+            <td>Origin:</td>
+            <td class="__bold">{{ origin }}</td>
+            </tr>
+            <tr>
+            <td>Process:</td>
+            <td class="__bold">{{ process }}</td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+</section>
+  
