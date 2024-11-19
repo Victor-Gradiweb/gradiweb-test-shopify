@@ -1,18 +1,6 @@
-<span class="collection-hero">
-  {% render 'breadcrumbs' %}
-  
-  {% render 'heading'
-    heading: 1,
-    class: "h1",
-    content: collection.title
-  %}
-</span>
 
-{% render 'filter-heading' %}
-
+<h1 class="products-title">All products</h1>
 <div class="collection-product-list">
-  {% render 'filter-groups' %}
-  
   {% paginate collection.products by section.settings.pagination %}
     <div id="list-products" class="list-products">
       {% if collection.products.size == 0 %}

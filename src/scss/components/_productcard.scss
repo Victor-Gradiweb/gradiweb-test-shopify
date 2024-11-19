@@ -2,29 +2,75 @@
   display: flex;
   overflow: hidden;
   flex-direction: column;
-  border-radius: 0;
+  border-radius: .5rem;
   height: 100%;
   background-color: var(--color-base-bg);
+  position: relative;
+  cursor: pointer;
+  &__collection {
+    grid-column: span 2;
+    grid-row: span 2;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-bottom: 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    &--cont-prod {
+      width: 50%;
+      height: 50%;
+      margin-top: 25%;
+    }
+  }
 
   &__head {
     display: flex;
     flex-direction: column;
+  }
+  
+  &__cont-hover {
+    padding: 20px;
+    position: absolute;
+    background: black;
+    color: white;
+    width: calc(100% - 90px);
+    height: calc(100% - 90px);
+    margin: 25px;
+    border-radius: .5rem;
+    z-index: 1;
+    opacity: 0;
+    transition: .3s;
+    cursor: pointer;
+    &--box {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      table {
+        position: absolute;
+        bottom: 0;
+      }
+    }
+    &--description {
+      line-height: 1;
+      font-size: 2rem;
+    }
   }
 
   &__head-images {
     position: relative;
     overflow: hidden;
     padding-bottom: 100%;
-
+    padding-top: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     img {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: 0.3s ease;
-      transition-property: opacity, display;
+      top: 2rem;
+      width: 70%;
+      height: auto;
+      transition: .3s;
     }
 
     &:hover {
@@ -40,15 +86,20 @@
 
   &__head-info {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     row-gap: 8px;
-    width: 95%;
+    width: calc(100% - 50px);
     justify-content: space-between;
     padding: 10px 0;
     margin: 0 auto 20px;
-
+    position: absolute;
+    bottom: .5rem;
+    left: 0;
+    padding: 0 25px;
+    align-items: center;
     > strong {
-      font-size: 18px;
+      font-size: 1.2rem;
+      text-transform: uppercase;
     }
   }
 
@@ -65,4 +116,13 @@
       margin: 0 10px 10px;
     }
   }
+
+  &:hover {
+    .product-card__cont-hover {
+      opacity: 1;
+    }
+    .product-card__head-images img {
+      width: 80%;
+    }
+  } 
 }
