@@ -8,13 +8,6 @@
  * ------------------------------------------------------------
  */
 {
-  "sections": {
-    "main": {
-      "type": "books-collections",
-      "settings": {}
-    }
-  },
-  "order": [
-    "main"
-  ]
+  "sections": {},
+  "order": []
 }
