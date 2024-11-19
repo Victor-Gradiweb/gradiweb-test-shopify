@@ -1,0 +1,23 @@
+
+<h1 class="products-title">All books</h1> 
+
+{% schema %}
+{
+  "name": "books-content",
+  "tag": "section",
+  "class": "books-content wrapper",
+  "settings": [
+    {
+      "type": "range",
+      "id": "pagination",
+      "label": "Products by page",
+      "unit": "Pr",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "default": 6
+    }
+  ]
+}
+{% endschema %}
+ 
