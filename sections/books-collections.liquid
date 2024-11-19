@@ -1,17 +1,49 @@
+{% assign books = shop.metaobjects["books"].values %}
+{% assign authors = shop.metaobjects["authors"].values %}
+{% assign genders = shop.metaobjects["gender"].values %}
 
-<h1 class="books-title">All books</h1> 
+<h1 class="books-title">ALL BOOKS</h1>
+<div class="filters-flex">
+  {% render "filters"
+      name: "authors",
+      list: authors,
+  %}
+  {% render "filters"
+      name: "genders",
+      list: genders,
+  %}
+</div>
+
+<div class="collection-book-list">
+    <div id="list-books" class="list-books">
+      {% if books.size == 0 %}
+        <div class="list-books--empty">
+          {{ 'sections.collection_template.empty' | t }}
+        </div>
+      {% endif %}
+  
+      <div id="item-list-js" class="items-list">
+        {% for book in books %}
+          {% render 'book-card'
+            book: book
+          %}
+        {% endfor %}
+      </div>
+  
+   
+    </div>
+</div>
 
 {% schema %}
 {
-  
-  "name": "books-content",
+  "name": "Books",
   "tag": "section",
-  "class": "books-content wrapper",
+  "class": "main-collection wrapper",
   "settings": [
     {
       "type": "range",
       "id": "pagination",
-      "label": "Products by page",
+      "label": "Books by page",
       "unit": "Pr",
       "min": 1,
       "max": 100,
@@ -21,4 +53,3 @@
   ]
 }
 {% endschema %}
- 

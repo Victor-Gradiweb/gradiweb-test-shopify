@@ -1,0 +1,22 @@
+
+<section class="section_filters">
+  <h4 class="section_filters__filter-title">Filter by {{ name }}</h4>
+  <div class="cont-filters">
+      {% for item in list %}
+          <div class="cont-filters__badge" style="background-color: 
+          {% if name == 'authors' %}
+            {{ item.color_filter }}
+          {% endif %} 
+          {% if name == 'genders' %}
+            {{ item.color }}
+          {% endif %} 
+      ">
+          {{ item.name }}
+        </div>
+      {% endfor %}
+       <div class="cont-filters__badge">
+        <p>X</p>
+        <p>Remove filter</p>
+       </div>
+  </div>
+</section>
