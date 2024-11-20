@@ -14,48 +14,9 @@
       "settings": {
         "pagination": 6
       }
-    },
-    "carousel_products_BnerW4": {
-      "type": "carousel-products",
-      "blocks": {
-        "product_tqTLgc": {
-          "type": "product",
-          "settings": {
-            "product": "dulce-honduras"
-          }
-        },
-        "product_FGNPCi": {
-          "type": "product",
-          "settings": {
-            "product": ""
-          }
-        },
-        "product_Nh4gDe": {
-          "type": "product",
-          "settings": {
-            "product": ""
-          }
-        },
-        "product_b7dQQ3": {
-          "type": "product",
-          "settings": {
-            "product": ""
-          }
-        }
-      },
-      "block_order": [
-        "product_tqTLgc",
-        "product_FGNPCi",
-        "product_Nh4gDe",
-        "product_b7dQQ3"
-      ],
-      "settings": {
-        "heading": "{{ page.title }}"
-      }
     }
   },
   "order": [
-    "main",
-    "carousel_products_BnerW4"
+    "main"
   ]
 }
