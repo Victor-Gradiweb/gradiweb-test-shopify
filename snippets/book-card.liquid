@@ -1,0 +1,31 @@
+{% comment %}
+  Renders a product card
+
+  Accepts:
+  - Book: {Object} Product Liquid object
+  - variant: {Object} Specific variant to add to cart
+
+  Usage:
+  {% render 'book-card'
+    product: product
+  %}
+
+{% endcomment %}
+
+<book-product class="book-card">
+  {% if book.cover != blank %}
+    <div class="book-card__img-head" style="background-image: url({{ book.cover |  image_url  }})">
+    </div>
+  {% endif %} 
+  <section class="book-card__data-cont">
+    <div class="book-card__gender-cont">
+      {% for gender in book.gender.value %}
+        <p class="book-card__gender" style="background-color: {{ gender.color }}">{{ gender.name }}</p>
+      {% endfor %}
+    </div>
+    <p class="book-card__title">{{ book.title }}</p>
+    <p class="book-card__author">{{ book.author.value.name }}</p>
+    <p class="book-card__publish"><b>Publish date:</b> {{ book.publish }}</p> 
+     
+  </section>
+</book-product>
