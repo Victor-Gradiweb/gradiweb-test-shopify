@@ -553,7 +553,6 @@
   flex-wrap: wrap;
 }
 .cont-filters__badge {
-  padding: 0.5rem 1rem;
   border-radius: 2rem;
   color: white;
   cursor: pointer;
@@ -564,6 +563,7 @@
   justify-content: space-around;
   gap: 15px;
   border: 1px solid white;
+  padding: 0.2rem 0.7rem;
 }
 .cont-filters__badge p:first-child {
   font-weight: bold;
